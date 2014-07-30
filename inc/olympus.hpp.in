@@ -1,0 +1,10 @@
+#ifndef OLYMPUS
+#define OLYMPUS
+
+#define OLYMPUS_VERSION_MAJOR @OLYMPUS_VERSION_MAJOR@
+#define OLYMPUS_VERSION_MINOR @OLYMPUS_VERSION_MINOR@
+
+namespace olympus {
+    void foo();
+}
+#endif
