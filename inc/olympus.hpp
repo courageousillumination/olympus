@@ -5,6 +5,6 @@
 #define OLYMPUS_VERSION_MINOR 1
 
 namespace olympus {
-    void foo();
+    int foo(int a, int b);
 }
 #endif

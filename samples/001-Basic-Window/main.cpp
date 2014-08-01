@@ -5,5 +5,5 @@
 using namespace std;
 
 int main() {
-    olympus::foo();
+    olympus::foo(0, 0);
 }
