@@ -5,7 +5,7 @@ project(OLYMPUS)
 set (OLYMPUS_VERSION_MAJOR 0)
 set (OLYMPUS_VERSION_MINOR 1)
 
-SET (CMAKE_CXX_FLAGS                "-Wall -Werror")
+SET (CMAKE_CXX_FLAGS                "-Wall -Werror -fprofile-arcs -ftest-coverage")
 SET (CMAKE_CXX_FLAGS_DEBUG          "-g")
 
 #set(CMAKE_VERBOSE_MAKEFILE ON)
