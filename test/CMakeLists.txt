@@ -10,3 +10,4 @@ add_executable(Tests ${tests})
 
 target_link_libraries(Tests Olympus)
 target_link_libraries(Tests googletest)
+target_link_libraries(Tests glfw)

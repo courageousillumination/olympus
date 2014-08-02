@@ -4,6 +4,7 @@ using namespace std;
 using namespace olympus;
 
 WindowManager::WindowManager() : _num_windows(0) {
+    glfwInit();
 }
 
 WindowManager& WindowManager::get_instance() {
@@ -13,6 +14,7 @@ WindowManager& WindowManager::get_instance() {
 
 WindowManager::~WindowManager() {
     destroy_all_windows();
+    glfwTerminate();
 }
 
 Window *WindowManager::create_window(unsigned width, unsigned height) {
