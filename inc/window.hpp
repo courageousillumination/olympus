@@ -8,7 +8,6 @@ namespace olympus {
     private:
        unsigned  _width, _height;
        
-       Window();
        Window(unsigned width, unsigned height, const char *title);
     public:
         unsigned get_width() { return _width; }

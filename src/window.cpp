@@ -2,8 +2,6 @@
 
 using namespace olympus;
 
-Window::Window() { }
-
 Window::Window(unsigned width, unsigned height, const char *title) :
     _width(width), _height(height) {
 }
