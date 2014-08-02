@@ -31,8 +31,9 @@ if __name__ == "__main__":
     
     #Create the test file
     test = open(os.path.join(test_path, file_name + "_test.cpp"), "w")
-    #test.write('#include <gtest/gtest.h>\n\n#include "{0}"\n'.format(full_path + ".hpp"))
-    test.write('#include <gtest/gtest.h>\n\n#include "olympus.hpp"\n')
+    test.write('#include <gtest/gtest.h>\n\n')
+    test.write('#include "olympus.hpp"\n')
+    test.write('#include "{0}"\n'.format(full_path + ".hpp"))
     test.close()
     
     inc = open(os.path.join(inc_path, file_name + ".hpp"), "w")
