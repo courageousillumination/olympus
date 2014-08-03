@@ -57,3 +57,8 @@
    Memcheck:Cond
    obj:/usr/lib/libnvidia-glcore*
 }
+{
+   xrandr memleak (9)
+   Memcheck:Leak
+   obj:/usr/lib/libXrandr*
+}
