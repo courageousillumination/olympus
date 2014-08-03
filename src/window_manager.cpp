@@ -27,7 +27,9 @@ void WindowManager::internal_key_callback(GLFWwindow* window, int key, int scanc
     }
 }
 
-WindowManager::WindowManager() : _num_windows(0) { }
+WindowManager::WindowManager() : _num_windows(0) {
+    glfwInit();
+}
 
 WindowManager& WindowManager::get_instance() {
     static WindowManager _manager;
