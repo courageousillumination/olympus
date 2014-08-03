@@ -38,3 +38,9 @@ TEST_F (WindowTest, WindowGettersAndSetters) {
     EXPECT_EQ(window->get_width(), DEFAULT_WIDTH);
     EXPECT_EQ(window->get_height(), DEFAULT_HEIGHT);
 }
+
+TEST_F(WindowTest, WindowShouldClose) {
+    EXPECT_EQ(window->should_close(), false);
+    window->set_should_close(true);
+    EXPECT_EQ(window->should_close(), true);
+}

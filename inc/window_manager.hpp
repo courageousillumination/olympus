@@ -17,6 +17,9 @@ namespace olympus {
         WindowManager();
         WindowManager(WindowManager const&);
         void operator=(WindowManager const&);
+        
+        static void internal_key_callback(GLFWwindow* window, int key, int scancode, int action, int mods);
+        std::vector<Window *> &get_windows() { return _windows; }
     public:
         /**
          * Retrieve the singelton instance of a window manager.
@@ -43,6 +46,18 @@ namespace olympus {
         void destroy_all_windows();
         
         unsigned get_num_windows() { return _num_windows; }
+        
+        /**
+         * Triggers a poll of all events and will update all windows accordingly
+         */
+        void poll();
+        
+                
+        /**
+         * This function will simualte a keypress on a specific window. It should not
+         * be used outside of testing/debugging.
+         */
+        void simulate_keypress(Window *window, int key, int scancode, int actions, int mods);
     };
 }
 #endif
