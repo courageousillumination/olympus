@@ -20,7 +20,7 @@ void WindowManager::internal_key_callback(GLFWwindow* window, int key, int scanc
          i != windows.end(); i++) {
         if ((*i)->_internal_window == window) {
             if ((*i)->_key_callback != nullptr) {
-                (*i)->_key_callback(key, scancode, action, mods);
+                (*i)->_key_callback(*i, key, scancode, action, mods);
             }
         }
     }

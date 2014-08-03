@@ -32,6 +32,6 @@ void Window::set_should_close(bool flag) {
     glfwSetWindowShouldClose(_internal_window, flag);
 }
 
-void Window::set_keyboard_callback(void (* callback)(int, int, int, int)) {
+void Window::set_keyboard_callback(void (* callback)(Window *, int, int, int, int)) {
     _key_callback = callback;
 }

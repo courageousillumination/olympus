@@ -14,7 +14,7 @@ namespace olympus {
        
         Window(unsigned width, unsigned height, const char *title);
         
-        void (* _key_callback)(int, int, int, int);
+        void (* _key_callback)(Window *, int, int, int, int);
     public:
         ~Window();
         
@@ -28,7 +28,7 @@ namespace olympus {
         void set_width(unsigned width);
         void set_dimensions(unsigned width, unsigned height);
         
-        void set_keyboard_callback(void (* callback)(int, int, int, int));
+        void set_keyboard_callback(void (* callback)(Window *, int, int, int, int));
         
         friend WindowManager;
     };

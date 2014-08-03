@@ -50,7 +50,7 @@ TEST_F (WindowManagerTest, WindowManagerWindowDestructionAll) {
 }
 
 static unsigned COUNTER = 0;
-static void test_keyboard_handler(int key, int scancode, int actions, int mods) {
+static void test_keyboard_handler(Window *window, int key, int scancode, int actions, int mods) {
      COUNTER++;
 }
 
@@ -73,10 +73,10 @@ TEST_F(WindowManagerTest, WindowManagerHandleKeyboardInput) {
 
 static unsigned COUNTER1 = 0;
 static unsigned COUNTER2 = 0;
-static void test_keyboard_handler1(int key, int scancode, int actions, int mods) {
+static void test_keyboard_handler1(Window * window, int key, int scancode, int actions, int mods) {
      COUNTER1++;
 }
-static void test_keyboard_handler2(int key, int scancode, int actions, int mods) {
+static void test_keyboard_handler2(Window * window, int key, int scancode, int actions, int mods) {
      COUNTER2++;
 }
 
