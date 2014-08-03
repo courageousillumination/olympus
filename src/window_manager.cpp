@@ -22,7 +22,6 @@ void WindowManager::internal_key_callback(GLFWwindow* window, int key, int scanc
             if ((*i)->_key_callback != nullptr) {
                 (*i)->_key_callback(key, scancode, action, mods);
             }
-            return;
         }
     }
 }
@@ -79,5 +78,7 @@ void WindowManager::poll() {
 }
 
 void WindowManager::simulate_keypress(Window *window, int key, int scancode, int actions, int mods) {
-    internal_key_callback(window->_internal_window, key, scancode, actions, mods);
+    if (window != nullptr) {
+        internal_key_callback(window->_internal_window, key, scancode, actions, mods);
+    }
 }
