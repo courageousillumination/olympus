@@ -1,3 +1,5 @@
+#include <iostream>
+
 #include "window_manager.hpp"
 
 using namespace std;
@@ -10,6 +12,13 @@ using namespace olympus;
  * we trigger the callback. This may introduce a slight lag if there are a lot of windows
  * but it should simplify the overall struture.
  */
+
+static void error_callback(int error, const char* description)
+{
+    fputs(description, stderr);
+}
+
+
 void WindowManager::internal_key_callback(GLFWwindow* window, int key, int scancode,
                                                  int action, int mods) {
     
@@ -26,7 +35,10 @@ void WindowManager::internal_key_callback(GLFWwindow* window, int key, int scanc
 }
 
 WindowManager::WindowManager() : _num_windows(0) {
-    glfwInit();
+    glfwSetErrorCallback(error_callback);
+    if(!glfwInit()) {
+        std::cout << "There was an error starting glfw\n");
+    }
 }
 
 WindowManager& WindowManager::get_instance() {
