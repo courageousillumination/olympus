@@ -60,5 +60,7 @@
 {
    xrandr memleak (9)
    Memcheck:Leak
-   obj:/usr/lib/libXrandr*
+   match-leak-kinds: definite
+   fun:malloc
+   obj:/usr/lib/libXrandr.so.2.2.0
 }
