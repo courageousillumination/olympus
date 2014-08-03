@@ -37,7 +37,7 @@ void WindowManager::internal_key_callback(GLFWwindow* window, int key, int scanc
 WindowManager::WindowManager() : _num_windows(0) {
     glfwSetErrorCallback(error_callback);
     if(!glfwInit()) {
-        std::cout << "There was an error starting glfw\n");
+        std::cout << "There was an error starting glfw\n";
     }
 }
 
