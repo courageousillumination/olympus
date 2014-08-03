@@ -91,6 +91,7 @@ TEST_F(WindowManagerTest, WindowManagerHandleKeyboardInputMultiple) {
     window1->set_keyboard_callback(test_keyboard_handler1);
     window2->set_keyboard_callback(test_keyboard_handler2);
     
+    window_manager.simulate_keypress(nullptr, 0, 0, 0, 0);
     window_manager.simulate_keypress(window1, 0, 0, 0, 0);
     window_manager.simulate_keypress(window2, 0, 0, 0, 0);
     
