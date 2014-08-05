@@ -2,7 +2,7 @@
 #include <iostream>
 
 #include "olympus.hpp"
-#include "window_manager.hpp"
+#include "window/window_manager.hpp"
 
 using namespace olympus;
 

@@ -1,7 +1,7 @@
 #include <gtest/gtest.h>
 
 #include "olympus.hpp"
-#include "window.hpp"
+#include "window/window.hpp"
 
 #define DEFAULT_HEIGHT 480
 #define DEFAULT_WIDTH 640

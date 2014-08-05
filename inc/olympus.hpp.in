@@ -4,7 +4,7 @@
 #define OLYMPUS_VERSION_MAJOR @OLYMPUS_VERSION_MAJOR@
 #define OLYMPUS_VERSION_MINOR @OLYMPUS_VERSION_MINOR@
 
-#include "window.hpp"
-#include "window_manager.hpp"
+#include "window/window.hpp"
+#include "window/window_manager.hpp"
 
 #endif

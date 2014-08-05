@@ -1,6 +1,6 @@
 #include <iostream>
 
-#include "window_manager.hpp"
+#include "window/window_manager.hpp"
 
 using namespace std;
 using namespace olympus;

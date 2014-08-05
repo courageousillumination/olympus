@@ -1,5 +1,5 @@
-#ifndef OLYMPUS__WINDOW
-#define OLYMPUS__WINDOW
+#ifndef OLYMPUS__WINDOW__WINDOW
+#define OLYMPUS__WINDOW__WINDOW
 
 #include <GLFW/glfw3.h>
 
