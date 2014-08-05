@@ -15,8 +15,7 @@ using namespace olympus;
 class FileAppenderTest : public ::testing::Test {
 protected:
     virtual void SetUp() {
-        appender = new FileAppender;
-        appender->set_output(TEST_FILE);
+        appender = new FileAppender(TEST_FILE);
         Logger::set_appender(appender);
         Logger::set_level(Logger::DEBUG);
     }

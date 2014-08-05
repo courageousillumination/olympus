@@ -1,5 +1,7 @@
 #include <iostream>
 
+#include "debug/logger.hpp"
+
 #include "window/window_manager.hpp"
 
 using namespace std;
@@ -28,6 +30,7 @@ void WindowManager::internal_key_callback(GLFWwindow* window, int key, int scanc
 
 WindowManager::WindowManager() : _num_windows(0) {
     glfwInit();
+    LOG(Logger::DEBUG, "Initalized GLFW");
 }
 
 WindowManager& WindowManager::get_instance() {
@@ -50,6 +53,9 @@ Window *WindowManager::create_window(unsigned width, unsigned height, const char
     glfwSetKeyCallback(window->_internal_window, internal_key_callback);
     _num_windows++;
     _windows.push_back(window);
+    
+    LOG(Logger::DEBUG, "Set up a window of size %dx%d with title %s", width, height, title);
+    
     return window;
 }
 
@@ -60,6 +66,7 @@ void WindowManager::destroy_window(Window *window) {
             _windows.erase(i);
             _num_windows--;
             delete window;
+            LOG(Logger::DEBUG, "Destroyed window");
             return;
         }
     }
