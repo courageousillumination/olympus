@@ -9,6 +9,20 @@ SET (CMAKE_CXX_FLAGS                "-Wall -Werror -fprofile-arcs -ftest-coverag
 
 #set(CMAKE_VERBOSE_MAKEFILE ON)
 
+find_package(PkgConfig REQUIRED)
+pkg_search_module(GLFW REQUIRED glfw3)
+
+# Work-around http://www.cmake.org/Bug/bug_view_page.php?bug_id=6976 [^]
+IF(NOT "${X11_Xxf86vm_LIB}")
+    SET(X11_Xxf86vm_LIB "Xxf86vm")
+ENDIF()
+
+find_package(OpenGL REQUIRED)
+if(NOT OPENGL_FOUND)
+    message("ERROR: OpenGL not found")
+endif(NOT OPENGL_FOUND)
+set(GL_LIBRARY GL GLU X11 ${X11_Xxf86vm_LIB} pthread Xrandr Xi)
+
 add_subdirectory(inc)
 add_subdirectory(src)
 add_subdirectory(samples)
