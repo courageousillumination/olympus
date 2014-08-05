@@ -1,5 +1,10 @@
 #include <fstream>
 #include <string>
+#include <vector>
+#include <iostream>
+
+#include <stdarg.h>
+#include <string.h>
 
 #include <gtest/gtest.h>
 
@@ -16,20 +21,52 @@ using namespace olympus;
 
 
 std::string generate_temp_file() {
-    return std::string();
+    return std::string("/tmp/abc");
 }
 
 class TestingAppender : public Appender {
+private:
+    std::vector<std::string> _output;
 public:
-    void set_output(const char *output) { }
+    void set_output(const char *output) {
+        //no-op
+    }
     
-    void append(const char *format_string, ...) { }
+    void append(const char *format_string, ...) {
+        //Repackage the varargs
+        char buff[1024];
+        va_list args;
+        va_start(args, format_string);
+        vsprintf(buff, format_string, args);
+        va_end(args);
+        
+        _output.push_back(std::string(buff));
+    }
         
     void shutdown() { }
    
     void flush() { }
     
-    void clear() { }
+    void clear() { 
+        _output.clear();
+    }
+    
+    bool contains_string(std::string string) {
+        for (unsigned i = 0; i < _output.size(); i++) {
+            std::size_t found = _output[i].find(":");
+            std::string substring = _output[i].substr(found + 2, std::string::npos);
+            if (substring == string) {
+                return true;
+            }
+        }
+        return false;
+    }
+   
+    void print() {
+        for (unsigned i = 0; i < _output.size(); i++) {
+            std::cout << _output[i] << '\n';
+        }
+    }
 };
 
 class LoggerTest : public ::testing::Test {
@@ -49,30 +86,10 @@ protected:
     TestingAppender *appender;
 };
 
-bool appender_contains_message(TestingAppender *appender, std::string message) {
-    return false;
-}
-
-TEST_F (LoggerTest, LoggerWithDefaultAppender) {
-    std::string temp_file_name = generate_temp_file();
-    
-    Logger::get_appender()->set_output(generate_temp_file().c_str());
-    Logger::set_level(Logger::DEBUG);
-    LOG(Logger::DEBUG, TEST_MESSAGE);
-    Logger::shutdown();
-    
-    //Now we need to check the file
-    std::ifstream infile(temp_file_name);
-    std::string line;
-    infile >> line;
-    
-    EXPECT_EQ(std::string(TEST_MESSAGE), line);
-}
-
 TEST_F (LoggerTest, LoggerWithCustomAppender) {
     LOG(Logger::DEBUG, TEST_MESSAGE);
     appender->flush();
-    EXPECT_TRUE(appender_contains_message(appender, std::string(TEST_MESSAGE)));
+    EXPECT_TRUE(appender->contains_string(std::string(TEST_MESSAGE)));
 }
 
 TEST_F (LoggerTest, LoggerLevels) {
@@ -80,15 +97,15 @@ TEST_F (LoggerTest, LoggerLevels) {
     
     LOG(Logger::DEBUG, TEST_MESSAGE1);
     LOG(Logger::INFO, TEST_MESSAGE2);
-    LOG(Logger::ERROR, TEST_MESSAGE3);
-    LOG(Logger::WARN, TEST_MESSAGE4);
+    LOG(Logger::WARN, TEST_MESSAGE3);
+    LOG(Logger::ERROR, TEST_MESSAGE4);
     
     appender->flush();
     
-    EXPECT_TRUE(appender_contains_message(appender, std::string(TEST_MESSAGE1)));
-    EXPECT_FALSE(appender_contains_message(appender, std::string(TEST_MESSAGE2)));
-    EXPECT_FALSE(appender_contains_message(appender, std::string(TEST_MESSAGE3)));
-    EXPECT_FALSE(appender_contains_message(appender, std::string(TEST_MESSAGE4)));
+    EXPECT_TRUE(appender->contains_string(std::string(TEST_MESSAGE1)));
+    EXPECT_FALSE(appender->contains_string(std::string(TEST_MESSAGE2)));
+    EXPECT_FALSE(appender->contains_string(std::string(TEST_MESSAGE3)));
+    EXPECT_FALSE(appender->contains_string(std::string(TEST_MESSAGE4)));
     
     appender->clear();
     
@@ -96,15 +113,15 @@ TEST_F (LoggerTest, LoggerLevels) {
     
     LOG(Logger::DEBUG, TEST_MESSAGE1);
     LOG(Logger::INFO, TEST_MESSAGE2);
-    LOG(Logger::ERROR, TEST_MESSAGE3);
-    LOG(Logger::WARN, TEST_MESSAGE4);
+    LOG(Logger::WARN, TEST_MESSAGE3);
+    LOG(Logger::ERROR, TEST_MESSAGE4);
     
     appender->flush();
     
-    EXPECT_TRUE(appender_contains_message(appender, std::string(TEST_MESSAGE1)));
-    EXPECT_TRUE(appender_contains_message(appender, std::string(TEST_MESSAGE2)));
-    EXPECT_TRUE(appender_contains_message(appender, std::string(TEST_MESSAGE3)));
-    EXPECT_TRUE(appender_contains_message(appender, std::string(TEST_MESSAGE4)));
+    EXPECT_TRUE(appender->contains_string(std::string(TEST_MESSAGE1)));
+    EXPECT_TRUE(appender->contains_string(std::string(TEST_MESSAGE2)));
+    EXPECT_TRUE(appender->contains_string(std::string(TEST_MESSAGE3)));
+    EXPECT_TRUE(appender->contains_string(std::string(TEST_MESSAGE4)));
     
     appender->clear();
     
@@ -112,14 +129,15 @@ TEST_F (LoggerTest, LoggerLevels) {
     
     LOG(Logger::DEBUG, TEST_MESSAGE1);
     LOG(Logger::INFO, TEST_MESSAGE2);
-    LOG(Logger::ERROR, TEST_MESSAGE3);
-    LOG(Logger::WARN, TEST_MESSAGE4);
+    LOG(Logger::WARN, TEST_MESSAGE3);
+    LOG(Logger::ERROR, TEST_MESSAGE4);
+    
     
     appender->flush();
     
-    EXPECT_TRUE(appender_contains_message(appender, std::string(TEST_MESSAGE1)));
-    EXPECT_FALSE(appender_contains_message(appender, std::string(TEST_MESSAGE2)));
-    EXPECT_FALSE(appender_contains_message(appender, std::string(TEST_MESSAGE3)));
-    EXPECT_TRUE(appender_contains_message(appender, std::string(TEST_MESSAGE4)));
- 
+    EXPECT_TRUE(appender->contains_string(std::string(TEST_MESSAGE1)));
+    EXPECT_FALSE(appender->contains_string(std::string(TEST_MESSAGE2)));
+    EXPECT_FALSE(appender->contains_string(std::string(TEST_MESSAGE3)));
+    EXPECT_TRUE(appender->contains_string(std::string(TEST_MESSAGE4)));
+    
 }

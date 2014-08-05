@@ -6,11 +6,14 @@ using namespace olympus;
 using namespace olympus::Logger;
 
 
-static Appender *_appender = new FileAppender;
+static Appender *_appender;
 static LogLevel _level;
 
 bool olympus::Logger::at_level(LogLevel level) {
-    return _level >= level;
+    if (level == DEBUG) { 
+        return ((_level & DEBUG) != 0);
+    }
+    return (_level & 0b11) >= level;
 }
 
 void olympus::Logger::set_level(int level) {

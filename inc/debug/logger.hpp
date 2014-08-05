@@ -37,8 +37,8 @@ namespace olympus {
 #define LOG(level, fmt, ...) \
         do { if (!NDEBUG && olympus::Logger::get_appender() != nullptr &&\
                   olympus::Logger::at_level(level)) { \
-            olympus::Logger::get_appender()->append("%s:%d:%s(): " fmt, __FILE__, \
-                                __LINE__, __func__,##__VA_ARGS__); }\
+            olympus::Logger::get_appender()->append("%s(): " fmt,\
+                            __func__,##__VA_ARGS__); }\
         } while (0)
                                 
 #endif
