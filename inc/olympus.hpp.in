@@ -7,4 +7,7 @@
 #include "window/window.hpp"
 #include "window/window_manager.hpp"
 
+#include "debug/logger.hpp"
+#include "debug/appender.hpp"
+
 #endif
