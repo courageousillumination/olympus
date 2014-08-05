@@ -28,9 +28,6 @@ class TestingAppender : public Appender {
 private:
     std::vector<std::string> _output;
 public:
-    void set_output(const char *output) {
-        //no-op
-    }
     
     void append(const char *format_string, ...) {
         //Repackage the varargs

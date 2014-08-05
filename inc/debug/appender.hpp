@@ -4,11 +4,6 @@ namespace olympus {
     class Appender {
     public:
         virtual ~Appender() { }
-        /**
-         * Takes a single string to set the output stream, there may
-         * be a better way of handeling output setting than this
-         */
-        virtual void set_output(const char *output) = 0;
         
         /**
          * This will do the actual heavy lifting of the appender and
