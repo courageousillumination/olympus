@@ -34,7 +34,7 @@ public:
     
     void append(const char *format_string, ...) {
         //Repackage the varargs
-        char buff[1024];
+        char buff[2048];
         va_list args;
         va_start(args, format_string);
         vsprintf(buff, format_string, args);
@@ -135,8 +135,7 @@ TEST_F (LoggerTest, LoggerLevels) {
     LOG(Logger::INFO, TEST_MESSAGE2);
     LOG(Logger::WARN, TEST_MESSAGE3);
     LOG(Logger::ERROR, TEST_MESSAGE4);
-    
-    
+   
     appender->flush();
     
     EXPECT_TRUE(appender->contains_string(std::string(TEST_MESSAGE1)));

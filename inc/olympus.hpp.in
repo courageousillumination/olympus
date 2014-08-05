@@ -9,5 +9,6 @@
 
 #include "debug/logger.hpp"
 #include "debug/appender.hpp"
+#include "debug/file_appender.hpp"
 
 #endif
