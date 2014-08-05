@@ -94,6 +94,7 @@ TEST_F (LoggerTest, LoggerWithCustomAppender) {
 
 TEST_F (LoggerTest, LoggerLevels) {
     Logger::set_level(Logger::DEBUG);
+    EXPECT_EQ(Logger::get_level(), Logger::DEBUG);
     
     LOG(Logger::DEBUG, TEST_MESSAGE1);
     LOG(Logger::INFO, TEST_MESSAGE2);
@@ -110,6 +111,7 @@ TEST_F (LoggerTest, LoggerLevels) {
     appender->clear();
     
     Logger::set_level(Logger::DEBUG | Logger::INFO);
+    EXPECT_EQ(Logger::get_level(), Logger::DEBUG | Logger::INFO);
     
     LOG(Logger::DEBUG, TEST_MESSAGE1);
     LOG(Logger::INFO, TEST_MESSAGE2);
@@ -126,6 +128,8 @@ TEST_F (LoggerTest, LoggerLevels) {
     appender->clear();
     
     Logger::set_level(Logger::DEBUG | Logger::ERROR);
+    EXPECT_EQ(Logger::get_level(), Logger::DEBUG | Logger::ERROR);
+   
     
     LOG(Logger::DEBUG, TEST_MESSAGE1);
     LOG(Logger::INFO, TEST_MESSAGE2);

@@ -8,7 +8,7 @@ namespace olympus {
          * Takes a single string to set the output stream, there may
          * be a better way of handeling output setting than this
          */
-        virtual void set_output(const char *output) { }
+        virtual void set_output(const char *output) = 0;
         
         /**
          * This will do the actual heavy lifting of the appender and
@@ -19,12 +19,12 @@ namespace olympus {
         /**
          * This should force evrything to shutdown
          */
-        virtual void shutdown() { }
+        virtual void shutdown() = 0;
         
         /**
-         * This should force a flush but allow contiued input
+         * This should force a flush but allow continued input
          */
-        virtual void flush() { }
+        virtual void flush() = 0;
     };
 };
 #endif
