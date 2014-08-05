@@ -13,7 +13,7 @@ using namespace olympus;
 class WindowTest : public ::testing::Test {
 protected:
     virtual void SetUp() {
-        window =  WindowManager::get_instance().create_window(DEFAULT_WIDTH, DEFAULT_HEIGHT);
+        window = WindowManager::get_instance().create_window(DEFAULT_WIDTH, DEFAULT_HEIGHT);
     }
     
     virtual void TearDown() {

@@ -1,7 +1,6 @@
 #include <iostream>
 
 #include "debug/logger.hpp"
-
 #include "window/window_manager.hpp"
 
 using namespace std;

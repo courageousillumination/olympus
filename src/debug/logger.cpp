@@ -6,8 +6,8 @@ using namespace olympus;
 using namespace olympus::Logger;
 
 
-static Appender *_appender;
-static LogLevel _level;
+static Appender *_appender = nullptr;
+static LogLevel _level = NONE;
 
 bool olympus::Logger::at_level(LogLevel level) {
     if (level == DEBUG) { 
@@ -30,4 +30,6 @@ void olympus::Logger::shutdown() {
     if (_appender != nullptr) {
         _appender->shutdown();
     }
+    _appender = nullptr;
+    _level = NONE;
 }
