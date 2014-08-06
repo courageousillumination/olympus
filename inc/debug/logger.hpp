@@ -1,11 +1,16 @@
 #ifndef OLYMPUS__DEBUG__LOGGER
 #define OLYMPUS__DEBUG__LOGGER
 
+#include <string.h>
+#include "debug/appender.hpp"
+
+
 #ifndef NDEBUG
 #define NDEBUG 0
 #endif
 
-#include "debug/appender.hpp"
+
+#define FILE_SHORT (strrchr(__FILE__, '/') ? strrchr(__FILE__, '/') + 1 : __FILE__)
 
 namespace olympus {  
     namespace Logger {
@@ -18,6 +23,7 @@ namespace olympus {
         };  
         
         bool at_level(LogLevel level);
+        const char *level_to_string(LogLevel level);
         
         Appender *get_appender();
         LogLevel get_level();
@@ -37,8 +43,8 @@ namespace olympus {
 #define LOG(level, fmt, ...) \
         do { if (!NDEBUG && olympus::Logger::get_appender() != nullptr &&\
                   olympus::Logger::at_level(level)) { \
-            olympus::Logger::get_appender()->append("%s(): " fmt,\
-                            __func__,##__VA_ARGS__); }\
+            olympus::Logger::get_appender()->append("%s:%d:%s() [%s]: " fmt,\
+                            FILE_SHORT, __LINE__, __func__, olympus::Logger::level_to_string(level), ##__VA_ARGS__); }\
         } while (0)
                                 
 #endif

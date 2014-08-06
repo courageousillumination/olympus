@@ -52,7 +52,6 @@ namespace olympus {
          */
         void poll();
         
-                
         /**
          * This function will simualte a keypress on a specific window. It should not
          * be used outside of testing/debugging.

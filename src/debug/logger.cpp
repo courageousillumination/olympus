@@ -33,3 +33,19 @@ void olympus::Logger::shutdown() {
     _appender = nullptr;
     _level = NONE;
 }
+
+
+const char *olympus::Logger::level_to_string(LogLevel level) {
+    switch (level) {
+        case DEBUG:
+            return "DEBUG";
+        case INFO:
+            return "INFO";
+        case WARN:
+            return "WARN";
+        case ERROR:
+            return "ERROR";
+        default:
+            return "Unsupported logging level";
+    }
+}
