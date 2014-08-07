@@ -4,10 +4,9 @@
 #include "render/screen.hpp"
 #include "render/renderer.hpp"
 #include "render/shaders.hpp"
+#include "render/mesh.hpp"
 
 using namespace olympus;
-
-static GLuint vao_id = 0;
 
 static const GLfloat g_vertex_buffer_data[] = {
    -1.0f, -1.0f, 0.0f,
@@ -23,13 +22,13 @@ GLfloat cube_texcoords[] = {
   };
 
 
-static GLuint vertexbuffer = 0, vbo_cube_texcoords = 0;
- 
 static Texture *texture = nullptr;
 static Renderer *renderer = nullptr;
+static Mesh *mesh = nullptr;
 
 Screen::Screen() {
-    if (vao_id == 0) {
+    /** As soon as we're done debugging this entire thing should be dropped **/
+    if (mesh == nullptr) {
         glActiveTexture(GL_TEXTURE0);
         texture = new Texture(Texture::TEXTURE_2D);
         texture->load_image("/home/tristan/Development/olympus/texture.jpg");
@@ -38,37 +37,9 @@ Screen::Screen() {
                                           TEXTURE_FRAGMENT_SHADER);
         renderer->bind();
         
-        
-        glGenVertexArrays(1, &vao_id);
-        glBindVertexArray(vao_id);
-        glGenBuffers(1, &vertexbuffer);
-        glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer);
-        glBufferData(GL_ARRAY_BUFFER, sizeof(g_vertex_buffer_data), g_vertex_buffer_data, GL_STATIC_DRAW);
-        glEnableVertexAttribArray(0);
-        glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer);
-        glVertexAttribPointer(
-            0,                  // attribute 0. No particular reason for 0, but must match the layout in the shader.
-            3,                  // size
-            GL_FLOAT,           // type
-            GL_FALSE,           // normalized?
-            0,                  // stride
-            (void*)0            // array buffer offset
-        );
-        
-        glGenBuffers(1, &vbo_cube_texcoords);
-        glBindBuffer(GL_ARRAY_BUFFER, vbo_cube_texcoords);
-        glBufferData(GL_ARRAY_BUFFER, sizeof(cube_texcoords), cube_texcoords, GL_STATIC_DRAW);
-        /* onDisplay */
-        glEnableVertexAttribArray(1);
-        glBindBuffer(GL_ARRAY_BUFFER, vbo_cube_texcoords);
-        glVertexAttribPointer(
-            1, // attribute
-            2,                  // number of elements per vertex, here (x,y)
-            GL_FLOAT,           // the type of each element
-            GL_FALSE,           // take our values as-is
-            0,                  // no extra data between each position
-            0                   // offset of first element
-        );
+        mesh = new Mesh(2, Mesh::TRIANGLES);
+        mesh->set_vertex_attribute(0, 3, 3, g_vertex_buffer_data);
+        mesh->set_vertex_attribute(1, 2, 3, cube_texcoords);
     }
     
     _framebuffer = new Framebuffer;
@@ -77,14 +48,15 @@ Screen::Screen() {
 void Screen::render() {
     _framebuffer->bind();
     glClear(GL_COLOR_BUFFER_BIT);
+    
+    /** All the things following this should be done in the world **/
     renderer->bind();
     texture->bind();
-    glBindVertexArray(vao_id);
-    glDrawArrays(GL_TRIANGLES, 0, 3); // Starting from vertex 0; 3 vertices total -> 1 triangle
-    _framebuffer->unbind();
+    mesh->bind();
+    mesh->draw();
+    /** Finish world draw **/
     
-    //_framebuffer->get_color_texture()->bind();
-    //glDrawArrays(GL_TRIANGLES, 0, 3);
+    _framebuffer->unbind();
 };
 
 Framebuffer *Screen::get_framebuffer() {
