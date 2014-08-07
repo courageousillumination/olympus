@@ -17,6 +17,8 @@ int main() {
     Logger::set_appender(appender);
     Logger::set_level(Logger::DEBUG | Logger::INFO);
     
+    fps::enable_fps_logging(true);
+    
     WindowManager &window_manager = WindowManager::get_instance();
     Window *window = window_manager.create_window(640, 480);
     window->set_keyboard_callback(key_callback);
@@ -24,6 +26,7 @@ int main() {
     while(!window->should_close()) {
         window->render();
         window_manager.poll();
+        fps::fps_tick();
     }
     
     //Clean up and exit

@@ -25,6 +25,7 @@ Window::Window(unsigned width, unsigned height, const char *title) :
     LOG(Logger::INFO, "OpenGL version supported %s", version);
     
     _screen = new Screen;
+    glfwSwapInterval(1);
 }
 
 Window::~Window() {
@@ -73,7 +74,7 @@ static const GLfloat simple_square_texcoords[] = {
 static Mesh *mesh = nullptr;
 
 void Window::render() {
-    glClear( GL_COLOR_BUFFER_BIT);
+    glClear(GL_COLOR_BUFFER_BIT);
     
     if (mesh == nullptr) {
         mesh = new Mesh(2, Mesh::TRIANGLE_STRIP);

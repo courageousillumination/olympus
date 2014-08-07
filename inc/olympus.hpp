@@ -11,5 +11,6 @@
 #include "debug/appender.hpp"
 #include "debug/file_appender.hpp"
 #include "debug/stream_appender.hpp"
+#include "debug/fps.hpp"
 
 #endif
