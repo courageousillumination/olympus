@@ -1,6 +1,9 @@
 #ifndef OLYMPUS__DEBUG__APPENDER
 #define OLYMPUS__DEBUG__APPENDER
 namespace olympus {
+    namespace Logger {
+        enum LogLevel : unsigned char;
+    }
     class Appender {
     public:
         virtual ~Appender() { }
@@ -9,7 +12,7 @@ namespace olympus {
          * This will do the actual heavy lifting of the appender and
          * do all appends.
          */
-        virtual void append(const char *format_string, ...) = 0;
+        virtual void append(Logger::LogLevel level, const char *format_string, ...) = 0;
         
         /**
          * This should force evrything to shutdown
@@ -21,5 +24,5 @@ namespace olympus {
          */
         virtual void flush() = 0;
     };
-};
+}
 #endif

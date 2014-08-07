@@ -9,17 +9,23 @@ namespace olympus {
      * graphics system.
      */
     class Texture {
-    private:
-        ///Stores the internal id of this texture (returned by OpenGL)
-        unsigned _texture_id;
     public:
         ///Defines possible targets for this texture.
         enum Target {
             TEXTURE_2D
         };
+    private:
+        ///Stores the internal id of this texture (returned by OpenGL)
+        unsigned _texture_id;
+        
+        int _width, _height, _depth;
+        Target _target;
+    public:
         
         Texture(Target target);
         ~Texture();
+        
+        void load_image(const char *path);
         
         /**
          * Bind this texture. All future texture operations will affect

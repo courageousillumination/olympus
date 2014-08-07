@@ -19,17 +19,12 @@
 
 using namespace olympus;
 
-
-std::string generate_temp_file() {
-    return std::string("/tmp/abc");
-}
-
 class TestingAppender : public Appender {
 private:
     std::vector<std::string> _output;
 public:
     
-    void append(const char *format_string, ...) {
+    void append(Logger::LogLevel level, const char *format_string, ...) {
         //Repackage the varargs
         char buff[2048];
         va_list args;

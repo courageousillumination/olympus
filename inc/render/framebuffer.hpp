@@ -5,6 +5,10 @@
 
 namespace olympus {
     class Framebuffer {
+    private:
+        unsigned _frame_buffer_id;
+        Texture *_color_0_texture;
+    public:
         Framebuffer();
         ~Framebuffer();
         
@@ -16,6 +20,12 @@ namespace olympus {
          * another bound call is made.
          */
         void bind();
+        /**
+         * This will unbind this specific frame buffer and bind
+         * the **default frame buffer**. This means you can't
+         * make a stack of framebuffers.
+         */
+        void unbind();
         
         /**
          * Attach a texture to this frame buffer, by default
@@ -23,7 +33,7 @@ namespace olympus {
          * More complicated attachement can use the paramaterized
          * versions of this function.
          */
-        void attach_texture(Texture *texture);
+        //void attach_texture(Texture *texture);
         
         //TODO: Add more parameters
         //void attach_texture(

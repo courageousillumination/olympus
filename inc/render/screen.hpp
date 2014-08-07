@@ -18,6 +18,8 @@ namespace olympus {
         //World *_world;
         Framebuffer *_framebuffer;
     public:
+        Screen();
+        
         /**
          * This does the actual render, using the current world and viewpoint.
          * NOTE: This will be rendered to a framebuffer (texture?) which others
@@ -30,7 +32,7 @@ namespace olympus {
         
         //Viewpoint *get_viewpoint();
         //World *get_world();        
-        Framebuffer *get_frame_buffer();
+        Framebuffer *get_framebuffer();
     };
 }
 #endif

@@ -11,7 +11,7 @@ namespace olympus {
         std::ostream &_output;
     public:
         StreamAppender(std::ostream &output);
-        void append(const char *format_string, ...);
+        void append(Logger::LogLevel level, const char *format_string, ...);
         void shutdown();
         void flush();
     };

@@ -14,7 +14,7 @@ namespace olympus {
          * Takes in a single stream for output to a file
          */
         FileAppender(const char *output);
-        void append(const char *format_string, ...);
+        void append(Logger::LogLevel level, const char *format_string, ...);
         void shutdown();
         void flush();
     };

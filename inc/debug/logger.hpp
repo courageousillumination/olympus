@@ -2,19 +2,18 @@
 #define OLYMPUS__DEBUG__LOGGER
 
 #include <string.h>
-#include "debug/appender.hpp"
 
+#include "debug/appender.hpp"
 
 #ifndef NDEBUG
 #define NDEBUG 0
 #endif
 
-
 #define FILE_SHORT (strrchr(__FILE__, '/') ? strrchr(__FILE__, '/') + 1 : __FILE__)
 
 namespace olympus {  
     namespace Logger {
-        enum LogLevel {
+        enum LogLevel : unsigned char {
             DEBUG = 0b100,
             INFO  = 0b011,
             WARN  = 0b010,
@@ -43,8 +42,8 @@ namespace olympus {
 #define LOG(level, fmt, ...) \
         do { if (!NDEBUG && olympus::Logger::get_appender() != nullptr &&\
                   olympus::Logger::at_level(level)) { \
-            olympus::Logger::get_appender()->append("%s:%d:%s() [%s]: " fmt,\
-                            FILE_SHORT, __LINE__, __func__, olympus::Logger::level_to_string(level), ##__VA_ARGS__); }\
+            olympus::Logger::get_appender()->append(level, "%s:%d:%s(): " fmt,\
+                            FILE_SHORT, __LINE__, __func__, ##__VA_ARGS__); }\
         } while (0)
                                 
 #endif

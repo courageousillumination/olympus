@@ -4,4 +4,7 @@
 #define FLAT_VERTEX_SHADER "@OLYMPUS_SOURCE_DIR@/src/render/shaders/flat_v.glsl"
 #define FLAT_FRAGMENT_SHADER "@OLYMPUS_SOURCE_DIR@/src/render/shaders/flat_f.glsl"
 
+#define TEXTURE_VERTEX_SHADER "@OLYMPUS_SOURCE_DIR@/src/render/shaders/texture_v.glsl"
+#define TEXTURE_FRAGMENT_SHADER "@OLYMPUS_SOURCE_DIR@/src/render/shaders/texture_f.glsl"
+
 #endif
