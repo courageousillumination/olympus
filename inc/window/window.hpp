@@ -1,6 +1,8 @@
 #ifndef OLYMPUS__WINDOW__WINDOW
 #define OLYMPUS__WINDOW__WINDOW
 
+#include <vector>
+
 #include <GLFW/glfw3.h>
 
 #include "render/screen.hpp"
@@ -18,8 +20,7 @@ namespace olympus {
         
         void (* _key_callback)(Window *, int, int, int, int);
         
-        //TODO: Allow a window to have multiple screens.
-        Screen *_screen;
+        std::vector<Screen *> _screens;
     public:
         ~Window();
         
@@ -39,6 +40,10 @@ namespace olympus {
         void set_dimensions(unsigned width, unsigned height);
         
         void set_keyboard_callback(void (* callback)(Window *, int, int, int, int));
+        
+        void add_screen(Screen *screen);
+        void add_screen(Screen *screen, float x, float y, float width, float height);
+        void remove_screen(Screen *screen);
         
         friend WindowManager;
     };

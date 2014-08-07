@@ -24,13 +24,10 @@ Window::Window(unsigned width, unsigned height, const char *title) :
     LOG(Logger::INFO, "Renderer: %s", renderer);
     LOG(Logger::INFO, "OpenGL version supported %s", version);
     
-    _screen = new Screen;
     glfwSwapInterval(1);
 }
 
 Window::~Window() {
-    delete _screen;
-    
     glfwDestroyWindow(_internal_window);
 }
 
@@ -81,7 +78,16 @@ void Window::render() {
         mesh->set_vertex_attribute(0, 3, 4, simple_square_verts);
         mesh->set_vertex_attribute(1, 2, 4, simple_square_texcoords);
     }
-    if (_screen != nullptr) {
+    
+    for (auto screen : _screens) {
+        screen->render();
+        screen->get_framebuffer()->get_color_texture()->bind();
+        
+        //TODO: Use a proper shader here.
+        mesh->bind();
+        mesh->draw();
+    }
+    /*if (_screen != nullptr) {
         _screen->render();
         
         //Now that we've rendered to a framebuffer we can unbind it and bind the screen back
@@ -93,7 +99,17 @@ void Window::render() {
         
         mesh->bind();
         mesh->draw();
-    }
+    }*/
     //Finally we swap our buffers
     glfwSwapBuffers(_internal_window);
+}
+
+void Window::add_screen(Screen *screen) {
+    _screens.push_back(screen);
+}
+void Window::add_screen(Screen *screen, float x, float y, float width, float height) {
+    //TODO
+}
+void Window::remove_screen(Screen *screen) {
+    //TODO
 }

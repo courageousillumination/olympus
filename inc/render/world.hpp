@@ -10,7 +10,11 @@ namespace olympus {
         RenderEngine *_render_engine;
     public:
         World();
+        
+        void set_render_engine(RenderEngine *render_engine);
         RenderEngine *get_render_engine();
+        
+        void render();
     };
 }
 #endif

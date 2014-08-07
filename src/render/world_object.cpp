@@ -48,7 +48,9 @@ std::set<WorldObject *> WorldObject::get_children() {
     return _children;
 }
 
-
 glm::mat4 WorldObject::get_model_matrix() {
     return _model_matrix;
+}
+World *WorldObject::get_root() {
+    return _root;
 }
