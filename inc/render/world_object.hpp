@@ -6,6 +6,9 @@
 #include <glm/glm.hpp>
 
 namespace olympus {
+    
+    class World;
+    
     /**
      * This class represents anything that exists spatially in the
      * world. These need not be renderable, but must have a position.
@@ -21,6 +24,7 @@ namespace olympus {
         
         WorldObject *_parent;
         std::set<WorldObject *> _children;
+        World *_root;
     public:
         
         ///NOTE: All setters are declared virtual to allow
@@ -42,6 +46,8 @@ namespace olympus {
         //TODO: Orientation getters
         WorldObject *get_parent();
         std::set<WorldObject *> get_children();
+        
+        World *get_root();
         
         /**
          * The model matrix can't be set explicitly and is created
