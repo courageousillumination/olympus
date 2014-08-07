@@ -19,7 +19,7 @@ GLfloat cube_texcoords[] = {
     0.0, 0.0,
     1.0, 0.0,
     1.0, 1.0
-  };
+};
 
 
 static Texture *texture = nullptr;

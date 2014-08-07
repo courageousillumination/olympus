@@ -27,7 +27,6 @@ void Texture::load_image(const char *path) {
     }
     
     //Here we pass on to SOIL
-        
     unsigned char *img = SOIL_load_image(path, &_width, &_height, NULL, 0);
     if (img == nullptr) {
         LOG(Logger::ERROR, "Failed to load image for texture %s", path);
@@ -38,9 +37,7 @@ void Texture::load_image(const char *path) {
     bind();
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB,
                  _width, _height, 0, GL_RGB, GL_UNSIGNED_BYTE, img);
-    
-    
-    
+
     SOIL_free_image_data(img);
 }
 

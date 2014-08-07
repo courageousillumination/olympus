@@ -26,6 +26,7 @@ Mesh::Mesh(unsigned num_attributes, enum Mesh::PrimType prim_type) {
             LOG(Logger::WARN, "Unexpected primitive type %d", prim_type);
     }
 }
+
 Mesh::~Mesh() {
     delete []_attributes;
 }
