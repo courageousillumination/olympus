@@ -45,7 +45,7 @@ public:
     
     bool contains_string(std::string string) {
         for (unsigned i = 0; i < _output.size(); i++) {
-            std::size_t found = _output[i].find(":");
+            std::size_t found = _output[i].find(": ");
             std::string substring = _output[i].substr(found + 2, std::string::npos);
             if (substring == string) {
                 return true;

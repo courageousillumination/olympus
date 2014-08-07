@@ -1,6 +1,7 @@
 #include <iostream>
 
 #include "olympus.hpp"
+#include "utils/shortcuts.hpp"
 
 using namespace std;
 using namespace olympus;
@@ -33,21 +34,11 @@ int main() {
     
     //Create a window
     WindowManager &window_manager = WindowManager::get_instance();
-    Window *window = window_manager.create_window(640, 480);
+    EasyWindow *easy_window = create_easy_window(640, 480);
+    
+    Window *window = easy_window->window;
     window->set_keyboard_callback(key_callback);
     
-    //Create a screen to attach to the window
-    Screen *screen = new Screen;
-    window->add_screen(screen);
-    
-    //Create a world to add to the screen
-    World *world = new World;
-    screen->set_world(world);
-    
-    //Create a render engine for the world
-    RenderEngine *render_engine = new StandardRenderEngine;
-    world->set_render_engine(render_engine);
-   
     //Create an object to add to the world
     Texture *texture = new Texture(Texture::TEXTURE_2D);
     texture->load_image("/home/tristan/Development/olympus/texture.jpg");
@@ -68,13 +59,15 @@ int main() {
     Renderable *renderable = new Renderable;
     renderable->asset = asset;
     
-    world->add_child(renderable);
+    easy_window->world->add_child(renderable);
     
     while(!window->should_close()) {
         window->render();
         window_manager.poll();
         fps::fps_tick();
     }
+    
+    destroy_easy_window(easy_window);
     
     //Clean up and exit
     Logger::shutdown();

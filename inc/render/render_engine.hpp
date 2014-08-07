@@ -10,6 +10,7 @@ namespace olympus {
     protected:
         std::set<Renderable *> _renderables;
     public:
+        virtual ~RenderEngine() { }
         virtual void add_renderable(Renderable *renderable);
         virtual void remove_renderable(Renderable *renderable);
         

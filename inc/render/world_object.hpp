@@ -26,6 +26,7 @@ namespace olympus {
         std::set<WorldObject *> _children;
         World *_root;
     public:
+        virtual ~WorldObject() {}
         
         ///NOTE: All setters are declared virtual to allow
         ///subclasses to insert their own callbacks.

@@ -35,7 +35,7 @@ bool stream_contains_string(std::istream &stream, std::string string) {
     bool result = false;
     
     for(std::string line; getline(stream, line);) {
-        std::size_t found = line.find(":");
+        std::size_t found = line.find(": ");
         std::string substring = line.substr(found + 2, std::string::npos);
         if (substring == string) {
             result = true;

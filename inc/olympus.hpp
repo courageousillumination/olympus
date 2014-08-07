@@ -13,10 +13,6 @@
 #include "debug/stream_appender.hpp"
 #include "debug/fps.hpp"
 
-#include "render/screen.hpp"
-#include "render/mesh.hpp"
-#include "render/world.hpp"
-#include "render/standard_render_engine.hpp"
 #include "render/shaders.hpp"
 
 #endif
