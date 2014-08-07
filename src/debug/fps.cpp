@@ -32,5 +32,7 @@ void olympus::fps::fps_tick() {
 }
 
 double olympus::fps::get_fps() {
-    return running_fps;
+    high_resolution_clock::time_point current_time = high_resolution_clock::now();
+    duration<double> time_span = duration_cast<duration<double>>(current_time - last_time);
+    return num_frames / time_span.count();
 }
