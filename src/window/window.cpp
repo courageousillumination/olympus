@@ -110,5 +110,12 @@ void Window::add_screen(Screen *screen, float x, float y, float width, float hei
     _screens.push_back(screen_and_mesh);
 }
 void Window::remove_screen(Screen *screen) {
-    //TODO
+    for(std::vector<ScreenAndMesh>::iterator it = _screens.begin();
+        it != _screens.end(); it++) {
+        if (it->screen == screen) {
+            delete it->mesh;
+            _screens.erase(it);
+            return;
+        }
+    }
 }

@@ -78,6 +78,18 @@ TEST_F(WindowTest, WindowWithMultipleScreens) {
     EXPECT_TRUE(expect_color_block(0, 0, DEFAULT_WIDTH / 2, DEFAULT_HEIGHT, 1.0, 0.0, 0.0));
     EXPECT_TRUE(expect_color_block(DEFAULT_WIDTH / 2, 0, DEFAULT_WIDTH / 2, DEFAULT_HEIGHT, 0.0, 1.0, 0.0));
     
+    //Set a world and make sure two screens can look at the same world
+    screen1->screen->set_world(screen2->world);
+    
+    window->render();
+    EXPECT_TRUE(expect_color_block(0, 0, DEFAULT_WIDTH, DEFAULT_HEIGHT, 0.0, 1.0, 0.0));
+    
+    //Test screen removal
+    window->remove_screen(screen2->screen);
+    window->render();
+    EXPECT_TRUE(expect_color_block(0, 0, DEFAULT_WIDTH / 2, DEFAULT_HEIGHT, 0.0, 1.0, 0.0));
+    EXPECT_TRUE(expect_color_block(DEFAULT_WIDTH / 2, 0, DEFAULT_WIDTH / 2, DEFAULT_HEIGHT, 0.0, 0.0, 0.0));
+    
     destroy_square(r);
     destroy_square(b);
     destroy_easy_screen(screen1);
