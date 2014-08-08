@@ -2,6 +2,12 @@
 
 using namespace olympus;
 
+Asset::Asset() {
+    for (unsigned i = 0; i < MAX_ASSET_TEXTURES; i++) {
+        _textures[i] = nullptr;
+    }
+}
+
 void Asset::set_mesh(Mesh *mesh) {
     _mesh = mesh;
 }

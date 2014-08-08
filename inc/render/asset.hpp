@@ -18,6 +18,8 @@ namespace olympus {
         Renderer *_renderer;
         Texture *_textures[MAX_ASSET_TEXTURES];
     public:
+        Asset();
+        
         void set_mesh(Mesh *mesh);
         void set_renderer(Renderer *renderer);
         /**
