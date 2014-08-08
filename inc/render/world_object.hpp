@@ -25,7 +25,10 @@ namespace olympus {
         WorldObject *_parent;
         std::set<WorldObject *> _children;
         World *_root;
+        
+        virtual void _update_model_matrix();
     public:
+        WorldObject();
         virtual ~WorldObject() {}
         
         ///NOTE: All setters are declared virtual to allow
