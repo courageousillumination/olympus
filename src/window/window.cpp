@@ -2,10 +2,19 @@
 
 #include "debug/logger.hpp"
 #include "render/mesh.hpp"
+#include "render/shaders.hpp"
 
 #include "window/window.hpp"
 
 using namespace olympus;
+
+
+static const GLfloat simple_square_texcoords[] = {
+    0.0, 0.0,
+    0.0, 1.0,
+    1.0, 0.0,
+    1.0, 1.0
+};
 
 Window::Window(unsigned width, unsigned height, const char *title) :
     _width(width), _height(height) {
@@ -25,6 +34,10 @@ Window::Window(unsigned width, unsigned height, const char *title) :
     LOG(Logger::INFO, "OpenGL version supported %s", version);
     
     glfwSwapInterval(1);
+    
+    //Build my renderer
+    _renderer = new Renderer(TEXTURE_VERTEX_SHADER,
+                            TEXTURE_FRAGMENT_SHADER);
 }
 
 Window::~Window() {
@@ -54,61 +67,47 @@ void Window::set_keyboard_callback(void (* callback)(Window *, int, int, int, in
     _key_callback = callback;
 }
 
-static const GLfloat simple_square_verts[] = {
-    -1.0f, -1.0f, 0.0f,
-    -1.0f, 1.0f, 0.0f,
-    1.0f, -1.0f, 0.0f,
-    1.0f, 1.0f, 0.0f
-};
-
-static const GLfloat simple_square_texcoords[] = {
-    0.0, 0.0,
-    0.0, 1.0,
-    1.0, 0.0,
-    1.0, 1.0
-};
-
-static Mesh *mesh = nullptr;
-
 void Window::render() {
     glClear(GL_COLOR_BUFFER_BIT);
     
-    if (mesh == nullptr) {
-        mesh = new Mesh(2, Mesh::TRIANGLE_STRIP);
-        mesh->set_vertex_attribute(0, 3, 4, simple_square_verts);
-        mesh->set_vertex_attribute(1, 2, 4, simple_square_texcoords);
+    for (auto screen : _screens) {
+        screen.screen->render();
     }
     
+    _renderer->bind();
     for (auto screen : _screens) {
-        screen->render();
-        screen->get_framebuffer()->get_color_texture()->bind();
-        
-        //TODO: Use a proper shader here.
-        mesh->bind();
-        mesh->draw();
+        screen.screen->get_framebuffer()->get_color_texture()->bind();
+        screen.mesh->bind();
+        screen.mesh->draw();
     }
-    /*if (_screen != nullptr) {
-        _screen->render();
-        
-        //Now that we've rendered to a framebuffer we can unbind it and bind the screen back
-        //glBindFramebuffer(GL_FRAMEBUFFER, 0);
-        //glViewport(0,0,_width, _height);
-        
-        //Next we can just use the rendered framebuffer back to the screen.
-        _screen->get_framebuffer()->get_color_texture()->bind();
-        
-        mesh->bind();
-        mesh->draw();
-    }*/
+    
     //Finally we swap our buffers
     glfwSwapBuffers(_internal_window);
 }
 
 void Window::add_screen(Screen *screen) {
-    _screens.push_back(screen);
+    add_screen(screen, -1.0, -1.0, 2.0, 2.0);
+    
 }
 void Window::add_screen(Screen *screen, float x, float y, float width, float height) {
-    //TODO
+    ScreenAndMesh screen_and_mesh;
+    screen_and_mesh.screen = screen;
+    
+    //Create the mesh
+    Mesh *mesh = new Mesh(2, Mesh::TRIANGLE_STRIP);
+    
+    const float verts[] = {
+        x, y, 0.0,
+        x + width, y, 0.0,
+        x, y + height, 0.0,
+        x + width, y + height, 0.0
+    };
+    
+    mesh->set_vertex_attribute(0, 3, 4, verts);
+    mesh->set_vertex_attribute(1, 2, 4, simple_square_texcoords);
+    
+    screen_and_mesh.mesh = mesh;
+    _screens.push_back(screen_and_mesh);
 }
 void Window::remove_screen(Screen *screen) {
     //TODO

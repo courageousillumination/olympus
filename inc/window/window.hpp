@@ -20,7 +20,13 @@ namespace olympus {
         
         void (* _key_callback)(Window *, int, int, int, int);
         
-        std::vector<Screen *> _screens;
+        struct ScreenAndMesh {
+            Screen *screen;
+            Mesh *mesh;
+        };
+        ///This should be a simple texture renderer to render the screens
+        Renderer *_renderer;
+        std::vector<ScreenAndMesh> _screens;
     public:
         ~Window();
         

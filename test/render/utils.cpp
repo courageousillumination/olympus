@@ -44,9 +44,9 @@ Renderable *create_square(float x, float y, float width, float height,
         r, g, b
     };
     
-    Mesh *mesh = new Mesh(2, Mesh::TRIANGLES);
-    mesh->set_vertex_attribute(0, 3, 3, verts);
-    mesh->set_vertex_attribute(1, 3, 3, colors);
+    Mesh *mesh = new Mesh(2, Mesh::TRIANGLE_STRIP);
+    mesh->set_vertex_attribute(0, 3, 4, verts);
+    mesh->set_vertex_attribute(1, 3, 4, colors);
 
     //Create an asset to wrap all of the above
     Asset *asset = new Asset;
