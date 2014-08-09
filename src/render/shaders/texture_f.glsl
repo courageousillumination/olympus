@@ -1,4 +1,4 @@
-#version 400 core
+#version 130
 in vec2 f_tex_coord;
 out vec3 color;
 
