@@ -1,3 +1,5 @@
+#include <exception>
+#include <stdexcept>
 #include <GL/glew.h>
 
 #include "debug/logger.hpp"
@@ -24,7 +26,11 @@ Window::Window(unsigned width, unsigned height, const char *title) :
     
     glfwMakeContextCurrent(_internal_window);
     glewExperimental = GL_TRUE; 
-    glewInit();
+    GLenum err = glewInit();
+    if (err !=  GLEW_OK) {
+        LOG(Logger::ERROR, "Failed to initalize GLEW. Errors %s", glewGetErrorString(err));
+        throw std::runtime_error("Failed to initalize GLEW");
+    }
     LOG(Logger::DEBUG, "Initalized GLEW");
     
     const GLubyte* renderer = glGetString (GL_RENDERER); 

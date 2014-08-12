@@ -41,7 +41,7 @@ int main() {
     
     //Create an object to add to the world
     Texture *texture = new Texture(Texture::TEXTURE_2D);
-    texture->load_image("/home/tristan/Development/olympus/texture.jpg");
+    texture->load_image("/home/tristan/development/olympus/texture.jpg");
     Renderer *renderer = new Renderer(TEXTURE_VERTEX_SHADER,
                             TEXTURE_FRAGMENT_SHADER);
     

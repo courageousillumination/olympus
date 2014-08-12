@@ -1,4 +1,6 @@
 #include <iostream>
+#include <exception>
+#include <stdexcept>
 
 #include "debug/logger.hpp"
 
@@ -6,6 +8,11 @@
 
 using namespace std;
 using namespace olympus;
+
+static void glfw_error_callback(int error, const char* description)
+{
+    LOG(Logger::ERROR, "%s", description);
+}
 
 /**
  * We have a problem handling the way GLFW was set up to not be OOP. Specifically,
@@ -29,7 +36,10 @@ void WindowManager::internal_key_callback(GLFWwindow* window, int key, int scanc
 }
 
 WindowManager::WindowManager() : _num_windows(0) {
-    glfwInit();
+    glfwSetErrorCallback(glfw_error_callback);
+    if (!glfwInit()) {
+        throw std::runtime_error("Failed to initalize GLFW");
+    }
     LOG(Logger::DEBUG, "Initalized GLFW");
 }
 

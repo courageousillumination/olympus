@@ -30,6 +30,7 @@ unsigned Renderer::_compile_shader(const char *path, unsigned type) {
     LOG(Logger::DEBUG, "Starting compile of %s", path);
     
     unsigned shader_id = glCreateShader(type);
+    
     const char *source = code.c_str();
     glShaderSource(shader_id, 1, &source, NULL);
     glCompileShader(shader_id);
@@ -37,8 +38,8 @@ unsigned Renderer::_compile_shader(const char *path, unsigned type) {
     //Check that compilation finished
     int result, info_log_length;
     glGetShaderiv(shader_id, GL_COMPILE_STATUS, &result);
-    glGetShaderiv(shader_id, GL_INFO_LOG_LENGTH, &info_log_length);
-    if (info_log_length > 0) {
+    if (result != GL_TRUE) {
+        glGetShaderiv(shader_id, GL_INFO_LOG_LENGTH, &info_log_length);
         char *errors = new char[info_log_length];
         glGetShaderInfoLog(shader_id, info_log_length, NULL, errors);
         LOG(Logger::ERROR, "Failed to compile shader. Error(s): %s", errors);
@@ -61,8 +62,8 @@ unsigned Renderer::_link(unsigned num_shaders, unsigned shaders[]) {
     //Check for link errors
     int result, info_log_length;
     glGetProgramiv(program_id, GL_LINK_STATUS, &result);
-    glGetProgramiv(program_id, GL_INFO_LOG_LENGTH, &info_log_length);
-    if (info_log_length > 0) {
+    if (result != GL_TRUE) {
+        glGetProgramiv(program_id, GL_INFO_LOG_LENGTH, &info_log_length);
         char *errors = new char[info_log_length];
         glGetProgramInfoLog(program_id, info_log_length, NULL, errors);
         LOG(Logger::ERROR, "Failed to link shader. Error(s): %s", errors);
