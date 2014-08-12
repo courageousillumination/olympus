@@ -1,3 +1,5 @@
+#include <unistd.h>
+
 #include <gtest/gtest.h>
 
 #include "olympus.hpp"
@@ -17,6 +19,7 @@ class WindowTest : public ::testing::Test {
 protected:
     virtual void SetUp() {
         window = WindowManager::get_instance().create_window(DEFAULT_WIDTH, DEFAULT_HEIGHT);
+	usleep(100000); //Give the window time to create
     }
     
     virtual void TearDown() {
@@ -57,6 +60,8 @@ TEST_F(WindowTest, WindowWithScreen) {
     screen->world->add_child(g);
     
     window->render();
+    window->render();
+
     EXPECT_TRUE(expect_color_block(0, 0, DEFAULT_WIDTH, DEFAULT_HEIGHT, 0.0, 1.0, 0.0));
     destroy_square(g);
     destroy_easy_screen(screen);
@@ -75,6 +80,8 @@ TEST_F(WindowTest, WindowWithMultipleScreens) {
     screen2->world->add_child(b);
     
     window->render();
+    window->render();
+
     EXPECT_TRUE(expect_color_block(0, 0, DEFAULT_WIDTH / 2, DEFAULT_HEIGHT, 1.0, 0.0, 0.0));
     EXPECT_TRUE(expect_color_block(DEFAULT_WIDTH / 2, 0, DEFAULT_WIDTH / 2, DEFAULT_HEIGHT, 0.0, 1.0, 0.0));
     
@@ -82,6 +89,8 @@ TEST_F(WindowTest, WindowWithMultipleScreens) {
     screen1->screen->set_world(screen2->world);
     
     window->render();
+    window->render();
+
     EXPECT_TRUE(expect_color_block(0, 0, DEFAULT_WIDTH, DEFAULT_HEIGHT, 0.0, 1.0, 0.0));
     
     //Test screen removal
