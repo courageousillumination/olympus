@@ -19,6 +19,7 @@ namespace olympus {
         Framebuffer *_framebuffer;
     public:
         Screen();
+        ~Screen();
         
         /**
          * This does the actual render, using the current world and viewpoint.

@@ -9,35 +9,16 @@
 using namespace olympus;
 
 Screen::Screen() {
-    /** As soon as we're done debugging this entire thing should be dropped **/
-    /*if (mesh == nullptr) {
-        glActiveTexture(GL_TEXTURE0);
-        texture = new Texture(Texture::TEXTURE_2D);
-        texture->load_image("/home/tristan/Development/olympus/texture.jpg");
-        texture->bind();
-        renderer = new Renderer(TEXTURE_VERTEX_SHADER,
-                                          TEXTURE_FRAGMENT_SHADER);
-        renderer->bind();
-        
-        mesh = new Mesh(2, Mesh::TRIANGLES);
-        mesh->set_vertex_attribute(0, 3, 3, g_vertex_buffer_data);
-        mesh->set_vertex_attribute(1, 2, 3, cube_texcoords);
-    }*/
-    
     _framebuffer = new Framebuffer;
+}
+
+Screen::~Screen() {
+    delete _framebuffer;
 }
 
 void Screen::render() {
     _framebuffer->bind();
     glClear(GL_COLOR_BUFFER_BIT);
-    
-    /** All the things following this should be done in the world 
-    renderer->bind();
-    texture->bind();
-    mesh->bind();
-    mesh->draw();
-     Finish world draw **/
-    
     _world->render();
     
     _framebuffer->unbind();

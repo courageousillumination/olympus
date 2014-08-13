@@ -54,4 +54,5 @@ void olympus::destroy_easy_screen(EasyScreen *easy_screen) {
     delete easy_screen->render_engine;
     delete easy_screen->world;
     delete easy_screen->screen;
+    delete easy_screen;
 }
