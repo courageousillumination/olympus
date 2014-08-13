@@ -19,7 +19,7 @@ protected:
     virtual void SetUp() {
         appender = new StreamAppender(stream);
         Logger::set_appender(appender);
-        Logger::set_level(Logger::DEBUG);
+        Logger::set_level(Logger::DEBUG | Logger::INFO);
     }
     
     virtual void TearDown() {
