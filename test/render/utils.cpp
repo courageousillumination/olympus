@@ -16,12 +16,11 @@ bool expect_color_block(unsigned x, unsigned y,
         if (data[i * 3] != r ||
             data[i * 3 + 1] != g ||
             data[i * 3 + 2] != b) {
-            
             valid = false;
             break;
         }
     }
-    delete data;
+    delete []data;
     return valid;
 }
 

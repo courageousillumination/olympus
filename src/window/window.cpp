@@ -47,6 +47,11 @@ Window::Window(unsigned width, unsigned height, const char *title) :
 }
 
 Window::~Window() {
+    for(std::vector<ScreenAndMesh>::iterator it = _screens.begin();
+        it != _screens.end(); it++) {
+        delete it->mesh;
+    }
+    delete _renderer;
     glfwDestroyWindow(_internal_window);
 }
 
