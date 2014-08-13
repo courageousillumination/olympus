@@ -1,3 +1,4 @@
+#include <iostream>
 #include <stdarg.h>
 
 #include "debug/logger.hpp"
@@ -31,7 +32,7 @@ void StreamAppender::append(Logger::LogLevel level, const char *format_string, .
             _output << "[UNKNOWN LOG LEVEL] ";
             break;
     }
-    _output << buff << '\n';
+    _output << buff << std::endl;
 }
 void StreamAppender::shutdown() {
     //Someone else is responsible for tearing down the stream
