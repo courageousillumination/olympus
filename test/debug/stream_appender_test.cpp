@@ -7,7 +7,10 @@
 #include "debug/stream_appender.hpp"
 
 #define TEST_FILE "/tmp/olympus_log.tmp"
-#define TEST_STRING "This is a test"
+#define TEST_STRING1 "This is a test1"
+#define TEST_STRING2 "This is a test2"
+#define TEST_STRING3 "This is a test3"
+#define TEST_STRING4 "This is a test4"
 
 using namespace olympus;
 
@@ -45,7 +48,13 @@ bool stream_contains_string(std::istream &stream, std::string string) {
 }
 
 TEST_F (StreamAppenderTest, StreamAppender) {
-    LOG(Logger::DEBUG, TEST_STRING);
+    LOG(Logger::DEBUG, TEST_STRING1);
+    LOG(Logger::INFO, TEST_STRING2);
+    LOG(Logger::WARN, TEST_STRING3);
+    LOG(Logger::ERROR, TEST_STRING4);
     appender->flush();
-    EXPECT_TRUE(stream_contains_string(stream, TEST_STRING));
+    EXPECT_TRUE(stream_contains_string(stream, TEST_STRING1));
+    EXPECT_TRUE(stream_contains_string(stream, TEST_STRING2));
+    EXPECT_TRUE(stream_contains_string(stream, TEST_STRING3));
+    EXPECT_TRUE(stream_contains_string(stream, TEST_STRING4));
 }
