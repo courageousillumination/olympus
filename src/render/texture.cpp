@@ -1,3 +1,6 @@
+#include <exception>
+#include <stdexcept>
+
 #include <SOIL/SOIL.h>
 #include <GL/glew.h>
 
@@ -17,7 +20,7 @@ Texture::Texture(Texture::Target target) {
 }
 
 Texture::~Texture() {
-    
+    glDeleteTextures(1, &_texture_id);
 }
 
 void Texture::load_image(const char *path) {
@@ -30,6 +33,7 @@ void Texture::load_image(const char *path) {
     unsigned char *img = SOIL_load_image(path, &_width, &_height, NULL, 0);
     if (img == nullptr) {
         LOG(Logger::ERROR, "Failed to load image for texture %s", path);
+        throw std::runtime_error("Failed to load image for texture");
     }
     LOG(Logger::DEBUG, "Loaded texture image %s (%dx%d)", path, _width, _height);
     
@@ -46,7 +50,5 @@ void Texture::bind() {
         case TEXTURE_2D:
             glBindTexture(GL_TEXTURE_2D, _texture_id);
             break;
-        default:
-            LOG(Logger::WARN, "Attempting to use bad texture target %d\n", _target);
     }
 }

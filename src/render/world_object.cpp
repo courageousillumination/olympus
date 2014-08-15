@@ -40,6 +40,10 @@ void WorldObject::add_child(WorldObject *child) {
     }
 }
 
+void WorldObject::remove_child(WorldObject *child) {
+    //TODO
+}
+
 glm::vec3 WorldObject::get_position() {
     return _position;
 }

@@ -43,21 +43,27 @@ bool stream_contains_string(std::stringstream *stream, std::string string) {
 
 TEST_F (StreamAppenderTest, AllLevels) {
     LOG(Logger::DEBUG, TEST_STRING1);
+    appender->flush();
     EXPECT_TRUE(stream_contains_string(stream, "[\033[1;37m"));
     EXPECT_TRUE(stream_contains_string(stream, TEST_STRING1));
+    
 
     LOG(Logger::INFO, TEST_STRING1);
+    appender->flush();
     EXPECT_TRUE(stream_contains_string(stream, "[\033[1;32m"));
     EXPECT_TRUE(stream_contains_string(stream, TEST_STRING1));
     
     LOG(Logger::WARN, TEST_STRING1);
+    appender->flush();
     EXPECT_TRUE(stream_contains_string(stream, "[\033[1;33m"));
     EXPECT_TRUE(stream_contains_string(stream, TEST_STRING1));
     
     LOG(Logger::ERROR, TEST_STRING1);
+    appender->flush();
     EXPECT_TRUE(stream_contains_string(stream, "[\033[1;31m"));
     EXPECT_TRUE(stream_contains_string(stream, TEST_STRING1));
     
     LOG(Logger::NONE, TEST_STRING1);
+    appender->flush();
     EXPECT_TRUE(stream_contains_string(stream, TEST_STRING1));
 }

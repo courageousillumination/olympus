@@ -95,3 +95,7 @@ Renderer::~Renderer() {
 void Renderer::bind() {
     glUseProgram(_shader_id);
 }
+
+unsigned Renderer::get_internal_id() {
+    return _shader_id;
+}

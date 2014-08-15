@@ -42,6 +42,7 @@ namespace olympus {
         //TODO: Orientation setters
         virtual void set_parent(WorldObject *parent);
         virtual void add_child(WorldObject *child);
+        virtual void remove_child(WorldObject *child);
         
         glm::vec3 get_position();
         void get_position(float &x, float &y, float &z);

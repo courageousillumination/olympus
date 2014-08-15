@@ -22,8 +22,6 @@ Mesh::Mesh(unsigned num_attributes, enum Mesh::PrimType prim_type) {
         case TRIANGLE_STRIP:
             _prim_type = GL_TRIANGLE_STRIP;
             break;
-        default:
-            LOG(Logger::WARN, "Unexpected primitive type %d", prim_type);
     }
 }
 

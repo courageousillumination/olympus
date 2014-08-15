@@ -1,3 +1,4 @@
+#include "debug/logger.hpp"
 #include "render/asset.hpp"
 
 using namespace olympus;
@@ -14,18 +15,36 @@ void Asset::set_mesh(Mesh *mesh) {
 void Asset::set_renderer(Renderer *renderer) {
     _renderer = renderer;
 }
-void Asset::add_texture(Texture *texture) {
-    _textures[0] = texture; //TODO: Fix this!
+bool Asset::add_texture(Texture *texture) {
+    return add_texture(texture, 0);
 }
-void Asset::add_texture(Texture *texture, unsigned slot) {
-    _textures[slot] = texture; //TODO: Bounds checking.
+bool Asset::add_texture(Texture *texture, unsigned slot) {
+    if (slot < MAX_ASSET_TEXTURES) {
+        if (_textures[slot] != nullptr) {
+            LOG(Logger::WARN, "Attempting to add a texture to texture slot %d which already has a texture in it", slot);
+        }
+        _textures[slot] = texture;
+        return true;
+    } else {
+        return false;
+    }
 }
 
-void Asset::remove_texture(Texture *texture) {
-    //TODO
+bool Asset::remove_texture(Texture *texture) {
+    for (unsigned i = 0; i < MAX_ASSET_TEXTURES; i++) {
+        if (_textures[i] == texture) {
+            _textures[i] = nullptr;
+            return true;
+        }
+    }
+    return false;
 }
-void Asset::remove_texture(unsigned slot) {
-    _textures[slot] = nullptr;
+bool Asset::remove_texture(unsigned slot) {
+    if (_textures[slot] != nullptr) {
+        _textures[slot] = nullptr;
+        return true;
+    }
+    return false;
 }
 
 Mesh *Asset::get_mesh() {

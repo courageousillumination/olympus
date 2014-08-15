@@ -64,3 +64,4 @@ void destroy_square(Renderable *renderable) {
     delete renderable->asset;
     delete renderable;
 }
+

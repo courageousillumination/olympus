@@ -3,6 +3,7 @@
 
 #define OLYMPUS_VERSION_MAJOR @OLYMPUS_VERSION_MAJOR@
 #define OLYMPUS_VERSION_MINOR @OLYMPUS_VERSION_MINOR@
+#define OLYMPUS_ROOT_DIR "@OLYMPUS_SOURCE_DIR@"
 
 #include "window/window.hpp"
 #include "window/window_manager.hpp"

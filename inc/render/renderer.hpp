@@ -26,6 +26,8 @@ namespace olympus {
         
         void bind();
         
+        unsigned get_internal_id();
+        
         //TODO: Add a renderer cache.
     };
 };
