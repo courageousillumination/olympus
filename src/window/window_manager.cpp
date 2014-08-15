@@ -36,10 +36,7 @@ void WindowManager::internal_key_callback(GLFWwindow* window, int key, int scanc
 }
 
 WindowManager::WindowManager() : _num_windows(0) {
-    glfwSetErrorCallback(glfw_error_callback);
-    if (!glfwInit()) {
-        throw std::runtime_error("Failed to initalize GLFW");
-    }
+    initialize_backend();
     LOG(Logger::DEBUG, "Initalized GLFW");
 }
 
@@ -50,6 +47,17 @@ WindowManager& WindowManager::get_instance() {
 
 WindowManager::~WindowManager() {
     destroy_all_windows();
+    destroy_backend();
+}
+
+
+void WindowManager::initialize_backend() {
+    glfwSetErrorCallback(glfw_error_callback);
+    if (!glfwInit()) {
+        throw std::runtime_error("Failed to initalize GLFW");
+    }
+}
+void WindowManager::destroy_backend() {
     glfwTerminate();
 }
 

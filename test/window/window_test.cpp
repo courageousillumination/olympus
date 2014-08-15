@@ -1,6 +1,7 @@
 #include <unistd.h>
 
 #include <gtest/gtest.h>
+#include <GLFW/glfw3.h>
 
 #include "olympus.hpp"
 #include "window/window.hpp"
@@ -81,7 +82,8 @@ TEST_F(WindowTest, WindowWithMultipleScreens) {
     
     window->render();
     window->render();
-
+    
+    EXPECT_FALSE(expect_color_block(0, 0, DEFAULT_WIDTH, DEFAULT_HEIGHT, 0.0, 0.0, 0.0));
     EXPECT_TRUE(expect_color_block(0, 0, DEFAULT_WIDTH / 2, DEFAULT_HEIGHT, 1.0, 0.0, 0.0));
     EXPECT_TRUE(expect_color_block(DEFAULT_WIDTH / 2, 0, DEFAULT_WIDTH / 2, DEFAULT_HEIGHT, 0.0, 1.0, 0.0));
     

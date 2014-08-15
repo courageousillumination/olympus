@@ -22,6 +22,17 @@ namespace olympus {
         std::vector<Window *> &get_windows() { return _windows; }
     public:
         /**
+         * This function is mainly here for testing. It allows explicit initalization
+         * of the backend framework.
+         */
+        void initialize_backend();
+        /**
+         * This function is mainly here for testing. It allows explicit destruction
+         * of the backend framework.
+         */
+        void destroy_backend();
+        
+        /**
          * Retrieve the singelton instance of a window manager.
          */
         static WindowManager& get_instance();

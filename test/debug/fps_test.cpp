@@ -11,7 +11,7 @@ using namespace olympus;
 class FPSTest : public ::testing::Test {
 protected:
     virtual void SetUp() {
-        fps::enable_fps_logging(false);
+        fps::enable_fps_logging(true);
     }
 };
 

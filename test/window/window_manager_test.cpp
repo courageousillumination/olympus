@@ -1,5 +1,7 @@
+#include <exception>
+#include <stdexcept>
+
 #include <gtest/gtest.h>
-#include <iostream>
 
 #include "olympus.hpp"
 #include "window/window_manager.hpp"
@@ -33,6 +35,20 @@ TEST_F (WindowManagerTest, WindowManagerWindowDestructionSingle) {
     ASSERT_TRUE(window != nullptr);
     window_manager.destroy_window(window);
     window_manager.destroy_window(nullptr);
+}
+
+TEST_F (WindowManagerTest, FailsToCreateWindow) {
+    WindowManager::get_instance().destroy_backend();
+    try {
+        WindowManager::get_instance().create_window(640, 480);
+        EXPECT_TRUE(false); //fail
+    } catch (std::runtime_error e) {
+        //We're all good, pass on
+    } catch (...) {
+        EXPECT_TRUE(false); //fail
+    }
+    //Re init the backend since everyone else expects it to exst.
+    WindowManager::get_instance().initialize_backend();
 }
 
 

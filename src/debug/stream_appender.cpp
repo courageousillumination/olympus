@@ -17,22 +17,21 @@ void StreamAppender::append(Logger::LogLevel level, const char *format_string, .
     
     switch (level) {
         case Logger::DEBUG:
-            _output << "[\033[1;37mDEBUG\033[0m] ";
+            _output << "[\033[1;37m";
             break;
         case Logger::INFO:
-            _output << "[\033[1;32mINFO\033[0m] ";
+            _output << "[\033[1;32m";
             break;
         case Logger::WARN:
-            _output << "[\033[1;33mWARN\033[0m] ";
+            _output << "[\033[1;33m";
             break;
         case Logger::ERROR:
-            _output << "[\033[1;31mERROR\033[0m] ";
+            _output << "[\033[1;31m";
             break;
-        default:
-            _output << "[UNKNOWN LOG LEVEL] ";
-            break;
+        case Logger::NONE:
+            _output << "[";
     }
-    _output << buff << std::endl;
+    _output << Logger::level_to_string(level) << "\033[0m] " << buff << std::endl;
 }
 void StreamAppender::shutdown() {
     //Someone else is responsible for tearing down the stream

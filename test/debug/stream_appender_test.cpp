@@ -17,7 +17,8 @@ using namespace olympus;
 class StreamAppenderTest : public ::testing::Test {
 protected:
     virtual void SetUp() {
-        appender = new StreamAppender(stream);
+        stream = new std::stringstream;
+        appender = new StreamAppender(*stream);
         Logger::set_appender(appender);
         Logger::set_level(Logger::DEBUG | Logger::INFO);
     }
@@ -26,29 +27,37 @@ protected:
         //Make sure we always shutdown
         Logger::shutdown();
         delete appender;
+        delete stream;
     }
     
     StreamAppender *appender;
-    std::stringstream stream;
+    std::stringstream *stream;
 };
 
 
 
-bool stream_contains_string(std::istream &stream, std::string string) {
-    bool result = false;
-    
-    for(std::string line; getline(stream, line); ) {
-        std::cout << line;
-        std::size_t found = line.find(": ");
-        std::string substring = line.substr(found + 2, std::string::npos);
-        if (substring == string) {
-            result = true;
-        }
-    }
-    return result;
+bool stream_contains_string(std::stringstream *stream, std::string string) {
+    std::string current_stream = stream->str();
+    return current_stream.find(string) != std::string::npos;
 }
 
-TEST_F (StreamAppenderTest, StreamAppender) {
+TEST_F (StreamAppenderTest, AllLevels) {
     LOG(Logger::DEBUG, TEST_STRING1);
+    EXPECT_TRUE(stream_contains_string(stream, "[\033[1;37m"));
+    EXPECT_TRUE(stream_contains_string(stream, TEST_STRING1));
+
+    LOG(Logger::INFO, TEST_STRING1);
+    EXPECT_TRUE(stream_contains_string(stream, "[\033[1;32m"));
+    EXPECT_TRUE(stream_contains_string(stream, TEST_STRING1));
+    
+    LOG(Logger::WARN, TEST_STRING1);
+    EXPECT_TRUE(stream_contains_string(stream, "[\033[1;33m"));
+    EXPECT_TRUE(stream_contains_string(stream, TEST_STRING1));
+    
+    LOG(Logger::ERROR, TEST_STRING1);
+    EXPECT_TRUE(stream_contains_string(stream, "[\033[1;31m"));
+    EXPECT_TRUE(stream_contains_string(stream, TEST_STRING1));
+    
+    LOG(Logger::NONE, TEST_STRING1);
     EXPECT_TRUE(stream_contains_string(stream, TEST_STRING1));
 }

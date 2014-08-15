@@ -21,6 +21,10 @@ static const GLfloat simple_square_texcoords[] = {
 Window::Window(unsigned width, unsigned height, const char *title) :
     _width(width), _height(height) {
     _internal_window =  glfwCreateWindow(width, height, title, nullptr, nullptr);
+    if (_internal_window == nullptr) {
+        LOG(Logger::ERROR, "Failed to create GLFW window");
+        throw std::runtime_error("Failed to create GLFW window");
+    }
     
     _key_callback = nullptr;
     
