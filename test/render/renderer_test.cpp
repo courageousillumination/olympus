@@ -24,7 +24,7 @@ TEST_F (RendererTest, TestConstruction) {
 }
 
 TEST_F (RendererTest, TestFailures) {
-    Renderer renderer1(nullptr, nullptr);
+    Renderer renderer1("bad file name", "bad file name");
     EXPECT_EQ(renderer1.get_internal_id(), 0);
     Renderer renderer2(OLYMPUS_ROOT_DIR "/test/render/shaders/bad_v.glsl", OLYMPUS_ROOT_DIR "/test/render/shaders/bad_f.glsl");
     EXPECT_EQ(renderer2.get_internal_id(), 0);

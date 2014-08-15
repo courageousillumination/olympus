@@ -47,4 +47,7 @@ TEST_F (AssetTest, RemoveTexture) {
     
     EXPECT_TRUE(asset->remove_texture(texture1));
     EXPECT_TRUE(asset->remove_texture(texture2));
+    
+    delete texture1;
+    delete texture2;
 }

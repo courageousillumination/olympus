@@ -43,7 +43,7 @@ unsigned Renderer::_compile_shader(const char *path, unsigned type) {
         char *errors = new char[info_log_length];
         glGetShaderInfoLog(shader_id, info_log_length, NULL, errors);
         LOG(Logger::ERROR, "Failed to compile shader. Error(s): %s", errors);
-        delete errors;
+        delete []errors;
         return 0;
     }
     LOG(Logger::DEBUG, "Compiled %s", path);
@@ -67,7 +67,7 @@ unsigned Renderer::_link(unsigned num_shaders, unsigned shaders[]) {
         char *errors = new char[info_log_length];
         glGetProgramInfoLog(program_id, info_log_length, NULL, errors);
         LOG(Logger::ERROR, "Failed to link shader. Error(s): %s", errors);
-        delete errors;
+        delete []errors;
         return 0;
     }
     
