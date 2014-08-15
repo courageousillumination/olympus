@@ -10,18 +10,32 @@
 
 using namespace olympus;
 
+static unsigned enum_convertor(Texture::Target target) {
+    switch (target) {
+        case Texture::TEXTURE_2D:
+            return GL_TEXTURE_2D;
+        case Texture::TEXTURE_3D:
+            return GL_TEXTURE_3D;
+        default:
+            return GL_NONE;
+    }
+}
+
+
 Texture::Texture(Texture::Target target) {
     _target = target;
     glGenTextures(1, &_texture_id);
-    glBindTexture(GL_TEXTURE_2D, _texture_id);
     
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+    bind();
+    glTexParameteri(enum_convertor(_target), GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+    glTexParameteri(enum_convertor(_target), GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 }
 
 Texture::~Texture() {
     glDeleteTextures(1, &_texture_id);
 }
+
+
 
 void Texture::load_image(const char *path) {
     if (_target != TEXTURE_2D) { 
@@ -46,9 +60,5 @@ void Texture::load_image(const char *path) {
 }
 
 void Texture::bind() {
-    switch (_target) {
-        case TEXTURE_2D:
-            glBindTexture(GL_TEXTURE_2D, _texture_id);
-            break;
-    }
+    glBindTexture(enum_convertor(_target), _texture_id);
 }

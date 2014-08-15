@@ -46,7 +46,11 @@ TEST_F (AssetTest, RemoveTexture) {
     asset->add_texture(texture2, 1);
     
     EXPECT_TRUE(asset->remove_texture(texture1));
-    EXPECT_TRUE(asset->remove_texture(texture2));
+    EXPECT_TRUE(asset->remove_texture(1));
+    
+    //Check for the logger warning message if we add to a non empty slot.
+    asset->add_texture(texture1);
+    asset->add_texture(texture2);
     
     delete texture1;
     delete texture2;

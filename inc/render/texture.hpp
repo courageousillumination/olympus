@@ -12,7 +12,8 @@ namespace olympus {
     public:
         ///Defines possible targets for this texture.
         enum Target {
-            TEXTURE_2D
+            TEXTURE_2D,
+            TEXTURE_3D
         };
     private:
         ///Stores the internal id of this texture (returned by OpenGL)
