@@ -1,5 +1,7 @@
 #include <gtest/gtest.h>
 
+#include "../olympus_test.hpp"
+
 #include "olympus.hpp"
 #include "render/asset.hpp"
 
@@ -48,9 +50,9 @@ TEST_F (AssetTest, RemoveTexture) {
     EXPECT_TRUE(asset->remove_texture(texture1));
     EXPECT_TRUE(asset->remove_texture(1));
     
-    //Check for the logger warning message if we add to a non empty slot.
     asset->add_texture(texture1);
     asset->add_texture(texture2);
+    EXPECT_TRUE(logger_contains_string("Attempting to add a texture to texture slot 0 which already has a texture in it"));
     
     delete texture1;
     delete texture2;

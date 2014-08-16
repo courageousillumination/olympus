@@ -15,6 +15,9 @@ using namespace olympus;
 class FileAppenderTest : public ::testing::Test {
 protected:
     virtual void SetUp() {
+        default_level = Logger::get_level();
+        old = Logger::get_appender();
+        
         appender = new FileAppender(TEST_FILE);
         Logger::set_appender(appender);
         Logger::set_level(Logger::DEBUG);
@@ -22,11 +25,17 @@ protected:
     
     virtual void TearDown() {
         //Make sure we always shutdown
-        Logger::shutdown();
+        appender->shutdown();
         delete appender;
+        
+        Logger::set_level(default_level);
+        Logger::set_appender(old);
     }
     
     FileAppender *appender;
+    
+    Logger::LogLevel default_level;
+    Appender *old;
 };
 
 

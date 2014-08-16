@@ -17,6 +17,10 @@ using namespace olympus;
 class StreamAppenderTest : public ::testing::Test {
 protected:
     virtual void SetUp() {
+        //All other tests need the logger to be in a proper state 
+        default_level = Logger::get_level();
+        old = Logger::get_appender();
+        
         stream = new std::stringstream;
         appender = new StreamAppender(*stream);
         Logger::set_appender(appender);
@@ -24,14 +28,19 @@ protected:
     }
     
     virtual void TearDown() {
-        //Make sure we always shutdown
-        Logger::shutdown();
+        appender->shutdown();
         delete appender;
         delete stream;
+        
+        Logger::set_level(default_level);
+        Logger::set_appender(old);
     }
     
     StreamAppender *appender;
     std::stringstream *stream;
+    
+    Logger::LogLevel default_level;
+    Appender *old;
 };
 
 

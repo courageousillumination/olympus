@@ -4,6 +4,7 @@
 #include <gtest/gtest.h>
 
 #include "olympus.hpp"
+#include "../olympus_test.hpp"
 #include "window/window_manager.hpp"
 
 using namespace olympus;
@@ -38,6 +39,8 @@ TEST_F (WindowManagerTest, WindowManagerWindowDestructionSingle) {
 }
 
 TEST_F (WindowManagerTest, FailsToCreateWindow) {
+    logger_expect_error(true);
+    
     WindowManager::get_instance().destroy_backend();
     try {
         WindowManager::get_instance().create_window(640, 480);
@@ -49,6 +52,8 @@ TEST_F (WindowManagerTest, FailsToCreateWindow) {
     }
     //Re init the backend since everyone else expects it to exst.
     WindowManager::get_instance().initialize_backend();
+    
+    logger_expect_error(false);
 }
 
 

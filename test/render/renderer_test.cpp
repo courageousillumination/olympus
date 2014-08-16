@@ -1,6 +1,7 @@
 #include <gtest/gtest.h>
 
 #include "olympus.hpp"
+#include "../olympus_test.hpp"
 #include "render/renderer.hpp"
 
 #include "render_fixture.hpp"
@@ -24,10 +25,15 @@ TEST_F (RendererTest, TestConstruction) {
 }
 
 TEST_F (RendererTest, TestFailures) {
+    logger_expect_error(true);
+    
     Renderer renderer1("bad file name", "bad file name");
     EXPECT_EQ(renderer1.get_internal_id(), 0);
     Renderer renderer2(OLYMPUS_ROOT_DIR "/test/render/shaders/bad_v.glsl", OLYMPUS_ROOT_DIR "/test/render/shaders/bad_f.glsl");
     EXPECT_EQ(renderer2.get_internal_id(), 0);
     Renderer renderer3(OLYMPUS_ROOT_DIR "/test/render/shaders/bad_link_v.glsl", OLYMPUS_ROOT_DIR "/test/render/shaders/bad_link_f.glsl");
     EXPECT_EQ(renderer3.get_internal_id(), 0);
+    
+    logger_expect_error(false);
+    
 }
