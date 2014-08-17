@@ -27,7 +27,7 @@ bool expect_color_block(unsigned x, unsigned y,
 Renderable *create_square(float x, float y, float width, float height,
                           float r, float g, float b) {
     Renderer *renderer = new Renderer(FLAT_VERTEX_SHADER,
-                                        FLAT_FRAGMENT_SHADER);
+                                      FLAT_FRAGMENT_SHADER);
 
     const float verts[] = {
         x, y, 0.0f,

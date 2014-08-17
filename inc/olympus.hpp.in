@@ -15,5 +15,6 @@
 #include "debug/fps.hpp"
 
 #include "render/shaders.hpp"
+#include "render/renderable.hpp"
 
 #endif

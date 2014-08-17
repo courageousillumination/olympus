@@ -28,7 +28,7 @@ namespace olympus {
          */
         void render();
 
-        //void set_viewpoint(Viewpoint *viewpoint);
+        void set_viewpoint(Viewpoint *viewpoint);
         void set_world(World *world);
         
         //Viewpoint *get_viewpoint();

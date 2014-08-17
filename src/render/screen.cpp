@@ -31,3 +31,7 @@ Framebuffer *Screen::get_framebuffer() {
 void Screen::set_world(World *world) {
     _world = world;
 }
+
+void Screen::set_viewpoint(Viewpoint *viewpoint) {
+    
+}

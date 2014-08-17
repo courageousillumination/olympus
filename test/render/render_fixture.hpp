@@ -8,10 +8,13 @@
 #include "olympus.hpp"
 #include "utils/shortcuts.hpp"
 
+#define DEFAULT_HEIGHT 480
+#define DEFAULT_WIDTH 640
+
 class RenderTest : public ::testing::Test {
 protected:
     static void SetUpTestCase() {
-        _window = olympus::create_easy_window(640, 480);
+        _window = olympus::create_easy_window(DEFAULT_WIDTH, DEFAULT_HEIGHT);
         usleep(100000); //Give the window time to create
     }
     
