@@ -6,6 +6,14 @@
 
 using namespace olympus;
 
+Viewpoint::Viewpoint() {
+    _fov = 60.0f * (3.1415f / 180.0f);
+    _near = 0.5f;
+    _far = 10.0f;
+    _ratio = 4.0f / 3.0f;
+    _update_projection_matrix();
+}
+
 void Viewpoint::_update_projection_matrix() {
     _projection_matrix = glm::perspective(_fov, _ratio, _near, _far);
 }

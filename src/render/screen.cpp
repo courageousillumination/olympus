@@ -10,6 +10,8 @@ using namespace olympus;
 
 Screen::Screen() {
     _framebuffer = new Framebuffer;
+    _viewpoint = nullptr;
+    _world = nullptr;
 }
 
 Screen::~Screen() {
@@ -19,8 +21,9 @@ Screen::~Screen() {
 void Screen::render() {
     _framebuffer->bind();
     glClear(GL_COLOR_BUFFER_BIT);
-    _world->render();
-    
+    if (_world != nullptr) {
+        _world->get_render_engine()->render(_viewpoint);
+    }
     _framebuffer->unbind();
 };
 
@@ -33,5 +36,13 @@ void Screen::set_world(World *world) {
 }
 
 void Screen::set_viewpoint(Viewpoint *viewpoint) {
-    
+    _viewpoint = viewpoint;
+}
+
+Viewpoint *Screen::get_viewpoint() {
+    return _viewpoint;
+}
+
+World *Screen::get_world() {
+    return _world;
 }

@@ -12,7 +12,3 @@ RenderEngine *World::get_render_engine() {
 void World::set_render_engine(RenderEngine *render_engine) {
     _render_engine = render_engine;
 }
-
-void World::render() {
-    _render_engine->render();
-}

@@ -13,8 +13,6 @@ namespace olympus {
         
         void set_render_engine(RenderEngine *render_engine);
         RenderEngine *get_render_engine();
-        
-        void render();
     };
 }
 #endif

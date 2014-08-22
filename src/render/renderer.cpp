@@ -99,3 +99,15 @@ void Renderer::bind() {
 unsigned Renderer::get_internal_id() {
     return _shader_id;
 }
+
+unsigned Renderer::get_uniform_location(std::string id) {
+    int value = glGetUniformLocation(_shader_id, id.c_str());
+    if (value == -1) {
+        LOG(Logger::WARN, "Tried to fetch location of a non-existent uniform %s from a shader", id.c_str());
+    }
+    return (unsigned) value;
+}
+
+void Renderer::set_uniform(std::string id, glm::mat4 value) {
+    glUniformMatrix4fv(get_uniform_location(id), 1, GL_FALSE, &value[0][0]);
+}

@@ -3,6 +3,8 @@
 
 #include <string>
 
+#include <glm/glm.hpp>
+
 namespace olympus {
     /**
      * The renderer is the closest thing we have to 
@@ -28,7 +30,12 @@ namespace olympus {
         
         unsigned get_internal_id();
         
-        //TODO: Add a renderer cache.
+        unsigned get_uniform_location(std::string id);
+        //void set_uniform(std::string &id, float value);
+        void set_uniform(std::string id, glm::mat4 value);
+       
     };
+    
+    //TODO: Add a renderer cache.
 };
 #endif

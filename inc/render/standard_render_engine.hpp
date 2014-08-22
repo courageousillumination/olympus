@@ -10,7 +10,7 @@ namespace olympus {
      * minimizing state change.
      */
     class StandardRenderEngine : public RenderEngine {
-        void render();
+        void render(Viewpoint *viewpoint);
     };
 }
 

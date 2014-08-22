@@ -11,6 +11,7 @@ namespace olympus {
         
         void _update_projection_matrix();
     public:
+        Viewpoint();
         virtual ~Viewpoint() { }
         
         void set_fov(float fov);

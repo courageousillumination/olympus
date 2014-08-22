@@ -13,8 +13,8 @@ using namespace olympus;
 
 static const GLfloat simple_square_texcoords[] = {
     0.0, 0.0,
-    0.0, 1.0,
     1.0, 0.0,
+    0.0, 1.0,
     1.0, 1.0
 };
 
@@ -44,6 +44,8 @@ Window::Window(unsigned width, unsigned height, const char *title) :
     LOG(Logger::INFO, "OpenGL version supported %s", version);
     
     glfwSwapInterval(1);
+    
+    glEnable(GL_DEPTH);
     
     //Build my renderer
     _renderer = new Renderer(TEXTURE_VERTEX_SHADER,
@@ -90,6 +92,9 @@ void Window::render() {
     }
     
     _renderer->bind();
+    _renderer->set_uniform(std::string("model_view_matrix"), glm::mat4(1.0f));
+    _renderer->set_uniform(std::string("projection_matrix"), glm::mat4(1.0f));
+        
     for (auto screen : _screens) {
         screen.screen->get_framebuffer()->get_color_texture()->bind();
         screen.mesh->bind();

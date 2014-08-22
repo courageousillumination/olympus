@@ -4,6 +4,7 @@
 #include <set>
 
 #include "render/renderable.hpp"
+#include "render/viewpoint.hpp"
 
 namespace olympus {
     class RenderEngine {
@@ -19,7 +20,7 @@ namespace olympus {
          * must implement this method to specify how they want
          * to render the objects.
          */
-        virtual void render() = 0;
+        virtual void render(Viewpoint *viewpoint) = 0;
     };
 }
 #endif

@@ -14,7 +14,7 @@ namespace olympus {
      */
     class Screen {
     private:
-        //Viewpoint *_viewpoint;
+        Viewpoint *_viewpoint;
         World *_world;
         Framebuffer *_framebuffer;
     public:
@@ -31,8 +31,8 @@ namespace olympus {
         void set_viewpoint(Viewpoint *viewpoint);
         void set_world(World *world);
         
-        //Viewpoint *get_viewpoint();
-        //World *get_world();        
+        Viewpoint *get_viewpoint();
+        World *get_world();        
         Framebuffer *get_framebuffer();
     };
 }
