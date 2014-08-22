@@ -3,7 +3,10 @@
 
 #include <set>
 
+#define GLM_FORCE_RADIANS
 #include <glm/glm.hpp>
+#include <glm/gtc/quaternion.hpp>
+#include <glm/gtx/quaternion.hpp>
 
 namespace olympus {
     
@@ -19,14 +22,19 @@ namespace olympus {
     class WorldObject {
     protected:
         glm::vec3 _position, _scale;
-        //mglm::quat _orientation;
+        glm::quat _orientation;
         glm::mat4 _model_matrix;
         
         WorldObject *_parent;
         std::set<WorldObject *> _children;
         World *_root;
         
-        virtual void _update_model_matrix();
+        void _update_model_matrix();
+        /**
+         * This function can be overriden by children to properly account
+         * for post move operations.
+         */
+        virtual void _post_update_model_matrix() { }
     public:
         WorldObject();
         virtual ~WorldObject() {}
@@ -39,7 +47,9 @@ namespace olympus {
         virtual void set_position(float x, float y, float z);
         virtual void set_scale(glm::vec3 scale);
         virtual void set_scale(float x, float y, float z);
-        //TODO: Orientation setters
+        virtual void set_orientation(glm::quat orientation);
+        virtual void set_orientation(float pitch, float yaw, float roll);
+        virtual void set_orientation(glm::vec3 euler_angles);
         virtual void set_parent(WorldObject *parent);
         virtual void add_child(WorldObject *child);
         virtual void remove_child(WorldObject *child);
@@ -48,7 +58,8 @@ namespace olympus {
         void get_position(float &x, float &y, float &z);
         glm::vec3 get_scale();
         void get_scale(float &x, float &y, float &z);
-        //TODO: Orientation getters
+        glm::quat get_orientation();
+        glm::vec3 get_orientation_euler();
         WorldObject *get_parent();
         std::set<WorldObject *> get_children();
         

@@ -18,14 +18,21 @@ void Viewpoint::_update_projection_matrix() {
     _projection_matrix = glm::perspective(_fov, _ratio, _near, _far);
 }
 
+void Viewpoint::_post_update_model_matrix() {
+    //Update the view matrix
+    _view_matrix = glm::lookAt(_position,
+                               _position + (glm::vec3(0.0, 0.0, -1.0) * _orientation),
+                               glm::vec3(0.0, 1.0, 0.0) * _orientation); //Up is always along the y axis.
+}
+
 glm::mat4 Viewpoint::get_view_matrix() {
-    return _model_matrix;
+    return _view_matrix;
 }
 glm::mat4 Viewpoint::get_projection_matrix() {
     return _projection_matrix;
 }
 glm::mat4 Viewpoint::get_view_projection_matrix() {
-    return _model_matrix * _projection_matrix;
+    return _projection_matrix * _view_matrix;
 }
 
 void Viewpoint::set_fov(float fov) {

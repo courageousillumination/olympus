@@ -45,7 +45,8 @@ Window::Window(unsigned width, unsigned height, const char *title) :
     
     glfwSwapInterval(1);
     
-    glEnable(GL_DEPTH);
+    glEnable(GL_DEPTH_TEST);
+    glDepthFunc(GL_LESS);
     
     //Build my renderer
     _renderer = new Renderer(TEXTURE_VERTEX_SHADER,
@@ -85,7 +86,7 @@ void Window::set_keyboard_callback(void (* callback)(Window *, int, int, int, in
 }
 
 void Window::render() {
-    glClear(GL_COLOR_BUFFER_BIT);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     
     for (auto screen : _screens) {
         screen.screen->render();

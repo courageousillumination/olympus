@@ -23,10 +23,34 @@ Viewpoint *viewpoint = nullptr;
 
 static void key_callback(Window *window, int key, int scancode, int action, int mods) {
     if (key == GLFW_KEY_UP) {
-        viewpoint->set_position(viewpoint->get_position() + glm::vec3(0.0, 0.0, 0.1));
+        viewpoint->set_position(viewpoint->get_position() + glm::vec3(0.0, 0.0, -0.1));
     }
     if (key == GLFW_KEY_DOWN) {
-        viewpoint->set_position(viewpoint->get_position() + glm::vec3(0.0, 0.0, -0.1));
+        viewpoint->set_position(viewpoint->get_position() + glm::vec3(0.0, 0.0, 0.1));
+    }
+    if (key == GLFW_KEY_LEFT) {
+        viewpoint->set_position(viewpoint->get_position() + glm::vec3(-0.1, 0.0, 0.0));
+    }
+    if (key == GLFW_KEY_RIGHT) {
+        viewpoint->set_position(viewpoint->get_position() + glm::vec3(0.1, 0.0, 0.0));
+    }
+    if (key == GLFW_KEY_W) {
+        viewpoint->set_orientation(viewpoint->get_orientation_euler() + glm::vec3(-0.1, 0.0, 0.0));
+    }
+    if (key == GLFW_KEY_S) {
+        viewpoint->set_orientation(viewpoint->get_orientation_euler() + glm::vec3(0.1, 0.0, 0.0));
+    }
+    if (key == GLFW_KEY_A) {
+        viewpoint->set_orientation(viewpoint->get_orientation_euler() + glm::vec3(0.0, -0.1, 0.0));
+    }
+    if (key == GLFW_KEY_D) {
+        viewpoint->set_orientation(viewpoint->get_orientation_euler() + glm::vec3(0.0, 0.1, 0.0));
+    }
+    if (key == GLFW_KEY_H) {
+        viewpoint->set_orientation(viewpoint->get_orientation_euler() + glm::vec3(0.0, 0.0, -0.1));
+    }
+    if (key == GLFW_KEY_J) {
+        viewpoint->set_orientation(viewpoint->get_orientation_euler() + glm::vec3(0.0, 0.0, 0.1));
     }
     if (key == GLFW_KEY_ESCAPE) {
         window->set_should_close(true);
@@ -65,14 +89,12 @@ int main() {
     renderable->asset = asset;
     renderable->set_position(0.0f, 0.0f, 0.3f);
     
-   
-    
     easy_window->world->add_child(renderable);
      
     //Set up the viewpoint
     viewpoint = new Viewpoint;
-    //viewpoint->set_far(100.0f);
-    //viewpoint->set_near(1.0f);
+    viewpoint->set_far(100.0f);
+    viewpoint->set_near(1.0f);
     viewpoint->set_position(0.0f, 0.0f, -0.5f);
     easy_window->screen->set_viewpoint(viewpoint);
     

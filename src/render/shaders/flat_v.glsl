@@ -8,8 +8,7 @@ uniform mat4 projection_matrix;
 
 out vec3 f_color;
 
-void main(){
-    gl_Position = model_view_matrix * projection_matrix * vec4(position, 1.0);
-    
+void main() {
+    gl_Position =  projection_matrix * model_view_matrix * vec4(position, 1.0);
     f_color = color;
 }

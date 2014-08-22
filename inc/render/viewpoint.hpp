@@ -7,9 +7,15 @@ namespace olympus {
     class Viewpoint : public WorldObject {
     private:
         glm::mat4 _projection_matrix;
+        glm::mat4 _view_matrix;
         float _fov, _ratio, _near, _far;
         
         void _update_projection_matrix();
+        /** 
+         * We need to override this method in order to update our view matrix as well
+         * as the model matrix.
+         */
+        void _post_update_model_matrix();
     public:
         Viewpoint();
         virtual ~Viewpoint() { }

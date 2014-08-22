@@ -20,7 +20,7 @@ Screen::~Screen() {
 
 void Screen::render() {
     _framebuffer->bind();
-    glClear(GL_COLOR_BUFFER_BIT);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     if (_world != nullptr) {
         _world->get_render_engine()->render(_viewpoint);
     }

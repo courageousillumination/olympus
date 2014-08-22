@@ -1,3 +1,5 @@
+#include "debug/logger.hpp"
+
 #include "render/standard_render_engine.hpp"
 
 using namespace olympus;
@@ -22,7 +24,7 @@ void StandardRenderEngine::render(Viewpoint *viewpoint) {
         }
         
         current->asset->get_renderer()->bind();
-        current->asset->get_renderer()->set_uniform(std::string("model_view_matrix"), current->get_model_matrix() * view_matrix);
+        current->asset->get_renderer()->set_uniform(std::string("model_view_matrix"), view_matrix * current->get_model_matrix());
         current->asset->get_renderer()->set_uniform(std::string("projection_matrix"), projection_matrix);
         
         current->asset->get_mesh()->bind();
