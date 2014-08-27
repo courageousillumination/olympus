@@ -11,7 +11,7 @@ namespace olympus {
      */
     struct Renderable : public WorldObject {
         Asset *asset;
-        
+    protected:
         void set_parent(WorldObject *parent);
     };
 }

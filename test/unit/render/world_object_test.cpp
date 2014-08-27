@@ -106,4 +106,5 @@ TEST_F(WorldObjectTest, InheritsPositionTwoLevels) {
     EXPECT_EQ(glm::translate(glm::vec3(2, 0, 0)), object->get_model_matrix());
     
     delete parent;
+    delete grand_parent;
 }

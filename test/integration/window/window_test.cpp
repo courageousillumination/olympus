@@ -24,6 +24,7 @@ protected:
     virtual void TearDown() {
         WindowManager::get_instance().destroy_all_windows();
     }
+    
     Window *window;
 };
 

@@ -39,7 +39,7 @@ namespace olympus {
         /**
          * This has been made private to simplify the upper levels.
          */
-        void set_parent(WorldObject *parent);
+        virtual void set_parent(WorldObject *parent);
     public:
         WorldObject();
         virtual ~WorldObject() {}

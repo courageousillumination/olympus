@@ -10,6 +10,5 @@ out vec2 f_tex_coord;
 
 void main(){
     gl_Position = model_view_matrix * projection_matrix * vec4(position, 1.0);
-    
     f_tex_coord = tex_coord;
 }

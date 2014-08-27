@@ -26,12 +26,15 @@ void Viewpoint::_post_update_model_matrix() {
 }
 
 glm::mat4 Viewpoint::get_view_matrix() {
-    return _view_matrix;
+    //return _view_matrix;
+    return glm::mat4(1.0f);
 }
 glm::mat4 Viewpoint::get_projection_matrix() {
+    return glm::mat4(1.0f);
     return _projection_matrix;
 }
 glm::mat4 Viewpoint::get_view_projection_matrix() {
+    return glm::mat4(1.0f);
     return _projection_matrix * _view_matrix;
 }
 
