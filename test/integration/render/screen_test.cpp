@@ -31,7 +31,9 @@ protected:
     Window *window;
 };
 
-
+/**
+ * When we draw a square on a screen it should render to the window.
+ */
 TEST_F(ScreenTest, SingleScreen) {
     EasyScreen *screen = create_easy_screen();
     window->add_screen(screen->screen);
@@ -47,6 +49,10 @@ TEST_F(ScreenTest, SingleScreen) {
     destroy_easy_screen(screen);
 }
 
+/**
+ * When we have two screens that split the window they should both render in
+ * their respective halves
+ */
 TEST_F(ScreenTest, MultipleScreens) {
     EasyScreen *screen1 = create_easy_screen();
     EasyScreen *screen2 = create_easy_screen();

@@ -19,22 +19,30 @@ void Viewpoint::_update_projection_matrix() {
 }
 
 void Viewpoint::_post_update_model_matrix() {
-    //Update the view matrix
-    _view_matrix = glm::lookAt(_position,
-                               _position + (glm::vec3(0.0, 0.0, -1.0) * _orientation),
-                               glm::vec3(0.0, 1.0, 0.0) * _orientation); //Up is always along the y axis.
+    if (_parent == nullptr) {
+        _view_matrix = glm::lookAt(_position,
+                                   _position + (glm::vec3(0.0, 0.0, -1.0) * _orientation),
+                                   glm::vec3(0.0, 1.0, 0.0) * _orientation);
+    } else {
+        glm::vec4 world_position4 = _parent->get_model_matrix() * glm::vec4(_position, 1.0f);
+        glm::vec3 world_position = glm::vec3(world_position4[0], world_position4[1], world_position4[2]);
+        
+        _view_matrix = glm::lookAt(world_position,
+                                   world_position + (glm::vec3(0.0, 0.0, -1.0) * _orientation * _parent->get_orientation()),
+                                   glm::vec3(0.0, 1.0, 0.0) * _orientation * _parent->get_orientation()); 
+
+        
+    }
+    
 }
 
 glm::mat4 Viewpoint::get_view_matrix() {
-    //return _view_matrix;
-    return glm::mat4(1.0f);
+    return _view_matrix;
 }
 glm::mat4 Viewpoint::get_projection_matrix() {
-    return glm::mat4(1.0f);
     return _projection_matrix;
 }
 glm::mat4 Viewpoint::get_view_projection_matrix() {
-    return glm::mat4(1.0f);
     return _projection_matrix * _view_matrix;
 }
 
