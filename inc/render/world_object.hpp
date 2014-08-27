@@ -35,6 +35,11 @@ namespace olympus {
          * for post move operations.
          */
         virtual void _post_update_model_matrix() { }
+        
+        /**
+         * This has been made private to simplify the upper levels.
+         */
+        void set_parent(WorldObject *parent);
     public:
         WorldObject();
         virtual ~WorldObject() {}
@@ -50,7 +55,6 @@ namespace olympus {
         virtual void set_orientation(glm::quat orientation);
         virtual void set_orientation(float pitch, float yaw, float roll);
         virtual void set_orientation(glm::vec3 euler_angles);
-        virtual void set_parent(WorldObject *parent);
         virtual void add_child(WorldObject *child);
         virtual void remove_child(WorldObject *child);
         

@@ -56,7 +56,13 @@ void WorldObject::add_child(WorldObject *child) {
 }
 
 void WorldObject::remove_child(WorldObject *child) {
-    //TODO
+    for(auto c : _children) {
+        if (c == child) {
+            _children.erase(c);
+            child->set_parent(nullptr);
+            return;
+        }
+    }
 }
 
 glm::vec3 WorldObject::get_position() {

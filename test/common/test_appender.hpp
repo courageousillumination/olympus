@@ -5,7 +5,11 @@
 
 #include "debug/appender.hpp"
 #include "debug/logger.hpp"
-
+/**
+ * This class is a simple in memory appender used by the testing framework.
+ * It will throw an exception on any errors it receives and has capacity to
+ * check if a message is present.
+ */
 class TestAppender : public olympus::Appender {
 private:
     bool _expect_error;
