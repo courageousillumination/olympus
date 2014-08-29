@@ -28,7 +28,14 @@ namespace olympus {
          */
         void render();
 
+        /**
+         * Every Screen can have a viewpoint which defines how it will look
+         * at the world.
+         */
         void set_viewpoint(Viewpoint *viewpoint);
+        /**
+         * Each Screen can have a single world which it will render
+         */
         void set_world(World *world);
         
         Viewpoint *get_viewpoint();

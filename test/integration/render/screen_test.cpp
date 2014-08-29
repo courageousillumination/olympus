@@ -9,32 +9,14 @@
 
 #include "common/square.hpp"
 #include "common/test_block.hpp"
-
-#define DEFAULT_HEIGHT 480
-#define DEFAULT_WIDTH 640
-#define MODIFIED_HEIGHT 100
-#define MODIFIED_WIDTH 100
+#include "common/fixtures/window_fixture.hpp"
 
 using namespace olympus;
-
-class ScreenTest : public ::testing::Test {
-protected:
-    virtual void SetUp() {
-        window = WindowManager::get_instance().create_window(DEFAULT_WIDTH, DEFAULT_HEIGHT);
-        usleep(100000); //Give the window time to create
-    }
-    
-    virtual void TearDown() {
-        WindowManager::get_instance().destroy_all_windows();
-    }
-    
-    Window *window;
-};
 
 /**
  * When we draw a square on a screen it should render to the window.
  */
-TEST_F(ScreenTest, SingleScreen) {
+TEST_F(WindowedTest, SingleScreen) {
     EasyScreen *screen = create_easy_screen();
     window->add_screen(screen->screen);
     
@@ -53,7 +35,7 @@ TEST_F(ScreenTest, SingleScreen) {
  * When we have two screens that split the window they should both render in
  * their respective halves
  */
-TEST_F(ScreenTest, MultipleScreens) {
+TEST_F(WindowedTest, MultipleScreens) {
     EasyScreen *screen1 = create_easy_screen();
     EasyScreen *screen2 = create_easy_screen();
     window->add_screen(screen1->screen, -1.0, -1.0, 1.0, 2.0);

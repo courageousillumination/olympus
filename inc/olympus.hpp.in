@@ -16,5 +16,6 @@
 
 #include "render/shaders.hpp"
 #include "render/renderable.hpp"
+#include "render/standard_render_engine.hpp"
 
 #endif

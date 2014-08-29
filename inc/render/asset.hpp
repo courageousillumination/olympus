@@ -25,13 +25,13 @@ namespace olympus {
         
         /**
          * Using the default without assigning a slot will simply assign
-         * the texture to slot 0.
+         * the texture to slot 0. Should always return true.
          */
         bool add_texture(Texture *texture);
         
         /**
          * The parametrized version allows for more fine grained control
-         * over where the texture goes.
+         * over where the texture goes. Returns false if slot >= MAX_ASSET_TEXTURES
          */
         bool add_texture(Texture *texture, unsigned slot);
         
@@ -43,7 +43,7 @@ namespace olympus {
         
         /**
          * This will null out a slot. It return true if there was an item
-         * in that slot
+         * in that slot, and false otherwise
          */
         bool remove_texture(unsigned slot);
         

@@ -13,7 +13,8 @@ namespace olympus {
         ///Defines possible targets for this texture.
         enum Target {
             TEXTURE_2D,
-            TEXTURE_3D
+            TEXTURE_3D,
+            NONE
         };
     private:
         ///Stores the internal id of this texture (returned by OpenGL)
@@ -22,10 +23,16 @@ namespace olympus {
         int _width, _height, _depth;
         Target _target;
     public:
-        
+        /**
+         * The default constructor should really only be used in testing
+         */
+        Texture();
         Texture(Target target);
         ~Texture();
         
+        /**
+         * Loads a specified image into a texture.
+         */
         void load_image(const char *path);
         
         /**

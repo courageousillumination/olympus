@@ -49,3 +49,9 @@ TEST_F(WindowTest, WindowShouldClose) {
     window->set_should_close(true);
     EXPECT_EQ(window->should_close(), true);
 }
+
+TEST_F(WindowTest, EasyWindowShortuct) {
+    EasyWindow *easy_window = create_easy_window(DEFAULT_WIDTH, DEFAULT_HEIGHT);
+    EXPECT_EQ(WindowManager::get_instance().get_num_windows(), 2);
+    destroy_easy_window(easy_window);
+}

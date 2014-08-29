@@ -27,7 +27,7 @@ protected:
 TEST_F (WorldObjectTest, PositionOrientationAndScale) {
     float x, y, z;
     
-    //Test setters using glm vecs3
+    //Test scale/position setters using glm vecs3
     object->set_position(glm::vec3(1, 0, 0));
     object->set_scale(glm::vec3(1, 1.5, 1));
     
@@ -38,7 +38,7 @@ TEST_F (WorldObjectTest, PositionOrientationAndScale) {
     object->get_scale(x, y, z);
     EXPECT_EQ(x, 1); EXPECT_EQ(y, 1.5); EXPECT_EQ(z, 1);
     
-    //Test setters using floats
+    //Test scale/position setters using floats
     object->set_position(2, 3, 4);
     object->set_scale(5, 6, 7);
     
@@ -48,6 +48,18 @@ TEST_F (WorldObjectTest, PositionOrientationAndScale) {
     EXPECT_EQ(x, 2); EXPECT_EQ(y, 3); EXPECT_EQ(z, 4);
     object->get_scale(x, y, z);
     EXPECT_EQ(x, 5); EXPECT_EQ(y, 6); EXPECT_EQ(z, 7);
+    
+    //Test orientation getters and setters using quats
+    object->set_orientation(glm::quat(1.0f, 0.0f, 0.0f, -1.0f));
+    
+    EXPECT_EQ(glm::quat(1.0f, 0.0f, 0.0f, -1.0f), object->get_orientation());
+    
+    //Test with euler angles
+    object->set_orientation(1.0f, 0.0f, 0.0f);
+    EXPECT_EQ(glm::vec3(1.0f, 0.0f, 0.0f), object->get_orientation_euler());
+    
+    object->set_orientation(glm::vec3(1.0f, 1.0f, 1.0f));
+    EXPECT_EQ(glm::vec3(1.0f, 1.0f, 1.0f), object->get_orientation_euler());
 }
 
 /**

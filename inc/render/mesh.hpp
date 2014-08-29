@@ -20,10 +20,21 @@ namespace olympus {
         Mesh(unsigned num_attributes, PrimType prim_type);
         ~Mesh();
         
+        /**
+         * Sets a vertex attribute using the given list of data.
+         */
         void set_vertex_attribute(unsigned attribute_number, unsigned dims,
                                   unsigned num_vertices, const float *data);
         
+        /**
+         * Bind this mesh to the current render context. All meshes
+         * must be bound before they can be drawn.
+         */
         void bind();
+        
+        /**
+         * Draw the specified mesh.
+         */
         void draw();
     };
 }

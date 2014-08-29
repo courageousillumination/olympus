@@ -12,6 +12,7 @@ using namespace olympus;
 static TestAppender *test_appender = nullptr;
 
 void OlympusEnvironment::TearDown() {
+    Logger::shutdown();
     delete test_appender;
 }
 

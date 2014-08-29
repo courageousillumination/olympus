@@ -34,19 +34,32 @@ namespace olympus {
          * Renders the current scene using all attached screens
          */
         void render();
-        
-        unsigned get_width() { return _width; }
-        unsigned get_height() { return _height; }
-        
-        bool should_close();
-        void set_should_close(bool flag);
-        
+
         void set_height(unsigned height);
         void set_width(unsigned width);
         void set_dimensions(unsigned width, unsigned height);
+
+        unsigned get_width() { return _width; }
+        unsigned get_height() { return _height; }
         
+        /**
+         * Should close will either be set to true by the user closing
+         * the window or by the program if an escape key etc. is hit.
+         */
+        bool should_close();
+        void set_should_close(bool flag);
+        
+        /**
+         * Adds a keyboard callback to the current window. These will only be
+         * called when the window manager polls for input.
+         */
         void set_keyboard_callback(void (* callback)(Window *, int, int, int, int));
         
+        /**
+         * Each screen is defined in terms of x, y, width and height on a -1.0 to 1.0
+         * scale. Adding a single screen is simply a short cut for creating a screen
+         * that takes up the entire window.
+         */
         void add_screen(Screen *screen);
         void add_screen(Screen *screen, float x, float y, float width, float height);
         void remove_screen(Screen *screen);

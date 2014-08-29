@@ -12,6 +12,11 @@ namespace olympus {
         std::set<Renderable *> _renderables;
     public:
         virtual ~RenderEngine() { }
+        /**
+         * The following two are used to add and remove renderables. These 
+         * will generally be called by renderables when they are added to
+         * the world.
+         */
         virtual void add_renderable(Renderable *renderable);
         virtual void remove_renderable(Renderable *renderable);
         

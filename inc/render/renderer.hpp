@@ -26,8 +26,15 @@ namespace olympus {
         
         ~Renderer();
         
+        /**
+         * Bind this renderer. All future render calls will use
+         * this renderer until another one is bound.
+         */
         void bind();
         
+        /**
+         * DO NOT USE. This is soley for internal APIs.
+         */
         unsigned get_internal_id();
         
         unsigned get_uniform_location(std::string id);

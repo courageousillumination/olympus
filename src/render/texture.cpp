@@ -21,6 +21,9 @@ static unsigned enum_convertor(Texture::Target target) {
     }
 }
 
+Texture::Texture() {
+    _target = Texture::NONE;
+}
 
 Texture::Texture(Texture::Target target) {
     _target = target;
