@@ -8,3 +8,10 @@ void RenderEngine::add_renderable(Renderable *renderable) {
 void RenderEngine::remove_renderable(Renderable *renderable) {
     _renderables.erase(renderable);
 }
+
+void RenderEngine::add_light(Light *light) {
+    _lights.insert(light);
+}
+void RenderEngine::remove_light(Light *light) {
+    _lights.erase(light);
+}

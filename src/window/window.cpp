@@ -47,6 +47,7 @@ Window::Window(unsigned width, unsigned height, const char *title) :
     
     glEnable(GL_DEPTH_TEST);
     glDepthFunc(GL_LESS);
+    glDisable(GL_CULL_FACE);
     
     //Build my renderer
     _renderer = new Renderer(TEXTURE_VERTEX_SHADER,

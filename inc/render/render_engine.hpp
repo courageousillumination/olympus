@@ -5,11 +5,13 @@
 
 #include "render/renderable.hpp"
 #include "render/viewpoint.hpp"
+#include "render/light.hpp"
 
 namespace olympus {
     class RenderEngine {
     protected:
         std::set<Renderable *> _renderables;
+        std::set<Light *> _lights;
     public:
         virtual ~RenderEngine() { }
         /**
@@ -19,6 +21,9 @@ namespace olympus {
          */
         virtual void add_renderable(Renderable *renderable);
         virtual void remove_renderable(Renderable *renderable);
+        
+        virtual void add_light(Light *light);
+        virtual void remove_light(Light *light);
         
         /**
          * This will perform the actual rendering, subclasses

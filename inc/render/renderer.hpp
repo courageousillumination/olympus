@@ -33,13 +33,15 @@ namespace olympus {
         void bind();
         
         /**
-         * DO NOT USE. This is soley for internal APIs.
+         * DO NOT USE. This is soley for internal APIs and testing.
          */
         unsigned get_internal_id();
         
+        bool has_uniform(std::string id);
         unsigned get_uniform_location(std::string id);
         //void set_uniform(std::string &id, float value);
         void set_uniform(std::string id, glm::mat4 value);
+        void set_uniform(std::string id, glm::vec3 value);
        
     };
     
