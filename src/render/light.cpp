@@ -11,11 +11,11 @@ Light::Light(Light::LightType type) {
 void Light::set_parent(WorldObject *parent) {
     if (_parent != nullptr) {
         //We need to deregister ourselvels
-        _parent->get_root()->get_render_engine()->remove_light(this);
+        _parent->get_root()->remove_light(this);
     }
     _parent = parent;
     if (parent != nullptr) {
-        parent->get_root()->get_render_engine()->add_light(this);
+        parent->get_root()->add_light(this);
     }
 }
 

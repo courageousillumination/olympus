@@ -1,5 +1,6 @@
 #include "debug/logger.hpp"
 
+#include "render/world.hpp"
 #include "render/standard_render_engine.hpp"
 
 using namespace olympus;
@@ -8,6 +9,9 @@ void StandardRenderEngine::render(Viewpoint *viewpoint) {
     Renderable *current = nullptr;
     glm::vec3 light_direction;
     glm::mat4 view_matrix, projection_matrix;
+    
+    std::set <Light *> lights = _world->get_lights();
+    std::set <Renderable *> renderables = _world->get_renderables();
 
     if (viewpoint == nullptr) {
         view_matrix = glm::mat4(1.0f);
@@ -17,15 +21,15 @@ void StandardRenderEngine::render(Viewpoint *viewpoint) {
         projection_matrix = viewpoint->get_projection_matrix();
     }
     
-    if (_lights.size() == 0) {
+    if (lights.size() == 0) {
         light_direction = glm::vec3(0, 0, 0);
     } else {
-        glm::vec4 t = view_matrix * glm::vec4((*_lights.begin())->get_direction(), 0.0);
+        glm::vec4 t = view_matrix * glm::vec4((*lights.begin())->get_direction(), 0.0);
         light_direction = glm::vec3(t[0], t[1], t[2]);
     }
     
-    for (std::set<Renderable *>::iterator it = _renderables.begin();
-         it != _renderables.end(); it++) {
+    for (std::set<Renderable *>::iterator it = renderables.begin();
+         it != renderables.end(); it++) {
         current = *it;
         if (current->asset->get_textures()[0] != nullptr) {
             current->asset->get_textures()[0]->bind();

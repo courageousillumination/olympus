@@ -108,3 +108,39 @@ TEST_F (LightTest, DirectionalLightWithViewpoint) {
     delete light;
     delete viewpoint;
 }
+
+TEST_F (LightTest, DirectionalLightWithShadows) {
+     glm::vec3 pre_light, lit, shadow;
+    //Check the scene before any light has been added (this should be the same
+    //as the shadowed image);
+    window->render();
+    pre_light = average_color_block(0, 0, DEFAULT_WIDTH, DEFAULT_HEIGHT);
+    
+    //Now we add a light pointing directly at the square
+    Light *light = new Light(Light::DIRECTIONAL);
+    light->set_direction(0.0, 0.0, -1.0);
+    world->add_child(light);
+    window->render();
+    
+    lit = average_color_block(0, 0, DEFAULT_WIDTH, DEFAULT_HEIGHT);
+    
+    //Now we add a block between us and the light source
+    Renderer *r = new Renderer(FLAT_LIGHT_VERTEX_SHADER,
+                            FLAT_LIGHT_FRAGMENT_SHADER);
+    Renderable *s1 = create_square(-1.0f, -1.0f, 2.0f, 2.0f, 0.0, 1.0, 0.0, r);
+    s1->set_position(0.0, 0.0, 1.0f);
+    world->add_child(s1);
+    
+    window->render();
+    shadow = average_color_block(0, 0, DEFAULT_WIDTH, DEFAULT_HEIGHT);
+    
+    EXPECT_EQ(pre_light, shadow);
+    EXPECT_LT(shadow[1], lit[1]);
+    
+    //Clean up
+    world->remove_child(s1);
+    destroy_square(s1);
+    
+    world->remove_child(light);
+    delete light;
+}

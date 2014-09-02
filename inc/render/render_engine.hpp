@@ -7,23 +7,18 @@
 #include "render/viewpoint.hpp"
 #include "render/light.hpp"
 
+#define MAX_LIGHT_SOURCES 1
+
 namespace olympus {
+    class World;
+    
     class RenderEngine {
     protected:
-        std::set<Renderable *> _renderables;
-        std::set<Light *> _lights;
+        World *_world;
     public:
         virtual ~RenderEngine() { }
-        /**
-         * The following two are used to add and remove renderables. These 
-         * will generally be called by renderables when they are added to
-         * the world.
-         */
-        virtual void add_renderable(Renderable *renderable);
-        virtual void remove_renderable(Renderable *renderable);
-        
-        virtual void add_light(Light *light);
-        virtual void remove_light(Light *light);
+        void set_world(World *world);
+        World *get_world();
         
         /**
          * This will perform the actual rendering, subclasses
@@ -31,6 +26,8 @@ namespace olympus {
          * to render the objects.
          */
         virtual void render(Viewpoint *viewpoint) = 0;
+        
+        
     };
 }
 #endif
