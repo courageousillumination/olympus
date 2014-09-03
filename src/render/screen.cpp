@@ -12,6 +12,7 @@ Screen::Screen() {
     _framebuffer = new Framebuffer;
     _viewpoint = nullptr;
     _world = nullptr;
+    _render_engine = nullptr;
 }
 
 Screen::~Screen() {
@@ -22,7 +23,7 @@ void Screen::render() {
     _framebuffer->bind();
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     if (_world != nullptr) {
-        _world->get_render_engine()->render(_viewpoint);
+        _render_engine->render(_viewpoint, _world);
     }
     _framebuffer->unbind();
 };
@@ -39,10 +40,18 @@ void Screen::set_viewpoint(Viewpoint *viewpoint) {
     _viewpoint = viewpoint;
 }
 
+void Screen::set_render_engine(RenderEngine *render_engine) {
+    _render_engine = render_engine;
+}
+
 Viewpoint *Screen::get_viewpoint() {
     return _viewpoint;
 }
 
 World *Screen::get_world() {
     return _world;
+}
+
+RenderEngine *Screen::get_render_engine() {
+    return _render_engine;
 }

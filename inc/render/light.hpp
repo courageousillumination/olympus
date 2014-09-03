@@ -2,6 +2,7 @@
 #define OLYMPUS__RENDER__LIGHT
 
 #include "render/world_object.hpp"
+#include "render/viewpoint.hpp"
 
 namespace olympus {
     class Light : public WorldObject {
@@ -14,8 +15,13 @@ namespace olympus {
         /// In theory this could be encoded in the orientation, but this
         /// is much easier.
         glm::vec3 _direction;
+        /// Each light has a viewpoint that is used for shadow rendering
+        Viewpoint *_viewpoint;
+        
+        void _update_viewpoint();
     public:
         Light(LightType);
+        ~Light();
         
         /**
          * Overriden so that we can register ourselves with
@@ -34,6 +40,10 @@ namespace olympus {
         
         void set_type(LightType type);
         LightType get_type();
+        
+        Viewpoint *get_viewpoint();
+        
+
         
     };
 }

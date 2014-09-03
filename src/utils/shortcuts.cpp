@@ -20,7 +20,7 @@ EasyWindow *olympus::create_easy_window(unsigned width, unsigned height) {
     
     //Create a render engine for the world
     easy_window->render_engine = new StandardRenderEngine;
-    easy_window->world->set_render_engine(easy_window->render_engine);
+    easy_window->screen->set_render_engine(easy_window->render_engine);
     
     return easy_window;
 }
@@ -45,7 +45,7 @@ EasyScreen *olympus::create_easy_screen() {
     
     //Create a render engine for the world
     easy_screen->render_engine = new StandardRenderEngine;
-    easy_screen->world->set_render_engine(easy_screen->render_engine);
+    easy_screen->screen->set_render_engine(easy_screen->render_engine);
     
     return easy_screen;
 }

@@ -26,12 +26,10 @@ Framebuffer::Framebuffer() {
     GLenum DrawBuffers[1] = {GL_COLOR_ATTACHMENT0};
     glDrawBuffers(1, DrawBuffers);
     
-    //Add a depth buffer. Really this should probably not be in the constructor. TODO: Fix this
-    GLuint depth_renderbuffer;
-    glGenRenderbuffers(1, &depth_renderbuffer);
-    glBindRenderbuffer(GL_RENDERBUFFER, depth_renderbuffer);
-    glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT, 640, 480);
-    glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, depth_renderbuffer);
+    _depth_texture = new Texture(Texture::TEXTURE_2D);
+    glTexImage2D(GL_TEXTURE_2D, 0,GL_DEPTH_COMPONENT16, 640, 480, 0,GL_DEPTH_COMPONENT, GL_FLOAT, 0);
+    glFramebufferTexture(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, _depth_texture->_texture_id, 0);
+ 
     
     if(glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE) {
         LOG(Logger::ERROR, "Failed to create framebuffer");
@@ -46,13 +44,18 @@ Framebuffer::~Framebuffer() {
 }
 
 void Framebuffer::bind() {
+    glGetIntegerv(GL_FRAMEBUFFER_BINDING, &_old_framebuffer);
     glBindFramebuffer(GL_FRAMEBUFFER, _frame_buffer_id);
 }
 
 void Framebuffer::unbind() {
-    glBindFramebuffer(GL_FRAMEBUFFER, 0);
+    glBindFramebuffer(GL_FRAMEBUFFER, _old_framebuffer);
 }
 
 Texture *Framebuffer::get_color_texture() {
     return _color_0_texture;
+}
+
+Texture *Framebuffer::get_depth_texture() {
+    return _depth_texture;
 }

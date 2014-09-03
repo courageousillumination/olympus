@@ -7,12 +7,15 @@ namespace olympus {
     class Framebuffer {
     private:
         unsigned _frame_buffer_id;
+        int _old_framebuffer;
         Texture *_color_0_texture;
+        Texture *_depth_texture;
     public:
         Framebuffer();
         ~Framebuffer();
         
         Texture *get_color_texture();
+        Texture *get_depth_texture();
         
         /**
          * Bind this framebuffer to the current render context.

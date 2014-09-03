@@ -9,6 +9,8 @@ namespace olympus {
         glm::mat4 _projection_matrix;
         glm::mat4 _view_matrix;
         float _fov, _ratio, _near, _far;
+        glm::vec2 _ortho_x, _ortho_y, _ortho_z;
+        bool _use_ortho;
         
         void _update_projection_matrix();
         /** 
@@ -24,6 +26,8 @@ namespace olympus {
         void set_ratio(float ratio);
         void set_near(float near);
         void set_far(float far);
+        void use_ortho(bool flag);
+        void set_ortho(glm::vec2 x, glm::vec2 y, glm::vec2 z);
         void set_perspective(float fov, float ratio, float near, float far);
         
         float get_fov();

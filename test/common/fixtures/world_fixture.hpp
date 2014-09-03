@@ -23,7 +23,7 @@ protected:
         screen->set_world(world);
         
         render_engine = new olympus::StandardRenderEngine;
-        world->set_render_engine(render_engine);
+        screen->set_render_engine(render_engine);
     }
     
     virtual void TearDown() {

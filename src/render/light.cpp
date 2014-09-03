@@ -6,6 +6,16 @@ using namespace olympus;
 
 Light::Light(Light::LightType type) {
     _type = type;
+    _viewpoint = new Viewpoint;
+    if (type == DIRECTIONAL) {
+        _viewpoint->set_ortho(glm::vec2(-10, 10),
+                              glm::vec2(-10, 10),
+                              glm::vec2(-10, 10));
+    }
+}
+
+Light::~Light() {
+    delete _viewpoint;
 }
 
 void Light::set_parent(WorldObject *parent) {
@@ -43,4 +53,14 @@ void Light::set_type(LightType type) {
 
 Light::LightType Light::get_type() {
     return _type;
+}
+
+Viewpoint *Light::get_viewpoint() {
+    return _viewpoint;
+}
+
+void Light::_update_viewpoint() {
+    if (type == DIRECTIONAL) {
+        //_viewpoint->set_orientation(_direction);
+    }
 }

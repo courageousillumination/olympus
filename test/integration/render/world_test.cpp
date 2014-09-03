@@ -17,7 +17,7 @@ protected:
         render_engine = new StandardRenderEngine;
         
         screen->set_world(world);
-        world->set_render_engine(render_engine);
+        screen->set_render_engine(render_engine);
     }
     
     virtual void TearDown() {
