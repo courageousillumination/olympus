@@ -65,6 +65,9 @@ namespace olympus {
         ~StandardRenderEngine();
         
         void render(Viewpoint *viewpoint, World *world);
+        
+        //DEBUG FUNCTIONS
+        Screen **get_shadow_screens() { return _shadow_screens; }
     };
 }
 

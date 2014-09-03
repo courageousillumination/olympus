@@ -60,7 +60,7 @@ Viewpoint *Light::get_viewpoint() {
 }
 
 void Light::_update_viewpoint() {
-    if (type == DIRECTIONAL) {
+    if (_type == DIRECTIONAL) {
         //_viewpoint->set_orientation(_direction);
     }
 }

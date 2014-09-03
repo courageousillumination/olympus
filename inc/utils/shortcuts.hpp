@@ -11,7 +11,7 @@ namespace olympus {
         Window *window;
         Screen *screen;
         World *world;
-        RenderEngine *render_engine;
+        StandardRenderEngine *render_engine;
     };
     
     EasyWindow *create_easy_window(unsigned width, unsigned height);
