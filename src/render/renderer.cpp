@@ -119,3 +119,7 @@ void Renderer::set_uniform(std::string id, glm::vec3 value) {
 void Renderer::set_uniform(std::string id, glm::mat4 value) {
     glUniformMatrix4fv(get_uniform_location(id), 1, GL_FALSE, &value[0][0]);
 }
+
+void Renderer::set_uniform(std::string id, int value) {
+    glUniform1i(get_uniform_location(id), value);
+}

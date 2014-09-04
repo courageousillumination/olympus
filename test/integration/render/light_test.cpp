@@ -110,9 +110,20 @@ TEST_F (LightTest, DirectionalLightWithViewpoint) {
 }
 
 TEST_F (LightTest, DirectionalLightWithShadows) {
+    Renderer *old_renderer = s->asset->get_renderer();
+    Renderer *new_renderer = new Renderer(SHADOW_VERTEX_SHADER,
+                                          SHADOW_FRAGMENT_SHADER);
+    
+
+    
+    Renderable *s1 = new Renderable;
+    s->asset->set_renderer(new_renderer);
+    s1->asset = s->asset;
+    
+    
      glm::vec3 pre_light, lit, shadow;
     //Check the scene before any light has been added (this should be the same
-    //as the shadowed image);
+    //as the shadowed image)
     window->render();
     pre_light = average_color_block(0, 0, DEFAULT_WIDTH, DEFAULT_HEIGHT);
     
@@ -120,14 +131,12 @@ TEST_F (LightTest, DirectionalLightWithShadows) {
     Light *light = new Light(Light::DIRECTIONAL);
     light->set_direction(0.0, 0.0, -1.0);
     world->add_child(light);
+    render_engine->enable_shadows();
     window->render();
     
     lit = average_color_block(0, 0, DEFAULT_WIDTH, DEFAULT_HEIGHT);
     
     //Now we add a block between us and the light source
-    Renderer *r = new Renderer(FLAT_LIGHT_VERTEX_SHADER,
-                            FLAT_LIGHT_FRAGMENT_SHADER);
-    Renderable *s1 = create_square(-1.0f, -1.0f, 2.0f, 2.0f, 0.0, 1.0, 0.0, r);
     s1->set_position(0.0, 0.0, 1.0f);
     world->add_child(s1);
     
@@ -139,8 +148,14 @@ TEST_F (LightTest, DirectionalLightWithShadows) {
     
     //Clean up
     world->remove_child(s1);
-    destroy_square(s1);
+    
+    render_engine->disable_shadows();
+    
     
     world->remove_child(light);
     delete light;
+    delete s1;
+    
+    s->asset->set_renderer(old_renderer);
+    delete new_renderer;
 }

@@ -8,9 +8,9 @@ Light::Light(Light::LightType type) {
     _type = type;
     _viewpoint = new Viewpoint;
     if (type == DIRECTIONAL) {
-        _viewpoint->set_ortho(glm::vec2(-10, 10),
-                              glm::vec2(-10, 10),
-                              glm::vec2(-10, 10));
+        _viewpoint->set_ortho(glm::vec2(-3, 3),
+                              glm::vec2(-3, 3),
+                              glm::vec2(-3, 3));
     }
 }
 
@@ -31,10 +31,12 @@ void Light::set_parent(WorldObject *parent) {
 
 void Light::set_direction(float x, float y, float z) {
     _direction = glm::normalize(glm::vec3(x, y, z));
+    _update_viewpoint();
 }
 
 void Light::set_direction(glm::vec3 direction) {
     _direction = glm::normalize(direction);
+    _update_viewpoint();
 }
 
 void Light::get_direction(float &x, float &y, float &z) {
@@ -61,6 +63,6 @@ Viewpoint *Light::get_viewpoint() {
 
 void Light::_update_viewpoint() {
     if (_type == DIRECTIONAL) {
-        //_viewpoint->set_orientation(_direction);
+        
     }
 }

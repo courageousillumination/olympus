@@ -42,6 +42,7 @@ namespace olympus {
         //void set_uniform(std::string &id, float value);
         void set_uniform(std::string id, glm::mat4 value);
         void set_uniform(std::string id, glm::vec3 value);
+        void set_uniform(std::string id, int value);
        
     };
     

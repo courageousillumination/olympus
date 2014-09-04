@@ -13,4 +13,7 @@
 #define SHADOW_HELPER_VERTEX_SHADER "/media/development/olympus/src/render/shaders/shadow_helper_v.glsl"
 #define SHADOW_HELPER_FRAGMENT_SHADER "/media/development/olympus/src/render/shaders/shadow_helper_f.glsl"
 
+#define SHADOW_VERTEX_SHADER "/media/development/olympus/src/render/shaders/flat_shadow_v.glsl"
+#define SHADOW_FRAGMENT_SHADER "/media/development/olympus/src/render/shaders/flat_shadow_f.glsl"
+
 #endif

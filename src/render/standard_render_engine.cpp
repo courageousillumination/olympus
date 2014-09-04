@@ -7,7 +7,14 @@
 #include "render/standard_render_engine.hpp"
 #include "render/shaders.hpp"
 
+#include <GL/glew.h>
+
 using namespace olympus;
+
+static glm::mat4 bias_matrix = glm::mat4(0.5, 0.0, 0.0, 0.0,
+                                         0.0, 0.5, 0.0, 0.0,
+                                         0.0, 0.0, 0.5, 0.0,
+                                         0.5, 0.5, 0.5, 1.0);
 
 void StandardRenderEngine::pre_render_viewpoint(Viewpoint *viewpoint) {
     if (viewpoint == nullptr) {
@@ -42,6 +49,18 @@ void StandardRenderEngine::configure_renderer_lights(Renderer *renderer) {
     }
 }
 
+void StandardRenderEngine::enable_shadows() {
+    _use_shadows = true;
+    setup_shadows();
+}
+
+void StandardRenderEngine::disable_shadows() {
+    if (_use_shadows) {
+        teardown_shadows();
+    }
+    _use_shadows = false;
+}
+
 void StandardRenderEngine::setup_shadows()  {
     Renderer *shadow_renderer = new Renderer(SHADOW_HELPER_VERTEX_SHADER,
                                              SHADOW_HELPER_FRAGMENT_SHADER);
@@ -60,6 +79,7 @@ void StandardRenderEngine::teardown_shadows() {
     delete _shadow_render_helper;
 }
 void StandardRenderEngine::pre_render_shadows(std::vector<Light *> &lights) {
+    if (! _use_shadows) return;
     for (unsigned i = 0; i < MAX_LIGHT_SOURCES && i < lights.size(); i++) {
         _shadow_screens[i]->set_world(_world);
         _shadow_screens[i]->set_viewpoint(lights[i]->get_viewpoint());
@@ -68,15 +88,28 @@ void StandardRenderEngine::pre_render_shadows(std::vector<Light *> &lights) {
 }
 
 void StandardRenderEngine::configure_renderer_shadows(Renderer *renderer) {
-    //TODO
+    if (! _use_shadows) return;
+    //if (renderer->has_uniform(std::string("shadow_map"))) {
+        glActiveTexture(GL_TEXTURE1);
+        _shadow_screens[0]->get_framebuffer()->get_depth_texture()->bind();
+        renderer->set_uniform(std::string("shadow_map"), 1);
+    //}
+}
+
+void StandardRenderEngine::configure_object_shadow(Renderer *renderer, Renderable *renderable) {
+    if (! _use_shadows) return;
+    renderer->set_uniform(std::string("shadow_mvp"), bias_matrix * _world->get_lights()[0]->get_viewpoint()->get_view_projection_matrix() * renderable->get_model_matrix());
+        
 }
 
 StandardRenderEngine::StandardRenderEngine() {
-    setup_shadows();
+    _use_shadows = false;
 }
         
 StandardRenderEngine::~StandardRenderEngine() {
-    teardown_shadows();
+    if (_use_shadows) {
+        teardown_shadows();
+    }
 }
 
 void StandardRenderEngine::render(Viewpoint *viewpoint, World *world) {
@@ -98,6 +131,7 @@ void StandardRenderEngine::render(Viewpoint *viewpoint, World *world) {
          it != renderables.end(); it++) {
         current = *it;
         if (current->asset->get_textures()[0] != nullptr) {
+            glActiveTexture(GL_TEXTURE0);
             current->asset->get_textures()[0]->bind();
         }
         
@@ -107,6 +141,7 @@ void StandardRenderEngine::render(Viewpoint *viewpoint, World *world) {
         configure_renderer_shadows(current->asset->get_renderer());
         
         configure_object_viewpoint(current->asset->get_renderer(), current);
+        configure_object_shadow(current->asset->get_renderer(), current);
         current->asset->get_mesh()->bind();
         current->asset->get_mesh()->draw();
     }

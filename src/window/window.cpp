@@ -97,6 +97,7 @@ void Window::render() {
     _renderer->set_uniform(std::string("model_view_matrix"), glm::mat4(1.0f));
     _renderer->set_uniform(std::string("projection_matrix"), glm::mat4(1.0f));
         
+    glActiveTexture(GL_TEXTURE0);
     for (auto screen : _screens) {
         screen.screen->get_framebuffer()->get_color_texture()->bind();
         screen.mesh->bind();

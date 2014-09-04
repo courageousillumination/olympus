@@ -48,6 +48,7 @@ namespace olympus {
         void teardown_shadows();
         void pre_render_shadows(std::vector<Light *> &lights);
         void configure_renderer_shadows(Renderer *renderer);
+        void configure_object_shadow(Renderer *renderer, Renderable *renderable);
         
         class ShadowRenderHelper : public RenderEngine {
         private:
@@ -60,9 +61,13 @@ namespace olympus {
         
         ShadowRenderHelper *_shadow_render_helper;
         Screen *_shadow_screens[MAX_LIGHT_SOURCES];
+        bool _use_shadows;
     public:
         StandardRenderEngine();
         ~StandardRenderEngine();
+        
+        void enable_shadows();
+        void disable_shadows();
         
         void render(Viewpoint *viewpoint, World *world);
         

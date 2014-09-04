@@ -36,7 +36,7 @@ protected:
     olympus::Window *window;
     olympus::Screen *screen;
     olympus::World *world;
-    olympus::RenderEngine *render_engine;
+    olympus::StandardRenderEngine *render_engine;
 };
 
 #endif
