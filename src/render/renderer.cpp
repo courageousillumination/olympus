@@ -123,3 +123,11 @@ void Renderer::set_uniform(std::string id, glm::mat4 value) {
 void Renderer::set_uniform(std::string id, int value) {
     glUniform1i(get_uniform_location(id), value);
 }
+
+void Renderer::set_uniform(std::string id, glm::vec3 *values, unsigned num_values) {
+    glUniform3fv(get_uniform_location(id), num_values, &values[0][0]);
+}
+
+void Renderer::set_uniform(std::string id, int *values, unsigned num_values) {
+    glUniform1iv(get_uniform_location(id), num_values, values);
+}

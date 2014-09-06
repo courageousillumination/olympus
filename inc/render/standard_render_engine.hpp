@@ -41,7 +41,8 @@ namespace olympus {
         void pre_render_lights(std::vector<Light *> &lights);
         void configure_renderer_lights(Renderer *renderer);
         
-        glm::vec3 _light_direction;
+        glm::vec3 _light_directions[MAX_LIGHT_SOURCES];
+        int _use_lights[MAX_LIGHT_SOURCES];
         
         //Things needed to support shadows
         void setup_shadows();

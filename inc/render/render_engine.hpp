@@ -6,7 +6,7 @@
 #include "render/world.hpp"
 #include "render/viewpoint.hpp"
 
-#define MAX_LIGHT_SOURCES 1
+#define MAX_LIGHT_SOURCES 2
 
 namespace olympus {
     class World;

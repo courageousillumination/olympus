@@ -35,17 +35,21 @@ void StandardRenderEngine::configure_object_viewpoint(Renderer *renderer, Render
 }
 
 void StandardRenderEngine::pre_render_lights(std::vector<Light *> &lights) {
-    if (lights.size() == 0) {
-        _light_direction = glm::vec3(0, 0, 0);
-    } else {
-        glm::vec4 t = _view_matrix * glm::vec4((*lights.begin())->get_direction(), 0.0);
-        _light_direction = glm::vec3(t[0], t[1], t[2]);
+    unsigned i;
+    for (i = 0; i < lights.size() && i < MAX_LIGHT_SOURCES; i++) {
+        glm::vec4 t = _view_matrix * glm::vec4(lights[i]->get_direction(), 0.0);
+        _light_directions[i] = glm::vec3(t[0], t[1], t[2]);
+        _use_lights[i] = 1;
+    }
+    while (i < MAX_LIGHT_SOURCES) {
+        _use_lights[i++] = 0;
     }
 }
 
 void StandardRenderEngine::configure_renderer_lights(Renderer *renderer) {
     if (renderer->has_uniform(std::string("light_direction"))) {
-        renderer->set_uniform(std::string("light_direction"), _light_direction);
+        renderer->set_uniform(std::string("light_direction"), _light_directions, MAX_LIGHT_SOURCES);
+        renderer->set_uniform(std::string("use_lights"), _use_lights, MAX_LIGHT_SOURCES);
     }
 }
 
@@ -87,13 +91,23 @@ void StandardRenderEngine::pre_render_shadows(std::vector<Light *> &lights) {
     }
 }
 
+const int SHADOW_MAP_OFFSET = 1;
+
 void StandardRenderEngine::configure_renderer_shadows(Renderer *renderer) {
     if (! _use_shadows) return;
-    //if (renderer->has_uniform(std::string("shadow_map"))) {
-        glActiveTexture(GL_TEXTURE1);
-        _shadow_screens[0]->get_framebuffer()->get_depth_texture()->bind();
-        renderer->set_uniform(std::string("shadow_map"), 1);
-    //}
+
+    int mappings[MAX_LIGHT_SOURCES];
+    for (unsigned i = 0; i < MAX_LIGHT_SOURCES; i++) {
+        if (_use_lights[i] == 1) {
+            glActiveTexture(GL_TEXTURE0 + SHADOW_MAP_OFFSET + i);
+            _shadow_screens[i]->get_framebuffer()->get_depth_texture()->bind();
+            mappings[i] = SHADOW_MAP_OFFSET + i;
+        } else {
+            mappings[i] = 0;
+        }
+    }
+    renderer->set_uniform(std::string("shadow_map"), mappings, MAX_LIGHT_SOURCES);
+        
 }
 
 void StandardRenderEngine::configure_object_shadow(Renderer *renderer, Renderable *renderable) {
