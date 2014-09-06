@@ -51,15 +51,7 @@ TEST_F (WorldObjectTest, PositionOrientationAndScale) {
     
     //Test orientation getters and setters using quats
     object->set_orientation(glm::quat(1.0f, 0.0f, 0.0f, -1.0f));
-    
     EXPECT_EQ(glm::quat(1.0f, 0.0f, 0.0f, -1.0f), object->get_orientation());
-    
-    //Test with euler angles
-    object->set_orientation(1.0f, 0.0f, 0.0f);
-    EXPECT_EQ(glm::vec3(1.0f, 0.0f, 0.0f), object->get_orientation_euler());
-    
-    object->set_orientation(glm::vec3(1.0f, 1.0f, 1.0f));
-    EXPECT_EQ(glm::vec3(1.0f, 1.0f, 1.0f), object->get_orientation_euler());
 }
 
 /**

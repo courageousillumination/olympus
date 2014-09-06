@@ -53,8 +53,6 @@ namespace olympus {
         virtual void set_scale(glm::vec3 scale);
         virtual void set_scale(float x, float y, float z);
         virtual void set_orientation(glm::quat orientation);
-        virtual void set_orientation(float pitch, float yaw, float roll);
-        virtual void set_orientation(glm::vec3 euler_angles);
         virtual void add_child(WorldObject *child);
         virtual void remove_child(WorldObject *child);
         
@@ -63,7 +61,6 @@ namespace olympus {
         glm::vec3 get_scale();
         void get_scale(float &x, float &y, float &z);
         glm::quat get_orientation();
-        glm::vec3 get_orientation_euler();
         WorldObject *get_parent();
         std::set<WorldObject *> get_children();
         

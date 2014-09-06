@@ -35,15 +35,6 @@ void WorldObject::set_orientation(glm::quat orientation) {
     _update_model_matrix();
 }
 
-void WorldObject::set_orientation(float pitch, float yaw, float roll) {
-    _orientation = glm::quat(glm::vec3(pitch, yaw, roll));
-    _update_model_matrix();
-}
-
-void WorldObject::set_orientation(glm::vec3 euler_angles) {
-    _orientation = glm::quat(euler_angles);
-    _update_model_matrix();
-}
 void WorldObject::set_parent(WorldObject *parent) {
     _parent = parent;
     _update_model_matrix();
@@ -84,10 +75,6 @@ void WorldObject::get_scale(float &x, float &y, float &z) {
 
 glm::quat WorldObject::get_orientation() {
     return _orientation;
-}
-
-glm::vec3 WorldObject::get_orientation_euler() {
-    return glm::eulerAngles(_orientation);
 }
 
 WorldObject *WorldObject::get_parent() {

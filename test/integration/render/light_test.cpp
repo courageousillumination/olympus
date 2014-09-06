@@ -79,7 +79,7 @@ TEST_F (LightTest, DirectionalLightWithViewpoint) {
     Viewpoint *viewpoint= new Viewpoint;
     viewpoint->set_near(0.1);
     viewpoint->set_position(0.0f, 0.0f, -1.0f);
-    viewpoint->set_orientation(0.0f, 3.14f, 0.0);
+    viewpoint->set_orientation(glm::angleAxis(-3.14f, glm::vec3(1, 0, 0)));
     screen->set_viewpoint(viewpoint);
     
     glm::vec3 pre_light, light1, light2, light_behind;
