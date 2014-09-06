@@ -48,7 +48,10 @@ TEST_F (AssetTest, RemoveTexture) {
     
     asset->add_texture(texture1);
     asset->add_texture(texture2);
+    
+    get_test_appender()->set_expect_warning(true);
     EXPECT_TRUE(get_test_appender()->contains_string("Attempting to add a texture to texture slot 0 which already has a texture in it"));
+    get_test_appender()->set_expect_warning(false);
     
     delete texture1;
     delete texture2;

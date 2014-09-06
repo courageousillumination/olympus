@@ -21,6 +21,9 @@ void TestAppender::append(Logger::LogLevel level, const char *format_string, ...
         std::cout << buff << '\n';
         throw std::runtime_error("Logged an error message when I wasn't expecting one.");
     }
+    //if (!_expect_warning && level == Logger::WARN) {
+    //    std::cout << "I got a warning message (if this is expected you should use the expect_warning flag): "<< buff << '\n';
+    //}
     
 }
 void TestAppender::shutdown() { }
@@ -31,6 +34,10 @@ void TestAppender::clear() {
 
 void TestAppender::set_expect_error(bool flag) {
     _expect_error = flag;
+}
+
+void TestAppender::set_expect_warning(bool flag) {
+    _expect_warning = flag;
 }
 
 bool TestAppender::contains_string(std::string string) {

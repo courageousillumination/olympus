@@ -112,7 +112,14 @@ void StandardRenderEngine::configure_renderer_shadows(Renderer *renderer) {
 
 void StandardRenderEngine::configure_object_shadow(Renderer *renderer, Renderable *renderable) {
     if (! _use_shadows) return;
-    renderer->set_uniform(std::string("shadow_mvp"), bias_matrix * _world->get_lights()[0]->get_viewpoint()->get_view_projection_matrix() * renderable->get_model_matrix());
+    
+    glm::mat4 shadow_mvp[MAX_LIGHT_SOURCES];
+    for (unsigned i = 0; i < MAX_LIGHT_SOURCES; i++) {
+        if (_use_lights[i] == 1) {
+            shadow_mvp[i] = bias_matrix * _world->get_lights()[i]->get_viewpoint()->get_view_projection_matrix() * renderable->get_model_matrix();
+        }
+    }
+    renderer->set_uniform(std::string("shadow_mvp"), shadow_mvp, MAX_LIGHT_SOURCES);
         
 }
 

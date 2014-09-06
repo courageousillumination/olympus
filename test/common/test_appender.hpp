@@ -12,7 +12,7 @@
  */
 class TestAppender : public olympus::Appender {
 private:
-    bool _expect_error;
+    bool _expect_error, _expect_warning;
     std::vector<std::string> _output;
 public:
     
@@ -24,6 +24,7 @@ public:
     //If we expect an error we can set this flag. It ought to be cleared at the end
     //of the test.
     void set_expect_error(bool flag);
+    void set_expect_warning(bool flag);
     
     bool contains_string(std::string string);
 };
