@@ -47,6 +47,13 @@ namespace olympus {
         World *get_world();        
         Framebuffer *get_framebuffer();
         RenderEngine *get_render_engine();
+        
+        /**
+         * Some functions to control screen wide parameters.
+         */
+        
+        bool get_wireframe();
+        void set_wireframe(bool flag);
     };
 }
 #endif

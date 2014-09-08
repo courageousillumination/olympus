@@ -1,6 +1,8 @@
 #include <GL/glew.h>
 #include <GL/gl.h>
 
+#include "debug/logger.hpp"
+
 #include "render/screen.hpp"
 #include "render/renderer.hpp"
 #include "render/shaders.hpp"
@@ -21,6 +23,7 @@ Screen::~Screen() {
 
 void Screen::render() {
     _framebuffer->bind();
+    
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     if (_world != nullptr) {
         _render_engine->render(_viewpoint, _world);

@@ -12,6 +12,7 @@ Mesh::Mesh(unsigned num_attributes, enum Mesh::PrimType prim_type) {
     _attributes = new unsigned[num_attributes];
     glGenBuffers(num_attributes, _attributes);
     _num_verts = 0;
+    _indexed = false;
     switch (prim_type) {
         case TRIANGLES:
             _prim_type = GL_TRIANGLES;
@@ -43,10 +44,29 @@ void Mesh::set_vertex_attribute(unsigned attribute_number, unsigned dims,
     glVertexAttribPointer(attribute_number, dims, GL_FLOAT, GL_FALSE, 0, nullptr);
 }
 
+void Mesh::set_indices(unsigned num_indices, const unsigned *indices) {
+    if (indices == nullptr) {
+        _indexed = false;
+        return;
+    }
+    
+    _indexed = true;
+    _num_indices = num_indices;
+    bind();
+    
+    glGenBuffers(1, &_element_buffer);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _element_buffer);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, num_indices * sizeof(unsigned), indices, GL_STATIC_DRAW);
+}
+
 void Mesh::bind() {
     glBindVertexArray(_vao_id);
 }
 
 void Mesh::draw() {
-    glDrawArrays(_prim_type, 0, _num_verts);
+    if (_indexed) {
+        glDrawElements(_prim_type, _num_indices, GL_UNSIGNED_INT, 0);
+    } else {
+        glDrawArrays(_prim_type, 0, _num_verts);
+    }
 }
