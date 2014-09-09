@@ -8,9 +8,9 @@ Light::Light(Light::LightType type) {
     _type = type;
     _viewpoint = new Viewpoint;
     if (type == DIRECTIONAL) {
-        _viewpoint->set_ortho(glm::vec2(-10, 10),
-                              glm::vec2(-10, 10),
-                              glm::vec2(-10, 10));
+        _viewpoint->set_ortho(glm::vec2(-6, 6),
+                              glm::vec2(-6, 6),
+                              glm::vec2(-6, 6));
     }
 }
 

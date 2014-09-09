@@ -87,7 +87,7 @@ int main() {
     
     //Create a renderable to actually draw on the screen
     terrain->asset = asset;
-    terrain->set_position(0.0f, 0.0f, 0.0f);
+    terrain->set_position(-2.5f, -2.5f, 0.0f);
     
     world->add_child(terrain);
     
