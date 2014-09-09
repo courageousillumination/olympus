@@ -8,9 +8,9 @@ Light::Light(Light::LightType type) {
     _type = type;
     _viewpoint = new Viewpoint;
     if (type == DIRECTIONAL) {
-        _viewpoint->set_ortho(glm::vec2(-20, 20),
-                              glm::vec2(-20, 20),
-                              glm::vec2(-20, 20));
+        _viewpoint->set_ortho(glm::vec2(-10, 10),
+                              glm::vec2(-10, 10),
+                              glm::vec2(-10, 10));
     }
 }
 
@@ -63,6 +63,13 @@ Viewpoint *Light::get_viewpoint() {
 
 void Light::_update_viewpoint() {
     if (_type == DIRECTIONAL) {
-        
+        if (_direction == glm::vec3(0, 0, -1)) { _viewpoint->set_orientation(glm::quat(1, 0, 0, 0)); }
+        else if (_direction == glm::vec3(0, 0, 1)) { _viewpoint->set_orientation(-1.0f * glm::quat(1, 0, 0,0 )); }
+        else {
+            glm::vec3 v = _direction;
+            glm::vec3 u = glm::vec3(0, 0, 1);
+            _viewpoint->set_orientation(glm::angleAxis((float) acos(glm::dot(u, v)),
+                                                       glm::normalize(glm::cross(u, v))));
+        }
     }
 }

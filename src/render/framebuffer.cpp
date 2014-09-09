@@ -29,7 +29,7 @@ Framebuffer::Framebuffer() {
     _depth_texture = new Texture(Texture::TEXTURE_2D);
     glTexImage2D(GL_TEXTURE_2D, 0,GL_DEPTH_COMPONENT16, 640, 480, 0,GL_DEPTH_COMPONENT, GL_FLOAT, 0);
     glFramebufferTexture(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, _depth_texture->_texture_id, 0);
- 
+    //glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_COMPARE_MODE, GL_COMPARE_R_TO_TEXTURE);
     
     if(glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE) {
         LOG(Logger::ERROR, "Failed to create framebuffer");

@@ -49,8 +49,8 @@ void StandardRenderEngine::pre_render_lights(std::vector<Light *> &lights) {
 void StandardRenderEngine::configure_renderer_lights(Renderer *renderer) {
     if (renderer->has_uniform(std::string("light_direction"))) {
         renderer->set_uniform(std::string("light_direction"), _light_directions, MAX_LIGHT_SOURCES);
-        renderer->set_uniform(std::string("use_lights"), _use_lights, MAX_LIGHT_SOURCES);
     }
+    renderer->set_uniform(std::string("use_lights"), _use_lights, MAX_LIGHT_SOURCES);
 }
 
 void StandardRenderEngine::enable_shadows() {

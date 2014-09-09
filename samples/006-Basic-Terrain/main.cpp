@@ -87,25 +87,25 @@ int main() {
     
     //Create a renderable to actually draw on the screen
     terrain->asset = asset;
-    terrain->set_position(0.0f, 0.0f, -1.0f);
+    terrain->set_position(0.0f, 0.0f, 0.0f);
     
     world->add_child(terrain);
     
     //Set up the viewpoint
     viewpoint = new Viewpoint;
     viewpoint->set_far(100.0f);
-    viewpoint->set_near(1.0f);
+    viewpoint->set_near(0.1f);
     viewpoint->set_position(0.0f, 0.0f, 2.0f);
     screen->set_viewpoint(viewpoint);
     
     //Create a new directional Light for the screen
     light = new Light(Light::DIRECTIONAL);
-    light->set_direction(-1.0f, 0.0f, 0.0f);
+    light->set_direction(1.0f, -1.0f, 0.0f);
     world->add_child(light);
     
     //DEBUG
-    //Screen *shadow_screen = render_engine->get_shadow_screens()[0];
-    //window->add_screen(shadow_screen, 0.0f, 0.0f, 1.0f, 1.0f);
+    Screen *shadow_screen = render_engine->get_shadow_screens()[0];
+    window->add_screen(shadow_screen, 0.0f, 0.0f, 1.0f, 1.0f);
     window->add_screen(screen);
     
     while(!window->should_close()) {

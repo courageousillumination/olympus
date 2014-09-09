@@ -20,4 +20,6 @@
 #include "render/light.hpp"
 #include "render/world_object.hpp"
 
+#include "terrain/terrain.hpp"
+
 #endif

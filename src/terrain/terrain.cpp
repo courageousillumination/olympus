@@ -1,3 +1,5 @@
+#include <random>
+
 #include "terrain/terrain.hpp"
 
 #include "debug/logger.hpp"
@@ -16,49 +18,59 @@ Mesh *Terrain::generate_mesh() {
     return generate_mesh(0);
 }
 
-/*static void calculate_normal(float *verts, float *normals, unsigned *indices) {
+void diamond_square(glm::vec3 *vertices, int row_size,
+                    int x1, int y1, int x2, int y2,
+                    int level, float max_displacement, float falloff) {
+   
+    if (level < 1) return;
     
+    std::default_random_engine generator;
+    std::uniform_real_distribution<float> distribution(-max_displacement, max_displacement);
     
-    glm::vec3 p1 = glm::vec3(verts[*indices * 3], verts[*indices * 3 + 1], verts[*indices * 3 + 2]);
-    glm::vec3 p2 = glm::vec3(verts[*(indices + 1) * 3 + 4], verts[*indices * 3 + 4], verts[triangle_index + 5]);
-    glm::vec3 p3 = glm::vec3(verts[triangle_index + 6], verts[triangle_index + 7], verts[triangle_index + 8]);
+    //Diamond Step
+    for (int i = x1 + level; i < x2; i+=level) {
+        for(int j = y1 + level; j < y2; j+= level) {
+            float a = vertices[(i - level) * row_size + j - level][1];
+            float b = vertices[i * row_size +j-level][1];
+            float c = vertices[(i - level) * row_size +j][1];
+            float d = vertices[i * row_size +j][1];
+            vertices[(i - level / 2)*row_size + j - level / 2][1] = (a + b + c + d) / 4.0f + distribution(generator);
+        }
+    }
     
-    glm::vec3 u = p2 - p1;
-    glm::vec3 v = p3 - p1;
-    
-    glm::vec3 normal = glm::vec3(u.y * v.z - u.z * v.y, u.z * v.x - u.x * v.z, u.x * v.y - u.y * v.x);
-    
-    normals[triangle_index + 0] = normal[0];
-    normals[triangle_index + 1] = normal[1];
-    normals[triangle_index + 2] = normal[2];
-
-    normals[triangle_index + 3] = normal[0];
-    normals[triangle_index + 4] = normal[1];
-    normals[triangle_index + 5] = normal[2];
-
-    normals[triangle_index + 6] = normal[0];
-    normals[triangle_index + 7] = normal[1];
-    normals[triangle_index + 8] = normal[2];
-
-}*/
+    for (int i = x1 + 2 * level; i < x2; i += level) {
+        for (int j = y1 + 2 * level; j < y2; j+= level) {
+            float a = vertices[(i - level) * row_size + j - level][1];
+            float b = vertices[i * row_size +j-level][1];
+            float c = vertices[(i - level) * row_size +j][1];
+            //float d = vertices[i][j][1];
+            float e = vertices[(i - level/2) * row_size +j - level/2][1];
+            
+            vertices[(i - level) * row_size +j - level / 2][1] = (a + c + e + vertices[(i - 3 * level / 2) * row_size +j - level / 2][1])  / 4.0f + distribution(generator);
+            vertices[(i - level / 2) * row_size +j - level][1] = (a + b + e + vertices[(i - level / 2) * row_size +j - 3 * level / 2][1])  / 4.0f + distribution(generator);
+        }
+    }
+    diamond_square(vertices, row_size, x1, y1, x2, y2, level / 2, max_displacement * falloff, falloff);
+}
 
 static void create_height_map(unsigned width, unsigned  height, glm::vec3 *verts, unsigned seed) {
-    for (unsigned i = 0; i < width; i++) {
+    diamond_square(verts, width, 0, 0, width, height, 64, 10.0f, 0.4f);
+    /*for (unsigned i = 0; i < width; i++) {
         for (unsigned j = 0; j < height; j++) {
             float x_dist = i - width / 2.0f;
             float y_dist = j - height / 2.0f;
             verts[i * width + j][1] = -0.5f * sqrt(x_dist * x_dist + y_dist * y_dist); 
         }   
-    }
+    }*/
 }
 
 static void calculate_normals(unsigned width, unsigned height, glm::vec3 *verts, glm::vec3 *normals, unsigned *indices) {
-    for (unsigned i = 0; i < (width - 1)* (height - 1) * 6 + 6; i+= 3) {
+    for (unsigned i = 0; i < (width - 1)* (height - 1) * 6; i+= 3) {
         glm::vec3 p1 = verts[indices[i]];
         glm::vec3 p2 = verts[indices[i + 1]];
         glm::vec3 p3 = verts[indices[i + 2]];
         
-        glm::vec3 normal = glm::cross(p2 - p1, p3 - p1);
+        glm::vec3 normal = glm::cross(p3 - p1, p2 - p1);
         normals[indices[i]] += normal;
         normals[indices[i + 1]] += normal;
         normals[indices[i + 2]] += normal;
@@ -74,14 +86,14 @@ static void calculate_normals(unsigned width, unsigned height, glm::vec3 *verts,
 Mesh *Terrain::generate_mesh(unsigned seed) {
     Mesh *mesh = new Mesh(3, Mesh::TRIANGLES);
     
-    unsigned width = 10, height = 10;
-    float cell_size = 1.0f;
+    unsigned width = 64, height = 64;
+    float cell_size = 0.1f;
     
     glm::vec3 *verts = new glm::vec3[width * height];
     glm::vec3 *normals = new glm::vec3[width * height];
     glm::vec3 *colors = new glm::vec3[width * height];
 
-    unsigned *indices = new unsigned[(width - 1)* (height - 1) * 6 + 6];
+    unsigned *indices = new unsigned[(width - 1) * (height - 1) * 6];
     unsigned *ind = indices;
     
     // Init all verts to be a square grid
@@ -104,7 +116,6 @@ Mesh *Terrain::generate_mesh(unsigned seed) {
             *ind++ = i * width + j;
             *ind++ = (i + 1) * width + j + 1;
             *ind++ = i * width + j + 1;
-   
             
         }
     }
@@ -115,7 +126,7 @@ Mesh *Terrain::generate_mesh(unsigned seed) {
     mesh->set_vertex_attribute(0, 3, width * height, (float *)verts);
     mesh->set_vertex_attribute(1, 3, width * height, (float *)colors);
     mesh->set_vertex_attribute(2, 3, width * height, (float *)normals);
-    mesh->set_indices((width - 1)* (height - 1)* 6 + 6, indices);
+    mesh->set_indices((width - 1) * (height - 1) * 6, indices);
     
     delete []indices;
     delete []verts;
