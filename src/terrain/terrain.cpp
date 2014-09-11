@@ -70,7 +70,7 @@ static void calculate_normals(unsigned width, unsigned height, glm::vec3 *verts,
         glm::vec3 p2 = verts[indices[i + 1]];
         glm::vec3 p3 = verts[indices[i + 2]];
         
-        glm::vec3 normal = glm::cross(p3 - p1, p2 - p1);
+        glm::vec3 normal = glm::cross(p2 - p1, p3 - p1);
         normals[indices[i]] += normal;
         normals[indices[i + 1]] += normal;
         normals[indices[i + 2]] += normal;
@@ -109,13 +109,14 @@ Mesh *Terrain::generate_mesh(unsigned seed) {
                 continue;
             }
             
-            *ind++ = i * width + j;
-            *ind++ = (i + 1) * width + j;
-            *ind++ = (i + 1) * width + j + 1;
             
-            *ind++ = i * width + j;
             *ind++ = (i + 1) * width + j + 1;
+            *ind++ = (i + 1) * width + j;
+            *ind++ = i * width + j;
+            
             *ind++ = i * width + j + 1;
+            *ind++ = (i + 1) * width + j + 1;
+            *ind++ = i * width + j;
             
         }
     }

@@ -6,6 +6,7 @@
 #include "render/world.hpp"
 #include "render/renderer.hpp"
 #include "render/render_engine.hpp"
+#include "render/graphics_state_manager.hpp"
 
 namespace olympus {
     /**
@@ -20,6 +21,7 @@ namespace olympus {
         World *_world;
         Framebuffer *_framebuffer;
         RenderEngine *_render_engine;
+        GraphicsState *_graphics_state;
     public:
         Screen();
         ~Screen();
@@ -47,6 +49,7 @@ namespace olympus {
         World *get_world();        
         Framebuffer *get_framebuffer();
         RenderEngine *get_render_engine();
+        GraphicsState *get_graphics_state();
         
         /**
          * Some functions to control screen wide parameters.

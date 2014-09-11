@@ -6,6 +6,7 @@
 #include <GLFW/glfw3.h>
 
 #include "render/screen.hpp"
+#include "render/graphics_state_manager.hpp"
 
 namespace olympus {
     class WindowManager;
@@ -27,6 +28,8 @@ namespace olympus {
         ///This should be a simple texture renderer to render the screens
         Renderer *_renderer;
         std::vector<ScreenAndMesh> _screens;
+        
+        GraphicsState *_graphics_state;
     public:
         ~Window();
         
@@ -62,7 +65,9 @@ namespace olympus {
          */
         void add_screen(Screen *screen);
         void add_screen(Screen *screen, float x, float y, float width, float height);
-        void remove_screen(Screen *screen);
+        void remove_screen(Screen *screen);        
+
+        GraphicsState *get_graphics_state();
         
         friend WindowManager;
     };

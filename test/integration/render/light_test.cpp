@@ -136,7 +136,7 @@ TEST_F (LightTest, DirectionalLightWithShadows) {
     lit = average_color_block(0, 0, DEFAULT_WIDTH, DEFAULT_HEIGHT);
     
     //Now we add a block between us and the light source
-    s1->set_position(0.0, 0.0, 2.0f);
+    s1->set_position(0.0, 0.0, 3.0f);
     world->add_child(s1);
     
     window->render();
@@ -262,51 +262,6 @@ TEST_F (LightTest, TwoDirectionalLightsWithShadows) {
     EXPECT_EQ(post_shadow1, post_shadow2);
     EXPECT_LT(post_shadow1[0], 1);
     EXPECT_LT(post_shadow2[0], 1);
-    
-    /*//Check both sides of the cube before anything has been added
-    glm::vec3 pre_light1, pre_light2, one_light1, one_light2, two_lights1, two_lights2;
-    
-    window->render();
-    
-    
-    
-    
-    EXPECT_EQ(pre_light1, pre_light2);
-    
-    //Now we add a light from one direction and check both
-    viewpoint->set_position(0.0, 0.0, 2.0f);
-    viewpoint->set_orientation(glm::angleAxis(0.0f, glm::vec3(1, 0, 0)));
-    light->set_direction(0, 0, -1.0);
-    world->add_child(light);
-    
-    window->render();
-    one_light1 = average_color_block(0, 0, DEFAULT_WIDTH, DEFAULT_HEIGHT);
-    
-    viewpoint->set_position(0.0, 0.0, -2.0f);
-    viewpoint->set_orientation(glm::angleAxis(-3.14f, glm::vec3(1, 0, 0)));
-    
-    window->render();
-    one_light2 = average_color_block(0, 0, DEFAULT_WIDTH, DEFAULT_HEIGHT);
-    
-    EXPECT_GT(one_light1[0], one_light2[0]);
-    EXPECT_EQ(pre_light1, one_light2);
-    
-    //Next we add our second light and we expect both sides to be equally illuminated
-    viewpoint->set_position(0.0, 0.0, 2.0f);
-    viewpoint->set_orientation(glm::angleAxis(0.0f, glm::vec3(1, 0, 0)));
-    light2->set_direction(0, 0, 1.0);
-    world->add_child(light2);
-    
-    window->render();
-    two_lights1 = average_color_block(0, 0, DEFAULT_WIDTH, DEFAULT_HEIGHT);
-    
-    viewpoint->set_position(0.0, 0.0, -2.0f);
-    viewpoint->set_orientation(glm::angleAxis(-3.14f, glm::vec3(1, 0, 0)));
-    
-    window->render();
-    two_lights2 = average_color_block(0, 0, DEFAULT_WIDTH, DEFAULT_HEIGHT);
-    
-    EXPECT_EQ(two_lights1, two_lights2);*/
     
     //Clean up
     world->remove_child(light);

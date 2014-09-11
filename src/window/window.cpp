@@ -45,13 +45,13 @@ Window::Window(unsigned width, unsigned height, const char *title) :
     
     glfwSwapInterval(1);
     
-    glEnable(GL_DEPTH_TEST);
-    glDepthFunc(GL_LESS);
-    glDisable(GL_CULL_FACE);
+    //Build my graphics state
+    _graphics_state = new GraphicsState;
     
     //Build my renderer
     _renderer = new Renderer(TEXTURE_VERTEX_SHADER,
                             TEXTURE_FRAGMENT_SHADER);
+    
 }
 
 Window::~Window() {
@@ -60,6 +60,7 @@ Window::~Window() {
         delete it->mesh;
     }
     delete _renderer;
+    delete _graphics_state;
     glfwDestroyWindow(_internal_window);
 }
 
@@ -93,6 +94,9 @@ void Window::render() {
         screen.screen->render();
     }
     
+    
+    GraphicsStateManager::get_instance().push(_graphics_state);
+    
     _renderer->bind();
     _renderer->set_uniform(std::string("model_view_matrix"), glm::mat4(1.0f));
     _renderer->set_uniform(std::string("projection_matrix"), glm::mat4(1.0f));
@@ -105,6 +109,9 @@ void Window::render() {
         screen.mesh->bind();
         screen.mesh->draw();
     }
+    
+    GraphicsStateManager::get_instance().pop();
+    
     
     //Finally we swap our buffers
     glfwSwapBuffers(_internal_window);
@@ -134,6 +141,7 @@ void Window::add_screen(Screen *screen, float x, float y, float width, float hei
     screen_and_mesh.mesh = mesh;
     _screens.push_back(screen_and_mesh);
 }
+
 void Window::remove_screen(Screen *screen) {
     for(std::vector<ScreenAndMesh>::iterator it = _screens.begin();
         it != _screens.end(); it++) {
@@ -143,4 +151,9 @@ void Window::remove_screen(Screen *screen) {
             return;
         }
     }
+}
+
+
+GraphicsState *Window::get_graphics_state() {
+    return _graphics_state;
 }
