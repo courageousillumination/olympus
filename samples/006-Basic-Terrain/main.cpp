@@ -43,6 +43,9 @@ static void key_callback(Window *window, int key, int scancode, int action, int 
     if (key == GLFW_KEY_J) {
         viewpoint->set_orientation(glm::angleAxis(0.1f, glm::vec3(0, 0, 1)) * viewpoint->get_orientation());
     }
+    if (key == GLFW_KEY_Z and action == GLFW_PRESS) {
+        screen->get_graphics_state()->wireframe = !screen->get_graphics_state()->wireframe ;
+    }
     if (key == GLFW_KEY_ESCAPE) {
         window->set_should_close(true);
     }
@@ -61,6 +64,7 @@ int main() {
     
     //Create a screen to attach to the window
     screen = new Screen;
+    screen->get_graphics_state()->cull = true;
     
     //Create a world to add to the screen
     World *world = new World;
@@ -104,8 +108,8 @@ int main() {
     world->add_child(light);
     
     //DEBUG
-    Screen *shadow_screen = render_engine->get_shadow_screens()[0];
-    window->add_screen(shadow_screen, 0.0f, 0.0f, 1.0f, 1.0f);
+    //Screen *shadow_screen = render_engine->get_shadow_screens()[0];
+    //window->add_screen(shadow_screen, 0.0f, 0.0f, 1.0f, 1.0f);
     window->add_screen(screen);
     
     while(!window->should_close()) {
