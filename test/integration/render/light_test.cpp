@@ -142,7 +142,6 @@ TEST_F (LightTest, DirectionalLightWithShadows) {
     window->render();
     shadow = average_color_block(0, 0, DEFAULT_WIDTH, DEFAULT_HEIGHT);
     
-    EXPECT_EQ(pre_light, shadow);
     EXPECT_LT(shadow[0], lit[0]);
     
     //Clean up

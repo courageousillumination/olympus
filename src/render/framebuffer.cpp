@@ -40,6 +40,7 @@ Framebuffer::Framebuffer() {
 
 Framebuffer::~Framebuffer() {
     delete _color_0_texture;
+    delete _depth_texture;
     glDeleteFramebuffers(1, &_frame_buffer_id);
 }
 

@@ -55,13 +55,6 @@ void diamond_square(glm::vec3 *vertices, int row_size,
 
 static void create_height_map(unsigned width, unsigned  height, glm::vec3 *verts, unsigned seed) {
     diamond_square(verts, width, 0, 0, width, height, 64, 10.0f, 0.4f);
-    /*for (unsigned i = 0; i < width; i++) {
-        for (unsigned j = 0; j < height; j++) {
-            float x_dist = i - width / 2.0f;
-            float y_dist = j - height / 2.0f;
-            verts[i * width + j][1] = -0.5f * sqrt(x_dist * x_dist + y_dist * y_dist); 
-        }   
-    }*/
 }
 
 static void calculate_normals(unsigned width, unsigned height, glm::vec3 *verts, glm::vec3 *normals, unsigned *indices) {

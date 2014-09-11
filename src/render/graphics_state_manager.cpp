@@ -18,12 +18,20 @@ GraphicsState::GraphicsState() {
 //Individual setters, not part of the class.
 
 static void enable_disable_general(GLenum target, bool flag) {
-    if (flag) { glEnable(target); }
-    else { glDisable(target); }
+    if (flag) { 
+        glEnable(target); 
+    }
+    else { 
+        glDisable(target);
+    }
 }
 static void set_wireframe(bool flag) {
-    if (flag) { glPolygonMode(GL_FRONT_AND_BACK, GL_LINE); }
-    else { glPolygonMode(GL_FRONT_AND_BACK, GL_FILL); }
+    if (flag) {
+        glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+    }
+    else {
+        glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+    }
 }
     
 void GraphicsStateManager::_apply_graphics_state(GraphicsState *state) {
