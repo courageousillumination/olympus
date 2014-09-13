@@ -7,6 +7,8 @@
 
 using namespace olympus;
 
+TestAppender::TestAppender(int level) : Appender(level) { }
+
 void TestAppender::append(Logger::LogLevel level, const char *format_string, ...) {
     //Append
     char buff[2048];

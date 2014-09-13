@@ -10,8 +10,8 @@
 
 using namespace olympus;
 
-
-static const GLfloat simple_square_texcoords[] = {
+// These are used to create a square texture
+static const float simple_square_texcoords[8] = {
     0.0, 0.0,
     1.0, 0.0,
     0.0, 1.0,
@@ -20,13 +20,13 @@ static const GLfloat simple_square_texcoords[] = {
 
 Window::Window(unsigned width, unsigned height, const char *title) :
     _width(width), _height(height) {
+     
+    // initalize GLFW and GLEW, making the window context the current one.
     _internal_window =  glfwCreateWindow(width, height, title, nullptr, nullptr);
     if (_internal_window == nullptr) {
         LOG(Logger::ERROR, "Failed to create GLFW window");
         throw std::runtime_error("Failed to create GLFW window");
     }
-    
-    _key_callback = nullptr;
     
     glfwMakeContextCurrent(_internal_window);
     glewExperimental = GL_TRUE; 
@@ -43,14 +43,13 @@ Window::Window(unsigned width, unsigned height, const char *title) :
     LOG(Logger::INFO, "Renderer: %s", renderer);
     LOG(Logger::INFO, "OpenGL version supported %s", version);
     
+    // Enable vsync
     glfwSwapInterval(1);
     
-    //Build my graphics state
     _graphics_state = new GraphicsState;
-    
-    //Build my renderer
     _renderer = new Renderer(TEXTURE_VERTEX_SHADER,
-                            TEXTURE_FRAGMENT_SHADER);
+                             TEXTURE_FRAGMENT_SHADER);
+    _key_callback = nullptr;
     
 }
 
@@ -76,7 +75,7 @@ void Window::set_dimensions(unsigned width, unsigned height) {
     glfwSetWindowSize(_internal_window, _width, _height);
 }
 
-bool Window::should_close() {
+bool Window::get_should_close() {
     return glfwWindowShouldClose(_internal_window);
 }
 void Window::set_should_close(bool flag) {
@@ -90,6 +89,7 @@ void Window::set_keyboard_callback(void (* callback)(Window *, int, int, int, in
 void Window::render() {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     
+    // Render each screen to a texture
     for (auto screen : _screens) {
         screen.screen->render();
     }
@@ -101,7 +101,7 @@ void Window::render() {
     _renderer->set_uniform(std::string("model_view_matrix"), glm::mat4(1.0f));
     _renderer->set_uniform(std::string("projection_matrix"), glm::mat4(1.0f));
         
-    //Configure OpenGL
+    // Make sure the state machine is in the proper place by binding texture 0.
     glActiveTexture(GL_TEXTURE0);
     
     for (auto screen : _screens) {
@@ -112,7 +112,6 @@ void Window::render() {
     
     GraphicsStateManager::get_instance().pop();
     
-    
     //Finally we swap our buffers
     glfwSwapBuffers(_internal_window);
 }
@@ -121,6 +120,7 @@ void Window::add_screen(Screen *screen) {
     add_screen(screen, -1.0, -1.0, 2.0, 2.0);
     
 }
+
 void Window::add_screen(Screen *screen, float x, float y, float width, float height) {
     ScreenAndMesh screen_and_mesh;
     screen_and_mesh.screen = screen;
@@ -128,6 +128,7 @@ void Window::add_screen(Screen *screen, float x, float y, float width, float hei
     //Create the mesh
     Mesh *mesh = new Mesh(2, Mesh::TRIANGLE_STRIP);
     
+    // Create a super simple square mesh to render the screen to.
     const float verts[] = {
         x, y, 0.0,
         x + width, y, 0.0,
@@ -152,7 +153,6 @@ void Window::remove_screen(Screen *screen) {
         }
     }
 }
-
 
 GraphicsState *Window::get_graphics_state() {
     return _graphics_state;

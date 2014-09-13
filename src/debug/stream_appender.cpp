@@ -6,7 +6,8 @@
 
 using namespace olympus;
 
-StreamAppender::StreamAppender(std::ostream  & output) : _output(output) { }
+StreamAppender::StreamAppender(int level, std::ostream  & output) : 
+    Appender(level), _output(output) { }
 
 void StreamAppender::append(Logger::LogLevel level, const char *format_string, ...) {
     char buff[2048]; //Hopefully we don't get too long of a string...

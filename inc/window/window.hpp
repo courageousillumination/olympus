@@ -11,25 +11,39 @@
 namespace olympus {
     class WindowManager;
     
+    /**
+     * A window represents a window in the windo manager. This class generally
+     * wraps the underlying GLFW calls and makes things a little more OOP. A window
+     * can have multiple Screens positioned at arbitrary points on the window.
+     * Windows can also have callbacks set on them, but these will not trigger until
+     * the window manager polls for events.
+     */
     class Window {
     private:
-        GLFWwindow *_internal_window;
-        
-        unsigned  _width, _height;
-       
-        Window(unsigned width, unsigned height, const char *title);
-        
-        void (* _key_callback)(Window *, int, int, int, int);
-        
+        /**
+         * A simple structure used to store a screen and mesh pair. We need 
+         * these to render the screens to the window.
+         */
         struct ScreenAndMesh {
             Screen *screen;
             Mesh *mesh;
         };
-        ///This should be a simple texture renderer to render the screens
-        Renderer *_renderer;
-        std::vector<ScreenAndMesh> _screens;
         
+        unsigned  _width, _height;
+        
+        // A simpler renderer that can render the textures produced by screens
+        // to the window.
+        Renderer *_renderer;
         GraphicsState *_graphics_state;
+        GLFWwindow *_internal_window;
+        
+        std::vector<ScreenAndMesh> _screens;
+ 
+        // Stores a function pointer to the callback for any keyboard event
+        void (* _key_callback)(Window *, int, int, int, int);
+        
+        // Private so only the window manager can construct windows
+        Window(unsigned width, unsigned height, const char *title);
     public:
         ~Window();
         
@@ -38,20 +52,6 @@ namespace olympus {
          */
         void render();
 
-        void set_height(unsigned height);
-        void set_width(unsigned width);
-        void set_dimensions(unsigned width, unsigned height);
-
-        unsigned get_width() { return _width; }
-        unsigned get_height() { return _height; }
-        
-        /**
-         * Should close will either be set to true by the user closing
-         * the window or by the program if an escape key etc. is hit.
-         */
-        bool should_close();
-        void set_should_close(bool flag);
-        
         /**
          * Adds a keyboard callback to the current window. These will only be
          * called when the window manager polls for input.
@@ -66,7 +66,17 @@ namespace olympus {
         void add_screen(Screen *screen);
         void add_screen(Screen *screen, float x, float y, float width, float height);
         void remove_screen(Screen *screen);        
+        
+        // Getters and Setters
+        
+        void set_height(unsigned height);
+        void set_width(unsigned width);
+        void set_dimensions(unsigned width, unsigned height);
+        void set_should_close(bool flag);
 
+        unsigned get_width() { return _width; }
+        unsigned get_height() { return _height; }
+        bool get_should_close();
         GraphicsState *get_graphics_state();
         
         friend WindowManager;

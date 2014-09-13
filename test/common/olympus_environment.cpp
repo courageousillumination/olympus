@@ -17,12 +17,11 @@ void OlympusEnvironment::TearDown() {
 }
 
 void OlympusEnvironment::SetUp() {
-    test_appender = new TestAppender();
-    test_appender->set_expect_error(false);
-    Logger::set_appender(test_appender);
     // We will only be checking the logger for warns or errors. Anything else
     // we don't need and will be discarded.
-    Logger::set_level(Logger::WARN);
+    test_appender = new TestAppender(Logger::WARN);
+    test_appender->set_expect_error(false);
+    Logger::add_appender(test_appender);
 }
 
 

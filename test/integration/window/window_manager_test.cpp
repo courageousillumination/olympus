@@ -16,6 +16,7 @@ using namespace olympus;
 static unsigned COUNTER = 0;
 static unsigned COUNTER1 = 0;
 static unsigned COUNTER2 = 0;
+
 static void test_keyboard_handler(Window *window, int key, int scancode, int actions, int mods) {
      COUNTER++;
 }
@@ -99,8 +100,7 @@ TEST_F(WindowManagerTest, WindowManagerHandleKeyboardInput) {
     //Finally we need to poll to make sure that we process the input
     window_manager.poll();
     
-    EXPECT_EQ(COUNTER, 1);
-   
+    EXPECT_EQ(COUNTER, 1);  
 }
 
 TEST_F(WindowManagerTest, WindowManagerHandleKeyboardInputMultiple) {

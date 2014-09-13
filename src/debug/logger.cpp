@@ -5,35 +5,31 @@
 using namespace olympus;
 using namespace olympus::Logger;
 
+static std::vector<Appender*> _appenders;
 
-static Appender *_appender = nullptr;
-static LogLevel _level = NONE;
+const std::vector<Appender *> &olympus::Logger::get_appenders() {
+    return _appenders;
+}
+        
+void olympus::Logger::add_appender(Appender *appender) {
+    _appenders.push_back(appender);
+}
 
-bool olympus::Logger::at_level(LogLevel level) {
-    if (level == DEBUG) { 
-        return ((_level & DEBUG) != 0);
+void olympus::Logger::remove_appender(Appender *appender) {
+    for(std::vector<Appender *>::iterator it = _appenders.begin();
+        it != _appenders.end(); it++) {
+        if ((*it) == appender) {
+            _appenders.erase(it);
+            return;
+        }
     }
-    return (_level & 0b11) >= level;
 }
-
-void olympus::Logger::set_level(int level) {
-    olympus::Logger::set_level((LogLevel) level);
-}
-
-Appender *olympus::Logger::get_appender() { return _appender; }
-LogLevel olympus::Logger::get_level() { return _level; }
-
-void olympus::Logger::set_appender(Appender *appender) { _appender = appender; }
-void olympus::Logger::set_level(LogLevel level) { _level = level; }
 
 void olympus::Logger::shutdown() {
-    if (_appender != nullptr) {
-        _appender->shutdown();
+    for (auto appender : _appenders) {
+        appender->shutdown();
     }
-    _appender = nullptr;
-    _level = NONE;
 }
-
 
 const char *olympus::Logger::level_to_string(LogLevel level) {
     switch (level) {

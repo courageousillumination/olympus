@@ -59,9 +59,8 @@ static void key_callback(Window *window, int key, int scancode, int action, int 
 
 int main() {
     //Set up debug and info logging
-    StreamAppender *appender = new StreamAppender(std::cout);
-    Logger::set_appender(appender);
-    Logger::set_level(Logger::DEBUG | Logger::INFO);
+    StreamAppender *appender = new StreamAppender(Logger::DEBUG | Logger::INFO, std::cout);
+    Logger::add_appender(appender);
     fps::enable_fps_logging(true);
     
     //Create a window
@@ -98,7 +97,7 @@ int main() {
     viewpoint->set_position(0.0f, 0.0f, -0.5f);
     easy_window->screen->set_viewpoint(viewpoint);
     
-    while(!window->should_close()) {
+    while(!window->get_should_close()) {
         window->render();
         window_manager.poll();
         fps::fps_tick();

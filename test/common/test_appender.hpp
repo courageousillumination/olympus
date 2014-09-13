@@ -15,6 +15,7 @@ private:
     bool _expect_error, _expect_warning;
     std::vector<std::string> _output;
 public:
+    TestAppender(int level);
     
     void append(olympus::Logger::LogLevel level, const char *format_string, ...);
     void shutdown();

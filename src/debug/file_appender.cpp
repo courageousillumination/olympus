@@ -5,9 +5,10 @@
 
 using namespace olympus;
 
-FileAppender::FileAppender(const char *output) {
+FileAppender::FileAppender(int level, const char *output) : Appender(level) {
     _output = fopen(output, "w");
 }
+
 void FileAppender::append(Logger::LogLevel level, const char *format_string, ...) {
     fprintf(_output, "[%s] ", Logger::level_to_string(level));
     va_list args;
@@ -16,9 +17,11 @@ void FileAppender::append(Logger::LogLevel level, const char *format_string, ...
     va_end(args);
     fprintf(_output, "\n");
 }
+
 void FileAppender::shutdown() { 
     fclose(_output);
 }
+
 void FileAppender::flush() {
     fflush(_output);
 }

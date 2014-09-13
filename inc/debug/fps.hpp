@@ -2,6 +2,9 @@
 #define OLYMPUS__DEBUG__FPS
 namespace olympus {
     /**
+     * This is a simple namspace to allow for logging fps. It will
+     * simply keep a counter and print it out every second at the
+     * debug level.
      * NOTE: This is not threadsafe.
      */
     namespace fps {

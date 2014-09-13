@@ -42,12 +42,14 @@ TEST_F (WindowTest, WindowGettersAndSetters) {
     
     EXPECT_EQ(window->get_width(), DEFAULT_WIDTH);
     EXPECT_EQ(window->get_height(), DEFAULT_HEIGHT);
+    
+    EXPECT_TRUE(window->get_graphics_state() != nullptr);
 }
 
 TEST_F(WindowTest, WindowShouldClose) {
-    EXPECT_EQ(window->should_close(), false);
+    EXPECT_EQ(window->get_should_close(), false);
     window->set_should_close(true);
-    EXPECT_EQ(window->should_close(), true);
+    EXPECT_EQ(window->get_should_close(), true);
 }
 
 TEST_F(WindowTest, EasyWindowShortuct) {
