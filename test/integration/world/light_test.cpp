@@ -129,6 +129,9 @@ TEST_F (LightTest, DirectionalLightWithShadows) {
     
     //Now we add a light pointing directly at the square
     light->set_direction(0.0, 0.0, -1.0);
+    light->set_shadow_box(glm::vec2(-5, 5),
+                          glm::vec2(-5, 5),
+                          glm::vec2(-5, 5));
     world->add_child(light);
     render_engine->enable_shadows();
     window->render();
@@ -228,8 +231,15 @@ TEST_F (LightTest, TwoDirectionalLightsWithShadows) {
     s2->set_position(0, 0, 3.0f);
     
     Light *light2 = new Light(Light::DIRECTIONAL);
-    light2->set_direction(0, 0, 1.0f);
     light->set_direction(0, 0, -1.0f);
+    light2->set_direction(0, 0, 1.0f);
+    light->set_shadow_box(glm::vec2(-5, 5),
+                          glm::vec2(-5, 5),
+                          glm::vec2(-5, 5));
+    
+    light2->set_shadow_box(glm::vec2(-5, 5),
+                          glm::vec2(-5, 5),
+                          glm::vec2(-5, 5));
     world->add_child(light);
     world->add_child(light2);
     world->add_child(s1);

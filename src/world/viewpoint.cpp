@@ -36,27 +36,22 @@ void Viewpoint::_post_update_model_matrix() {
         
         _view_matrix = glm::lookAt(world_position,
                                    world_position + (glm::vec3(0.0, 0.0, -1.0) * _orientation * _parent->get_orientation()),
-                                   glm::vec3(0.0, 1.0, 0.0) * _orientation * _parent->get_orientation()); 
-
-        
+                                   glm::vec3(0.0, 1.0, 0.0) * _orientation * _parent->get_orientation());         
     }
-    
 }
 
 glm::mat4 Viewpoint::get_view_matrix() {
     return _view_matrix;
 }
+
 glm::mat4 Viewpoint::get_projection_matrix() {
     return _projection_matrix;
 }
+
 glm::mat4 Viewpoint::get_view_projection_matrix() {
     return _projection_matrix * _view_matrix;
 }
 
-void Viewpoint::use_ortho(bool flag) {
-    _use_ortho = flag;
-    _update_projection_matrix();
-}
 void Viewpoint::set_ortho(glm::vec2 x, glm::vec2 y, glm::vec2 z) {
     _ortho_x = x;
     _ortho_y = y;
@@ -69,14 +64,17 @@ void Viewpoint::set_fov(float fov) {
     _fov = fov;
     _update_projection_matrix();
 }
+
 void Viewpoint::set_ratio(float ratio) {
     _ratio = ratio;
     _update_projection_matrix();
 }
+
 void Viewpoint::set_near(float near) {
     _near = near;
     _update_projection_matrix();
 }
+
 void Viewpoint::set_far(float far) {
     _far = far;
     _update_projection_matrix();
@@ -91,7 +89,18 @@ void Viewpoint::set_perspective(float fov, float ratio, float near, float far) {
     _update_projection_matrix();
 }
 
-float Viewpoint::get_fov() { return _fov; }
-float Viewpoint::get_ratio() { return _ratio; }
-float Viewpoint::get_near() { return _near; }
-float Viewpoint::get_far() { return _far; }
+float Viewpoint::get_fov() { 
+    return _fov;
+}
+
+float Viewpoint::get_ratio() { 
+    return _ratio; 
+}
+
+float Viewpoint::get_near() { 
+    return _near;
+}
+
+float Viewpoint::get_far() { 
+    return _far;
+}

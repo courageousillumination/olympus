@@ -74,6 +74,8 @@ TEST_F (WorldObjectTest, InheritsPositionOneLevel) {
     parent->set_position(1, 0, 0);
     parent->add_child(object);
     
+    EXPECT_EQ(parent, object->get_parent());
+    
     EXPECT_EQ(glm::translate(glm::vec3(1, 0, 0)), parent->get_model_matrix());
     EXPECT_EQ(glm::translate(glm::vec3(1, 0, 0)), object->get_model_matrix());
     
@@ -84,6 +86,9 @@ TEST_F (WorldObjectTest, InheritsPositionOneLevel) {
     parent->set_position(-1, 0, 0);
     EXPECT_EQ(glm::translate(glm::vec3(-1, 0, 0)), parent->get_model_matrix());
     EXPECT_EQ(glm::translate(glm::vec3(1, 0, 0)), object->get_model_matrix());
+    
+    // Make sure we can delete a null child
+    parent->remove_child(nullptr);
     
     delete parent;
 }

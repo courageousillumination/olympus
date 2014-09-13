@@ -9,9 +9,9 @@ Light::Light(Light::LightType type) {
     _type = type;
     _viewpoint = new Viewpoint;
     if (type == DIRECTIONAL) {
-        _viewpoint->set_ortho(glm::vec2(-6, 6),
-                              glm::vec2(-6, 6),
-                              glm::vec2(-6, 6));
+        _viewpoint->set_ortho(glm::vec2(-1, 1),
+                              glm::vec2(-1, 1),
+                              glm::vec2(-1, 1));
     }
 }
 
@@ -40,6 +40,10 @@ void Light::set_direction(glm::vec3 direction) {
     _update_viewpoint();
 }
 
+void Light::set_shadow_box(glm::vec2 x, glm::vec2 y, glm::vec2 z) {
+    _viewpoint->set_ortho(x, y, z);
+}
+
 void Light::get_direction(float &x, float &y, float &z) {
     x = _direction[0];
     y = _direction[1];
@@ -64,8 +68,12 @@ Viewpoint *Light::get_viewpoint() {
 
 void Light::_update_viewpoint() {
     if (_type == DIRECTIONAL) {
-        if (_direction == glm::vec3(0, 0, -1)) { _viewpoint->set_orientation(glm::quat(1, 0, 0, 0)); }
-        else if (_direction == glm::vec3(0, 0, 1)) { _viewpoint->set_orientation(-1.0f * glm::quat(1, 0, 0,0 )); }
+        if (_direction == glm::vec3(0, 0, -1)) { 
+            _viewpoint->set_orientation(glm::quat(1, 0, 0, 0));
+        }
+        else if (_direction == glm::vec3(0, 0, 1)) { 
+            _viewpoint->set_orientation(-1.0f * glm::quat(1, 0, 0,0 ));
+        }
         else {
             glm::vec3 v = _direction;
             glm::vec3 u = glm::vec3(0, 0, 1);

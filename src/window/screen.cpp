@@ -3,10 +3,11 @@
 
 #include "debug/logger.hpp"
 
-#include "render/screen.hpp"
 #include "render/renderer.hpp"
 #include "render/shaders.hpp"
 #include "render/mesh.hpp"
+
+#include "window/screen.hpp"
 
 using namespace olympus;
 
@@ -36,10 +37,6 @@ void Screen::render() {
     GraphicsStateManager::get_instance().pop();
     
     _framebuffer->unbind();
-};
-
-Framebuffer *Screen::get_framebuffer() {
-    return _framebuffer;
 }
 
 void Screen::set_world(World *world) {
@@ -52,6 +49,10 @@ void Screen::set_viewpoint(Viewpoint *viewpoint) {
 
 void Screen::set_render_engine(RenderEngine *render_engine) {
     _render_engine = render_engine;
+}
+
+Framebuffer *Screen::get_framebuffer() {
+    return _framebuffer;
 }
 
 Viewpoint *Screen::get_viewpoint() {

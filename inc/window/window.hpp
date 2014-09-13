@@ -5,7 +5,7 @@
 
 #include <GLFW/glfw3.h>
 
-#include "render/screen.hpp"
+#include "window/screen.hpp"
 #include "render/graphics_state_manager.hpp"
 
 namespace olympus {

@@ -20,6 +20,11 @@ TEST_F(WindowedTest, SingleScreen) {
     EasyScreen *screen = create_easy_screen();
     window->add_screen(screen->screen);
     
+    // Make sure that the screen set up everything properly.
+    EXPECT_TRUE(screen->screen->get_world() != nullptr);
+    EXPECT_TRUE(screen->screen->get_render_engine() != nullptr);
+    EXPECT_TRUE(screen->screen->get_graphics_state() != nullptr);
+    
     //Create a new square that covers the entire screen
     Renderable *g = create_square(-1.0f, -1.0f, 2.0f, 2.0f, 0.0, 1.0, 0.0);
     screen->world->add_child(g);

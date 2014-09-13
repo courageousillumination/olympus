@@ -8,6 +8,13 @@
 #include "world/renderable.hpp"
 
 namespace olympus {
+    /**
+     * A World is a specific type of WorldObject that should
+     * be the root of any scene. It includes lists of all renderable
+     * children, all light children, etc. so that the render_engine
+     * has a single access point to these instead of having to walk
+     * the tree.
+     */
     class World : public WorldObject {
     private:
         std::set<Renderable *> _renderables;
@@ -20,8 +27,8 @@ namespace olympus {
         void remove_renderable(Renderable *r);
         void remove_light(Light *l);
         
-        std::set<Renderable *> get_renderables();
-        std::vector<Light *> get_lights();
+        const std::set<Renderable *> get_renderables();
+        const std::vector<Light *> get_lights();
         
     };
 }

@@ -31,6 +31,8 @@ TEST_F (ViewpointTestIntegration, AffectsImageOnScreen) {
     EXPECT_TRUE(expect_color_block(0, 0, DEFAULT_WIDTH, DEFAULT_HEIGHT, 0.0, 1.0, 0.0));
     
     screen->set_viewpoint(viewpoint);
+    EXPECT_EQ(screen->get_viewpoint(), viewpoint);
+    
     viewpoint->set_position(0, 0, 2.0f);
     window->render();
     EXPECT_FALSE(expect_color_block(0, 0, DEFAULT_WIDTH, DEFAULT_HEIGHT, 0.0, 1.0, 0.0));

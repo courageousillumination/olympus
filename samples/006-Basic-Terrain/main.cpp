@@ -104,6 +104,9 @@ int main() {
     //Create a new directional Light for the screen
     light = new Light(Light::DIRECTIONAL);
     light->set_direction(1.0f, -1.0f, 0.0f);
+    light->set_shadow_box(glm::vec2(-6, 6),
+                          glm::vec2(-6, 6),
+                          glm::vec2(-6, 6));
     world->add_child(light);
     
     //DEBUG

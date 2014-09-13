@@ -4,6 +4,11 @@
 #include "world/world_object.hpp"
 
 namespace olympus {
+    /**
+     * A viewpoint is a WorldObject with the additional functionality
+     * of having a view matrix. This can either use perspective or ortho
+     * perspective.
+     */
     class Viewpoint : public WorldObject {
     private:
         glm::mat4 _projection_matrix;
@@ -13,6 +18,7 @@ namespace olympus {
         bool _use_ortho;
         
         void _update_projection_matrix();
+        
         /** 
          * We need to override this method in order to update our view matrix as well
          * as the model matrix.
@@ -26,9 +32,11 @@ namespace olympus {
         void set_ratio(float ratio);
         void set_near(float near);
         void set_far(float far);
-        void use_ortho(bool flag);
-        void set_ortho(glm::vec2 x, glm::vec2 y, glm::vec2 z);
         void set_perspective(float fov, float ratio, float near, float far);
+        /**
+         * Right now this is the only way to set an orthographic projection.
+         */
+        void set_ortho(glm::vec2 x, glm::vec2 y, glm::vec2 z);
         
         float get_fov();
         float get_ratio();

@@ -4,7 +4,8 @@
 #include "world/renderable.hpp"
 #include "world/light.hpp"
 
-#include "render/screen.hpp"
+#include "window/screen.hpp"
+
 #include "render/standard_render_engine.hpp"
 #include "render/shaders.hpp"
 
