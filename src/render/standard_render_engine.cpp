@@ -1,8 +1,9 @@
 #include "debug/logger.hpp"
 
-#include "render/world.hpp"
-#include "render/renderable.hpp"
-#include "render/light.hpp"
+#include "world/world.hpp"
+#include "world/renderable.hpp"
+#include "world/light.hpp"
+
 #include "render/screen.hpp"
 #include "render/standard_render_engine.hpp"
 #include "render/shaders.hpp"

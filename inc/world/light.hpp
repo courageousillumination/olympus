@@ -1,8 +1,8 @@
-#ifndef OLYMPUS__RENDER__LIGHT
-#define OLYMPUS__RENDER__LIGHT
+#ifndef OLYMPUS__WORLD__LIGHT
+#define OLYMPUS__WORLD__LIGHT
 
-#include "render/world_object.hpp"
-#include "render/viewpoint.hpp"
+#include "world/world_object.hpp"
+#include "world/viewpoint.hpp"
 
 namespace olympus {
     class Light : public WorldObject {

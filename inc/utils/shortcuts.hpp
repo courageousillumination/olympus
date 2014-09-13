@@ -2,8 +2,8 @@
 #define OLYMPUS__UTILS__SHORTCUTS
 
 #include "window/window.hpp"
+#include "world/world.hpp"
 #include "render/screen.hpp"
-#include "render/world.hpp"
 #include "render/standard_render_engine.hpp"
 
 namespace olympus {

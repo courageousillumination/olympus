@@ -2,11 +2,12 @@
 #define OLYMPUS__RENDER__SCREEN
 
 #include "render/framebuffer.hpp"
-#include "render/viewpoint.hpp"
-#include "render/world.hpp"
 #include "render/renderer.hpp"
 #include "render/render_engine.hpp"
 #include "render/graphics_state_manager.hpp"
+
+#include "world/world.hpp"
+#include "world/viewpoint.hpp"
 
 namespace olympus {
     /**

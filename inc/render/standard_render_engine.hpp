@@ -3,7 +3,6 @@
 
 #include "render/render_engine.hpp"
 
-
 namespace olympus {
     class Screen;
     

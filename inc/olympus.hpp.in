@@ -15,11 +15,12 @@
 #include "debug/fps.hpp"
 
 #include "render/shaders.hpp"
-#include "render/renderable.hpp"
 #include "render/standard_render_engine.hpp"
-#include "render/light.hpp"
-#include "render/world_object.hpp"
 
 #include "terrain/terrain.hpp"
+
+#include "world/light.hpp"
+#include "world/world_object.hpp"
+#include "world/renderable.hpp"
 
 #endif

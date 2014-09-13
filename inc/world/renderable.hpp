@@ -1,7 +1,7 @@
-#ifndef OLYMPUS__RENDER__RENDERABLE
-#define OLYMPUS__RENDER__RENDERABLE
+#ifndef OLYMPUS__WORLD__RENDERABLE
+#define OLYMPUS__WORLD__RENDERABLE
 
-#include "render/world_object.hpp"
+#include "world/world_object.hpp"
 #include "render/asset.hpp"
 
 namespace olympus {

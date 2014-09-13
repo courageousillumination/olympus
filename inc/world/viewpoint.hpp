@@ -1,7 +1,7 @@
-#ifndef OLYMPUS__RENDER__VIEWPOINT
-#define OLYMPUS__RENDER__VIEWPOINT
+#ifndef OLYMPUS__WORLD__VIEWPOINT
+#define OLYMPUS__WORLD__VIEWPOINT
 
-#include "render/world_object.hpp"
+#include "world/world_object.hpp"
 
 namespace olympus {
     class Viewpoint : public WorldObject {

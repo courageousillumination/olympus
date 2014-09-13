@@ -1,6 +1,7 @@
 #include "debug/logger.hpp"
-#include "render/light.hpp"
-#include "render/world.hpp"
+
+#include "world/light.hpp"
+#include "world/world.hpp"
 
 using namespace olympus;
 

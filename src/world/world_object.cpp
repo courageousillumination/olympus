@@ -1,4 +1,4 @@
-#include "render/world_object.hpp"
+#include "world/world_object.hpp"
 
 #define GLM_FORCE_RADIANS
 #include <glm/gtx/transform.hpp>

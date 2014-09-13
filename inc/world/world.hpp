@@ -1,11 +1,11 @@
-#ifndef OLYMPUS__RENDER__WORLD
-#define OLYMPUS__RENDER__WORLD
+#ifndef OLYMPUS__WORLD__WORLD
+#define OLYMPUS__WORLD__WORLD
 
 #include <vector>
 
-#include "render/world_object.hpp"
-#include "render/light.hpp"
-#include "render/renderable.hpp"
+#include "world/world_object.hpp"
+#include "world/light.hpp"
+#include "world/renderable.hpp"
 
 namespace olympus {
     class World : public WorldObject {

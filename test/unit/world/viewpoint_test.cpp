@@ -4,7 +4,7 @@
 #include <glm/gtx/transform.hpp>
 
 #include "olympus.hpp"
-#include "render/viewpoint.hpp"
+#include "world/viewpoint.hpp"
 
 using namespace olympus;
 

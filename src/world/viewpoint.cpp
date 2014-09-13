@@ -2,7 +2,7 @@
 #include <glm/gtc/matrix_transform.hpp> 
 #include <glm/gtx/transform.hpp>
 
-#include "render/viewpoint.hpp"
+#include "world/viewpoint.hpp"
 
 using namespace olympus;
 

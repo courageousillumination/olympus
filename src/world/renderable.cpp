@@ -1,5 +1,5 @@
-#include "render/renderable.hpp"
-#include "render/world.hpp"
+#include "world/renderable.hpp"
+#include "world/world.hpp"
 
 using namespace olympus;
 

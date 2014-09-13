@@ -3,7 +3,7 @@
 #include <glm/gtx/transform.hpp>
 
 #include "olympus.hpp"
-#include "render/world_object.hpp"
+#include "world/world_object.hpp"
 
 using namespace olympus;
 

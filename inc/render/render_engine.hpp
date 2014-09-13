@@ -3,8 +3,7 @@
 
 #include <set>
 
-#include "render/world.hpp"
-#include "render/viewpoint.hpp"
+#include "world/viewpoint.hpp"
 
 #define MAX_LIGHT_SOURCES 2
 

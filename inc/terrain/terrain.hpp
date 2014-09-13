@@ -1,7 +1,7 @@
 #ifndef OLYMPUS__TERRAIN__TERRAIN
 #define OLYMPUS__TERRAIN__TERRAIN
 
-#include "render/renderable.hpp"
+#include "world/renderable.hpp"
 
 namespace olympus {
     class Terrain : public Renderable {
