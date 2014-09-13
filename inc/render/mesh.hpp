@@ -14,6 +14,7 @@ namespace olympus {
     private:
         unsigned _vao_id;
         unsigned *_attributes;
+        unsigned _num_attributes;
         unsigned _num_verts;
         unsigned _prim_type;
         unsigned _element_buffer;

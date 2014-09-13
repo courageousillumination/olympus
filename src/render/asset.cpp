@@ -12,12 +12,15 @@ Asset::Asset() {
 void Asset::set_mesh(Mesh *mesh) {
     _mesh = mesh;
 }
+
 void Asset::set_renderer(Renderer *renderer) {
     _renderer = renderer;
 }
+
 bool Asset::add_texture(Texture *texture) {
     return add_texture(texture, 0);
 }
+
 bool Asset::add_texture(Texture *texture, unsigned slot) {
     if (slot < MAX_ASSET_TEXTURES) {
         if (_textures[slot] != nullptr) {
@@ -39,6 +42,7 @@ bool Asset::remove_texture(Texture *texture) {
     }
     return false;
 }
+
 bool Asset::remove_texture(unsigned slot) {
     if (_textures[slot] != nullptr) {
         _textures[slot] = nullptr;
@@ -50,9 +54,11 @@ bool Asset::remove_texture(unsigned slot) {
 Mesh *Asset::get_mesh() {
     return _mesh;
 }
+
 Renderer *Asset::get_renderer() {
     return _renderer;
 }
+
 Texture **Asset::get_textures() {
     return _textures;
 }

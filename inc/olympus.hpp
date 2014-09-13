@@ -16,6 +16,7 @@
 
 #include "render/shaders.hpp"
 #include "render/standard_render_engine.hpp"
+#include "render/resource_manager.hpp"
 
 #include "terrain/terrain.hpp"
 

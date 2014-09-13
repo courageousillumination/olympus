@@ -9,10 +9,21 @@ namespace olympus {
      * at the manager.
      */
     class ResourceManager {
+    public:
+        enum ResourceType {
+            TEXTURE,
+            VERTEX_ARRAY,
+            BUFFER,
+            FRAMEBUFFER
+        };
     private:
         ResourceManager();
         ResourceManager(ResourceManager const&);
         void operator=(ResourceManager const&);
+        
+        // Some quick and dirty memory leak detection. We count all allocations and all 
+        // frees. If they don't match up we print a warning.
+        unsigned long _num_allocs, _num_frees;
     public:
         static ResourceManager &get_instance();
         ~ResourceManager();
@@ -20,28 +31,30 @@ namespace olympus {
         /**
          * Creates one of the specified resource and returns the identifier
          */
-        unsigned get_resource(int type);
+        unsigned get_resource(ResourceType type);
         
         /**
          * Creates __num__ of the specified resources and populates the
          * array with the values
          */
-        void get_resource(int type, unsigned num, unsigned values[]);
+        void get_resources(ResourceType type, unsigned num, unsigned values[]);
         
         /**
          * Release a single resource. This may not be immediatly deleted
          */
-        void release_resource(int type, unsigned id);
+        void release_resource(ResourceType type, unsigned id);
         
         /**
          * Release a list of resources. They may not be removed immediatly
          */
-        void release_resources(int type, unsigned num, unsigned values[]);
+        void release_resources(ResourceType type, unsigned num, unsigned values[]);
         
+        // Some function to manage memory
         /**
-         * Forces deletion of all items that are pending removal.
+         * This function is intended to check if anything is currently allocated. If it is
+         * it will print an error message.
          */
-        void flush();
+        void check_allocation();
     };
 }
 

@@ -6,6 +6,7 @@
 
 #include "debug/logger.hpp"
 
+#include "render/resource_manager.hpp"
 #include "render/texture.hpp"
 
 using namespace olympus;
@@ -27,18 +28,16 @@ Texture::Texture() {
 
 Texture::Texture(Texture::Target target) {
     _target = target;
-    glGenTextures(1, &_texture_id);
-    
+    _texture_id = ResourceManager::get_instance().get_resource(ResourceManager::TEXTURE);
+
     bind();
     glTexParameteri(enum_convertor(_target), GL_TEXTURE_MAG_FILTER, GL_NEAREST);
     glTexParameteri(enum_convertor(_target), GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 }
 
 Texture::~Texture() {
-    glDeleteTextures(1, &_texture_id);
+    ResourceManager::get_instance().release_resource(ResourceManager::TEXTURE, _texture_id);
 }
-
-
 
 void Texture::load_image(const char *path) {
     if (_target != TEXTURE_2D) { 

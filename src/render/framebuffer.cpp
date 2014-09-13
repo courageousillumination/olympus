@@ -2,12 +2,13 @@
 
 #include "debug/logger.hpp"
 
+#include "render/resource_manager.hpp"
 #include "render/framebuffer.hpp"
 
 using namespace olympus;
 
 Framebuffer::Framebuffer() {
-    glGenFramebuffers(1, &_frame_buffer_id);
+    _frame_buffer_id = ResourceManager::get_instance().get_resource(ResourceManager::FRAMEBUFFER); 
     
     bind();
     
@@ -41,7 +42,7 @@ Framebuffer::Framebuffer() {
 Framebuffer::~Framebuffer() {
     delete _color_0_texture;
     delete _depth_texture;
-    glDeleteFramebuffers(1, &_frame_buffer_id);
+    ResourceManager::get_instance().release_resource(ResourceManager::FRAMEBUFFER, _frame_buffer_id);
 }
 
 void Framebuffer::bind() {

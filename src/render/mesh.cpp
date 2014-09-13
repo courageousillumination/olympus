@@ -2,15 +2,17 @@
 
 #include "debug/logger.hpp"
 
+#include "render/resource_manager.hpp"
 #include "render/mesh.hpp"
 
 using namespace olympus;
 
 Mesh::Mesh(unsigned num_attributes, enum Mesh::PrimType prim_type) {
-    glGenVertexArrays(1, &_vao_id);
+    _vao_id = ResourceManager::get_instance().get_resource(ResourceManager::VERTEX_ARRAY);
     glBindVertexArray(_vao_id);
+    _num_attributes = num_attributes;
     _attributes = new unsigned[num_attributes];
-    glGenBuffers(num_attributes, _attributes);
+    ResourceManager::get_instance().get_resources(ResourceManager::BUFFER, num_attributes, _attributes);
     _num_verts = 0;
     _indexed = false;
     switch (prim_type) {
@@ -27,6 +29,8 @@ Mesh::Mesh(unsigned num_attributes, enum Mesh::PrimType prim_type) {
 }
 
 Mesh::~Mesh() {
+    ResourceManager::get_instance().release_resource(ResourceManager::VERTEX_ARRAY, _vao_id);
+    ResourceManager::get_instance().release_resources(ResourceManager::BUFFER, _num_attributes, _attributes);
     delete []_attributes;
 }
 

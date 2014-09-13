@@ -122,7 +122,18 @@ int main() {
     
     delete light;
     delete viewpoint;
+    delete asset;
+    delete mesh;
+    delete terrain;
+    delete renderer;
+    delete world;
+    delete screen;
+    delete render_engine;
     
+    window_manager.destroy_all_windows();
+    
+    // Make sure we've cleaned everything up.
+    ResourceManager::get_instance().check_allocation();
     //Clean up and exit
     Logger::shutdown();
     delete appender;

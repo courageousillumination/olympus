@@ -9,8 +9,7 @@
 
 namespace olympus {
     /**
-     * An asset is simply a wrapper for meshs/renderers(materials?) and
-     * textures.
+     * An asset is simply a container for meshs, renderers and textures.
      */
     class Asset {
     private:
