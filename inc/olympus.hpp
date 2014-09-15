@@ -3,7 +3,7 @@
 
 #define OLYMPUS_VERSION_MAJOR 0
 #define OLYMPUS_VERSION_MINOR 1
-#define OLYMPUS_ROOT_DIR "/home/tristan/Development/olympus"
+#define OLYMPUS_ROOT_DIR "/media/development/olympus"
 
 #include "window/window.hpp"
 #include "window/window_manager.hpp"

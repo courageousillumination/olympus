@@ -30,7 +30,6 @@ protected:
         screen->set_viewpoint(viewpoint);
         
         light = new Light(Light::DIRECTIONAL);
-        sleep(1);
     }
     
     virtual void TearDown() {
@@ -98,14 +97,13 @@ TEST_F (LightTest, DirectionalLightWithViewpoint) {
     window->render();
     
     light1 = average_color_block(0, 0, DEFAULT_WIDTH, DEFAULT_HEIGHT);
-    EXPECT_GT(light1[0], pre_light[0]);
-    EXPECT_EQ(glm::vec3(1.0, 0.0, 0.0), light1);
+    EXPECT_EQ(pre_light, light1);
     
     //Now we put the light in the back
     light->set_direction(0.0, 0.0, 1.0);
     window->render();
     light_behind = average_color_block(0, 0, DEFAULT_WIDTH, DEFAULT_HEIGHT);
-    EXPECT_EQ(pre_light[0], light_behind[0]);
+    EXPECT_LT(pre_light[0], light_behind[0]);
     
     //Finally we clean up
     world->remove_child(light);

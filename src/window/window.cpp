@@ -87,15 +87,14 @@ void Window::set_keyboard_callback(void (* callback)(Window *, int, int, int, in
 }
 
 void Window::render() {
+    GraphicsStateManager::get_instance().push(_graphics_state);
+    
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     
     // Render each screen to a texture
     for (auto screen : _screens) {
         screen.screen->render();
     }
-    
-    
-    GraphicsStateManager::get_instance().push(_graphics_state);
     
     _renderer->bind();
     _renderer->set_uniform(std::string("model_view_matrix"), glm::mat4(1.0f));
@@ -110,10 +109,10 @@ void Window::render() {
         screen.mesh->draw();
     }
     
-    GraphicsStateManager::get_instance().pop();
-    
     //Finally we swap our buffers
     glfwSwapBuffers(_internal_window);
+    
+    GraphicsStateManager::get_instance().pop();
 }
 
 void Window::add_screen(Screen *screen) {
