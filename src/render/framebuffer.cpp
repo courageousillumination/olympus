@@ -10,7 +10,10 @@ using namespace olympus;
 Framebuffer::Framebuffer() {
     _frame_buffer_id = ResourceManager::get_instance().get_resource(ResourceManager::FRAMEBUFFER); 
     
+    //Get the current framebuffer id
+    //unsigned previous_id = GraphicsStateManager::get_instance().get_head()->framebuffer->_frame_buffer_id;
     bind();
+    //glBindFramebuffer(GL_FRAMEBUFFER, _frame_buffer_id);
     
     //Create a texture to attach to color 0
     _color_0_texture = new Texture(Texture::TEXTURE_2D);
@@ -37,6 +40,7 @@ Framebuffer::Framebuffer() {
     }
     
     unbind();
+    //glBindFramebuffer(GL_FRAMEBUFFER, 0);
 }
 
 Framebuffer::~Framebuffer() {
@@ -51,7 +55,7 @@ void Framebuffer::bind() {
 }
 
 void Framebuffer::unbind() {
-    glBindFramebuffer(GL_FRAMEBUFFER, _old_framebuffer);
+   glBindFramebuffer(GL_FRAMEBUFFER, _old_framebuffer);
 }
 
 Texture *Framebuffer::get_color_texture() {
@@ -60,4 +64,8 @@ Texture *Framebuffer::get_color_texture() {
 
 Texture *Framebuffer::get_depth_texture() {
     return _depth_texture;
+}
+
+unsigned Framebuffer::get_internal_id() {
+    return _frame_buffer_id;
 }

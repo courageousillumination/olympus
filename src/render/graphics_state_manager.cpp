@@ -12,6 +12,8 @@ GraphicsState::GraphicsState() {
     cull = false;
     cull_face = GL_BACK;
     
+    framebuffer = nullptr;
+    
     next = nullptr;
 }
 
@@ -33,27 +35,54 @@ static void set_wireframe(bool flag) {
         glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
     }
 }
+
+/*static void set_framebuffer(Framebuffer *framebuffer) {
+    if (framebuffer == nullptr) {
+        glBindFramebuffer(GL_FRAMEBUFFER, 0);
+    }
+    else {
+        glBindFramebuffer(GL_FRAMEBUFFER, framebuffer->get_internal_id());
+    }
+}*/
     
 void GraphicsStateManager::_apply_graphics_state(GraphicsState *state) {
     if (_head == nullptr or state->wireframe != _head->wireframe) {
+        LOG(Logger::DEBUG, "Toggle wireframe");
         set_wireframe(state->wireframe);
     }
     if (_head == nullptr or state->use_depth_test != _head->use_depth_test) {
+        LOG(Logger::DEBUG, "Toggle depth test");
         enable_disable_general(GL_DEPTH_TEST, state->use_depth_test);
     }
     if (_head == nullptr or state->depth_function != _head->depth_function) {
+        LOG(Logger::DEBUG, "Toggle depth function");
         glDepthFunc(state->depth_function);
     }
     if (_head == nullptr or state->cull != _head->cull) {
+        LOG(Logger::DEBUG, "Toggle cull");
         enable_disable_general(GL_CULL_FACE, state->cull);
     }
     if (_head == nullptr or state->cull_face != _head->cull_face) {
+        LOG(Logger::DEBUG, "Toggle cull face");
         glCullFace(state->cull_face);
     }
+    //if (state->framebuffer != _head->framebuffer) {
+        //set_framebuffer(state->framebuffer);
+    //}
 }
 
 GraphicsStateManager::GraphicsStateManager() {
     _head = nullptr;
+    // Create a sentinal node so we know that everything is in a good state.
+    push(new GraphicsState);
+}
+
+GraphicsStateManager::~GraphicsStateManager() {
+    while (_head != nullptr) {
+        GraphicsState *next = _head->next;
+        delete _head;
+        _head = next;
+    }
 }
 
 GraphicsStateManager& GraphicsStateManager::get_instance() {

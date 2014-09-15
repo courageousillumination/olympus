@@ -1,5 +1,8 @@
 #ifndef OLYMPUS__RENDER__GRAPHICS_STATE_MANAGER
 #define OLYMPUS__RENDER__GRAPHICS_STATE_MANAGER
+
+#include "render/framebuffer.hpp"
+
 namespace olympus {
     /**
      * The GraphicsState struct simply wraps all options that will
@@ -12,6 +15,7 @@ namespace olympus {
         bool cull;
         int depth_function;
         int cull_face;
+        Framebuffer *framebuffer;
         
         GraphicsState *next;
         
@@ -39,6 +43,7 @@ namespace olympus {
         GraphicsState *_head;
     public:
         static GraphicsStateManager& get_instance();
+        ~GraphicsStateManager();
         
         /**
          * The graphics state will be managed as a stack.

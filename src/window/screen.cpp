@@ -17,6 +17,8 @@ Screen::Screen() {
     _viewpoint = nullptr;
     _world = nullptr;
     _render_engine = nullptr;
+    
+    _graphics_state->framebuffer = _framebuffer;
 }
 
 Screen::~Screen() {

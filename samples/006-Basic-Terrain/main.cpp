@@ -63,7 +63,7 @@ int main() {
     
     //Create a screen to attach to the window
     screen = new Screen;
-    screen->get_graphics_state()->cull = true;
+    //screen->get_graphics_state()->cull = true;
     
     //Create a world to add to the screen
     World *world = new World;

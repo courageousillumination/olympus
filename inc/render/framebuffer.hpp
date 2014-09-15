@@ -7,9 +7,11 @@ namespace olympus {
     class Framebuffer {
     private:
         unsigned _frame_buffer_id;
-        int _old_framebuffer;
         Texture *_color_0_texture;
         Texture *_depth_texture;
+        
+        
+        int _old_framebuffer;
     public:
         Framebuffer();
         ~Framebuffer();
@@ -17,12 +19,16 @@ namespace olympus {
         Texture *get_color_texture();
         Texture *get_depth_texture();
         
+        // For internal use only.
+        unsigned get_internal_id();
+        
         /**
          * Bind this framebuffer to the current render context.
          * All future writes will go into this buffer until it
          * another bound call is made.
          */
         void bind();
+        
         /**
          * This will unbind this specific frame buffer and bind
          * the **default frame buffer**. This means you can't

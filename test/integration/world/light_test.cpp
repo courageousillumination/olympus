@@ -25,10 +25,12 @@ protected:
         
         viewpoint = new Viewpoint;
         viewpoint->set_near(0.1);
-        viewpoint->set_position(0.0f, 0.0f, 2.0f);
+        viewpoint->set_position(0.0f, 0.0f, 2.1f);
+        viewpoint->set_orientation(glm::angleAxis(0.0f, glm::vec3(1, 0, 0)));
         screen->set_viewpoint(viewpoint);
         
         light = new Light(Light::DIRECTIONAL);
+        sleep(1);
     }
     
     virtual void TearDown() {
@@ -79,12 +81,10 @@ TEST_F (LightTest, DirectionalLight) {
     light_behind = average_color_block(0, 0, DEFAULT_WIDTH, DEFAULT_HEIGHT);
     EXPECT_EQ(pre_light[0], light_behind[0]);
     
-    //Finally we clean up
-
 }
 
 TEST_F (LightTest, DirectionalLightWithViewpoint) {
-    viewpoint->set_position(0, 0, 0.5);
+    viewpoint->set_position(0, 0, -2.1);
     viewpoint->set_orientation(glm::angleAxis(-3.14f, glm::vec3(1, 0, 0)));
         
     glm::vec3 pre_light, light1, light2, light_behind;
@@ -165,7 +165,7 @@ TEST_F (LightTest, TwoDirectionalLights) {
     window->render();
     pre_light1 = average_color_block(0, 0, DEFAULT_WIDTH, DEFAULT_HEIGHT);
     
-    viewpoint->set_position(0.0, 0.0, -2.0f);
+    viewpoint->set_position(0.0, 0.0, -2.1f);
     viewpoint->set_orientation(glm::angleAxis(-3.14f, glm::vec3(1, 0, 0)));
     
     window->render();
@@ -174,7 +174,7 @@ TEST_F (LightTest, TwoDirectionalLights) {
     EXPECT_EQ(pre_light1, pre_light2);
     
     //Now we add a light from one direction and check both
-    viewpoint->set_position(0.0, 0.0, 2.0f);
+    viewpoint->set_position(0.0, 0.0, 2.1f);
     viewpoint->set_orientation(glm::angleAxis(0.0f, glm::vec3(1, 0, 0)));
     light->set_direction(0, 0, -1.0);
     world->add_child(light);
@@ -182,7 +182,7 @@ TEST_F (LightTest, TwoDirectionalLights) {
     window->render();
     one_light1 = average_color_block(0, 0, DEFAULT_WIDTH, DEFAULT_HEIGHT);
     
-    viewpoint->set_position(0.0, 0.0, -2.0f);
+    viewpoint->set_position(0.0, 0.0, -2.1f);
     viewpoint->set_orientation(glm::angleAxis(-3.14f, glm::vec3(1, 0, 0)));
     
     window->render();
@@ -192,7 +192,7 @@ TEST_F (LightTest, TwoDirectionalLights) {
     EXPECT_EQ(pre_light1, one_light2);
     
     //Next we add our second light and we expect both sides to be equally illuminated
-    viewpoint->set_position(0.0, 0.0, 2.0f);
+    viewpoint->set_position(0.0, 0.0, 2.1f);
     viewpoint->set_orientation(glm::angleAxis(0.0f, glm::vec3(1, 0, 0)));
     light2->set_direction(0, 0, 1.0);
     world->add_child(light2);
@@ -200,7 +200,7 @@ TEST_F (LightTest, TwoDirectionalLights) {
     window->render();
     two_lights1 = average_color_block(0, 0, DEFAULT_WIDTH, DEFAULT_HEIGHT);
     
-    viewpoint->set_position(0.0, 0.0, -2.0f);
+    viewpoint->set_position(0.0, 0.0, -2.1f);
     viewpoint->set_orientation(glm::angleAxis(-3.14f, glm::vec3(1, 0, 0)));
     
     window->render();
@@ -248,7 +248,7 @@ TEST_F (LightTest, TwoDirectionalLightsWithShadows) {
     window->render();
     pre_shadow1 = average_color_block(0, 0, DEFAULT_WIDTH, DEFAULT_HEIGHT);
     
-    viewpoint->set_position(0.0, 0.0, -2.0f);
+    viewpoint->set_position(0.0, 0.0, -2.1f);
     viewpoint->set_orientation(glm::angleAxis(-3.14f, glm::vec3(1, 0, 0)));
     window->render();
     pre_shadow2 = average_color_block(0, 0, DEFAULT_WIDTH, DEFAULT_HEIGHT);
@@ -257,13 +257,13 @@ TEST_F (LightTest, TwoDirectionalLightsWithShadows) {
     EXPECT_EQ(glm::vec3(1, 0, 0), pre_shadow1);
     
     render_engine->enable_shadows();
-    viewpoint->set_position(0.0, 0.0, 2.0f);
+    viewpoint->set_position(0.0, 0.0, 2.1f);
     viewpoint->set_orientation(glm::angleAxis(0.0f, glm::vec3(1, 0, 0)));
     window->render();
     
     post_shadow1 = average_color_block(0, 0, DEFAULT_WIDTH, DEFAULT_HEIGHT);
     
-    viewpoint->set_position(0.0, 0.0, -2.0f);
+    viewpoint->set_position(0.0, 0.0, -2.1f);
     viewpoint->set_orientation(glm::angleAxis(-3.14f, glm::vec3(1, 0, 0)));
     window->render();
     post_shadow2 = average_color_block(0, 0, DEFAULT_WIDTH, DEFAULT_HEIGHT);
