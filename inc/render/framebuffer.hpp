@@ -6,15 +6,26 @@
 namespace olympus {
     class Framebuffer {
     private:
+        unsigned _width, _height;
         unsigned _frame_buffer_id;
-        Texture *_color_0_texture;
-        Texture *_depth_texture;
         
+        int _max_color_attachments;
+        Texture **_color_textures;
+        Texture *_depth_texture;
     public:
-        Framebuffer();
+        Framebuffer(unsigned width, unsigned height);
         ~Framebuffer();
         
-        Texture *get_color_texture();
+        /**
+         * This function will attach a texture to a framebuffer in
+         * the given slot. NOTE: This will bind the framebuffer so
+         * this shouldn't be called during a render call because
+         * it could leave the graphics manager confused.
+         */
+        void attach_color_texture(Texture *texture, unsigned slot);
+        void attach_depth_texture(Texture *texture);
+        
+        Texture *get_color_texture(unsigned slot);
         Texture *get_depth_texture();
         
         // For internal use only.

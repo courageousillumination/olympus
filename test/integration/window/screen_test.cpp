@@ -11,13 +11,16 @@
 #include "common/test_block.hpp"
 #include "common/fixtures/window_fixture.hpp"
 
+#define WIDTH 640
+#define HEIGHT 480
+
 using namespace olympus;
 
 /**
  * When we draw a square on a screen it should render to the window.
  */
 TEST_F(WindowedTest, SingleScreen) {
-    EasyScreen *screen = create_easy_screen();
+    EasyScreen *screen = create_easy_screen(WIDTH, HEIGHT);
     window->add_screen(screen->screen);
     
     // Make sure that the screen set up everything properly.
@@ -41,8 +44,8 @@ TEST_F(WindowedTest, SingleScreen) {
  * their respective halves
  */
 TEST_F(WindowedTest, MultipleScreens) {
-    EasyScreen *screen1 = create_easy_screen();
-    EasyScreen *screen2 = create_easy_screen();
+    EasyScreen *screen1 = create_easy_screen(WIDTH, HEIGHT);
+    EasyScreen *screen2 = create_easy_screen(WIDTH, HEIGHT);
     window->add_screen(screen1->screen, -1.0, -1.0, 1.0, 2.0);
     window->add_screen(screen2->screen, 0.0, -1.0, 1.0, 2.0);
     

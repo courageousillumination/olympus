@@ -23,7 +23,7 @@ namespace olympus {
         RenderEngine *render_engine;
     };
     
-    EasyScreen *create_easy_screen();
+    EasyScreen *create_easy_screen(unsigned width, unsigned height);
     void destroy_easy_screen(EasyScreen *screen);
     
     struct EasyWorld {

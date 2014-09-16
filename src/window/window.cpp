@@ -104,7 +104,7 @@ void Window::render() {
     glActiveTexture(GL_TEXTURE0);
     
     for (auto screen : _screens) {
-        screen.screen->get_framebuffer()->get_color_texture()->bind();
+        screen.screen->get_framebuffer()->get_color_texture(0)->bind();
         screen.mesh->bind();
         screen.mesh->draw();
     }

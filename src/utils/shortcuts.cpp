@@ -11,7 +11,7 @@ EasyWindow *olympus::create_easy_window(unsigned width, unsigned height) {
     easy_window->window = window_manager.create_window(width, height);
     
     //Create a screen to attach to the window
-    easy_window->screen = new Screen;
+    easy_window->screen = new Screen(width, height);
     easy_window->window->add_screen(easy_window->screen);
     
     //Create a world to add to the screen
@@ -33,11 +33,11 @@ void olympus::destroy_easy_window(EasyWindow *easy_window) {
     delete easy_window;
 }
 
-EasyScreen *olympus::create_easy_screen() {
+EasyScreen *olympus::create_easy_screen(unsigned width, unsigned height) {
     EasyScreen *easy_screen = new EasyScreen;
     
     //Create a screen
-    easy_screen->screen = new Screen;
+    easy_screen->screen = new Screen(width, height);
     
     //Create a world to add to the screen
     easy_screen->world = new World;

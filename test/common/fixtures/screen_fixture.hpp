@@ -16,7 +16,7 @@ protected:
     virtual void SetUp() {
         window = olympus::WindowManager::get_instance().create_window(DEFAULT_WIDTH, DEFAULT_HEIGHT);
         usleep(100000); //Give the window time to create
-        screen = new olympus::Screen;
+        screen = new olympus::Screen(DEFAULT_WIDTH, DEFAULT_HEIGHT);
         window->add_screen(screen);
     }
     

@@ -62,7 +62,7 @@ int main() {
     Window *window = window_manager.create_window(640, 480);
     
     //Create a screen to attach to the window
-    screen = new Screen;
+    screen = new Screen(640, 480);
     //screen->get_graphics_state()->cull = true;
     
     //Create a world to add to the screen

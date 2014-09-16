@@ -25,8 +25,11 @@ namespace olympus {
         RenderEngine *_render_engine;
         Framebuffer *_framebuffer;
         GraphicsState *_graphics_state;
+        
+        Texture *_color_texture;
+        Texture *_depth_texture;
     public:
-        Screen();
+        Screen(unsigned width, unsigned height);
         ~Screen();
         
         /**

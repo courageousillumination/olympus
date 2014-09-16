@@ -11,17 +11,25 @@
 
 using namespace olympus;
 
-Screen::Screen() {
-    _framebuffer = new Framebuffer;
+Screen::Screen(unsigned width, unsigned height) {
+    _framebuffer = new Framebuffer(width, height);
     _graphics_state = new GraphicsState;
     _viewpoint = nullptr;
     _world = nullptr;
     _render_engine = nullptr;
     
+    _color_texture = new Texture(Texture::TEXTURE_2D);
+    _depth_texture = new Texture(Texture::TEXTURE_2D);
+    
+    _framebuffer->attach_color_texture(_color_texture, 0);
+    _framebuffer->attach_depth_texture(_depth_texture);
+    
     _graphics_state->framebuffer = _framebuffer;
 }
 
 Screen::~Screen() {
+    delete _color_texture;
+    delete _depth_texture;
     delete _graphics_state;
     delete _framebuffer;
 }

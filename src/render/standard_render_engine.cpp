@@ -73,7 +73,7 @@ void StandardRenderEngine::setup_shadows()  {
     _shadow_render_helper = new ShadowRenderHelper;
     _shadow_render_helper->set_shadow_renderer(shadow_renderer);
     for (unsigned i = 0; i < MAX_LIGHT_SOURCES; i++) {
-        _shadow_screens[i] = new Screen();
+        _shadow_screens[i] = new Screen(640, 480);
         _shadow_screens[i]->set_render_engine(_shadow_render_helper);
     }
 }
