@@ -12,7 +12,7 @@ Framebuffer::Framebuffer() {
     
     //Get the current framebuffer id
     //unsigned previous_id = GraphicsStateManager::get_instance().get_head()->framebuffer->_frame_buffer_id;
-    bind();
+    glBindFramebuffer(GL_FRAMEBUFFER, _frame_buffer_id);
     //glBindFramebuffer(GL_FRAMEBUFFER, _frame_buffer_id);
     
     //Create a texture to attach to color 0
@@ -39,7 +39,7 @@ Framebuffer::Framebuffer() {
         LOG(Logger::ERROR, "Failed to create framebuffer");
     }
     
-    unbind();
+    //unbind();
     //glBindFramebuffer(GL_FRAMEBUFFER, 0);
 }
 
@@ -47,15 +47,6 @@ Framebuffer::~Framebuffer() {
     delete _color_0_texture;
     delete _depth_texture;
     ResourceManager::get_instance().release_resource(ResourceManager::FRAMEBUFFER, _frame_buffer_id);
-}
-
-void Framebuffer::bind() {
-    glGetIntegerv(GL_FRAMEBUFFER_BINDING, &_old_framebuffer);
-    glBindFramebuffer(GL_FRAMEBUFFER, _frame_buffer_id);
-}
-
-void Framebuffer::unbind() {
-   glBindFramebuffer(GL_FRAMEBUFFER, _old_framebuffer);
 }
 
 Texture *Framebuffer::get_color_texture() {

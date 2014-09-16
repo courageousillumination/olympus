@@ -36,14 +36,14 @@ static void set_wireframe(bool flag) {
     }
 }
 
-/*static void set_framebuffer(Framebuffer *framebuffer) {
+static void set_framebuffer(Framebuffer *framebuffer) {
     if (framebuffer == nullptr) {
         glBindFramebuffer(GL_FRAMEBUFFER, 0);
     }
     else {
         glBindFramebuffer(GL_FRAMEBUFFER, framebuffer->get_internal_id());
     }
-}*/
+}
     
 void GraphicsStateManager::_apply_graphics_state(GraphicsState *state) {
     if (_head == nullptr or state->wireframe != _head->wireframe) {
@@ -61,9 +61,9 @@ void GraphicsStateManager::_apply_graphics_state(GraphicsState *state) {
     if (_head == nullptr or state->cull_face != _head->cull_face) {
         glCullFace(state->cull_face);
     }
-    //if (state->framebuffer != _head->framebuffer) {
-        //set_framebuffer(state->framebuffer);
-    //}
+    if (_head == nullptr or state->framebuffer != _head->framebuffer) {
+        set_framebuffer(state->framebuffer);
+    }
 }
 
 GraphicsStateManager::GraphicsStateManager() {

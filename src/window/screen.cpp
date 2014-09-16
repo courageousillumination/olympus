@@ -27,7 +27,7 @@ Screen::~Screen() {
 }
 
 void Screen::render() {
-    _framebuffer->bind();
+    //_framebuffer->bind();
     
     GraphicsStateManager::get_instance().push(_graphics_state);
     
@@ -38,7 +38,7 @@ void Screen::render() {
     
     GraphicsStateManager::get_instance().pop();
     
-    _framebuffer->unbind();
+    //_framebuffer->unbind();
 }
 
 void Screen::set_world(World *world) {
