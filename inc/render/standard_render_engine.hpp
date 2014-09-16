@@ -42,6 +42,7 @@ namespace olympus {
         
         glm::vec3 _light_directions[MAX_LIGHT_SOURCES];
         int _use_lights[MAX_LIGHT_SOURCES];
+        bool _use_lighting;
         
         //Things needed to support shadows
         void setup_shadows();
@@ -65,6 +66,9 @@ namespace olympus {
     public:
         StandardRenderEngine();
         ~StandardRenderEngine();
+        
+        void enable_lighting();
+        void disable_lighting();
         
         void enable_shadows();
         void disable_shadows();

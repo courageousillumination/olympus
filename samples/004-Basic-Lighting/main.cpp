@@ -89,6 +89,8 @@ int main() {
     Window *window = easy_window->window;
     window->set_keyboard_callback(key_callback);
     
+    easy_window->render_engine->enable_lighting();
+    
     //Create an object to add to the world
     Renderer *renderer = new Renderer(FLAT_LIGHT_VERTEX_SHADER,
                                       FLAT_LIGHT_FRAGMENT_SHADER);

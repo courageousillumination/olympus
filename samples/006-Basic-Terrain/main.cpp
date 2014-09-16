@@ -72,6 +72,7 @@ int main() {
     //Create a render engine for the world
     StandardRenderEngine *render_engine = new StandardRenderEngine;
     screen->set_render_engine(render_engine);
+    render_engine->enable_lighting();
     render_engine->enable_shadows();
     
     window->set_keyboard_callback(key_callback);

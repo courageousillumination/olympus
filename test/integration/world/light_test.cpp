@@ -29,6 +29,8 @@ protected:
         viewpoint->set_orientation(glm::angleAxis(0.0f, glm::vec3(1, 0, 0)));
         screen->set_viewpoint(viewpoint);
         
+        render_engine->enable_lighting();
+        
         light = new Light(Light::DIRECTIONAL);
     }
     

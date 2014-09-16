@@ -13,6 +13,12 @@ namespace olympus {
         Texture **_color_textures;
         Texture *_depth_texture;
     public:
+        /**
+         * Set up a framebuffer object. Width and height are used
+         * to determine the resolution of the framebuffer, and all
+         * textures attached to this framebuffer will inherit that 
+         * resolution.
+         */
         Framebuffer(unsigned width, unsigned height);
         ~Framebuffer();
         

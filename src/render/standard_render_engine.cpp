@@ -37,6 +37,8 @@ void StandardRenderEngine::configure_object_viewpoint(Renderer *renderer, Render
 }
 
 void StandardRenderEngine::pre_render_lights(std::vector<Light *> &lights) {
+    if (!_use_lighting)  return;
+    
     unsigned i;
     for (i = 0; i < lights.size() && i < MAX_LIGHT_SOURCES; i++) {
         glm::vec4 t = _view_matrix * glm::vec4(lights[i]->get_direction(), 0.0);
@@ -49,6 +51,8 @@ void StandardRenderEngine::pre_render_lights(std::vector<Light *> &lights) {
 }
 
 void StandardRenderEngine::configure_renderer_lights(Renderer *renderer) {
+    if (!_use_lighting)  return;
+    
     if (renderer->has_uniform(std::string("light_direction"))) {
         renderer->set_uniform(std::string("light_direction"), _light_directions, MAX_LIGHT_SOURCES);
     }
@@ -65,6 +69,14 @@ void StandardRenderEngine::disable_shadows() {
         teardown_shadows();
     }
     _use_shadows = false;
+}
+
+void StandardRenderEngine::enable_lighting() {
+    _use_lighting = true;
+}
+
+void StandardRenderEngine::disable_lighting() {
+    _use_lighting = false;
 }
 
 void StandardRenderEngine::setup_shadows()  {
@@ -127,6 +139,7 @@ void StandardRenderEngine::configure_object_shadow(Renderer *renderer, Renderabl
 
 StandardRenderEngine::StandardRenderEngine() {
     _use_shadows = false;
+    _use_lighting = false;
 }
         
 StandardRenderEngine::~StandardRenderEngine() {
