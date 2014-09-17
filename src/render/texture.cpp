@@ -61,6 +61,11 @@ void Texture::load_image(const char *path) {
     SOIL_free_image_data(img);
 }
 
+void Texture::load_data(unsigned num_channels, unsigned width, unsigned height, float *data) {
+    bind();
+    glTexImage2D(enum_convertor(_target), 0, GL_R32F, width, height, 0, GL_RED, GL_FLOAT, data);
+}
+
 void Texture::bind() {
     glBindTexture(enum_convertor(_target), _texture_id);
 }

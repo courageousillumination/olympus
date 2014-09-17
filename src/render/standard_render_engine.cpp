@@ -105,7 +105,7 @@ void StandardRenderEngine::pre_render_shadows(std::vector<Light *> &lights) {
     }
 }
 
-const int SHADOW_MAP_OFFSET = 1;
+const int SHADOW_MAP_OFFSET = 5;
 
 void StandardRenderEngine::configure_renderer_shadows(Renderer *renderer) {
     if (! _use_shadows) return;
@@ -166,9 +166,11 @@ void StandardRenderEngine::render(Viewpoint *viewpoint, World *world) {
     for (std::set<Renderable *>::iterator it = renderables.begin();
          it != renderables.end(); it++) {
         current = *it;
-        if (current->asset->get_textures()[0] != nullptr) {
-            glActiveTexture(GL_TEXTURE0);
-            current->asset->get_textures()[0]->bind();
+        for (unsigned i = 0; i < MAX_ASSET_TEXTURES; i++) {
+            if (current->asset->get_textures()[i] != nullptr) {
+                glActiveTexture(GL_TEXTURE0 + i);
+                current->asset->get_textures()[i]->bind();
+            }
         }
         
         current->asset->get_renderer()->bind();
@@ -178,6 +180,7 @@ void StandardRenderEngine::render(Viewpoint *viewpoint, World *world) {
         
         configure_object_viewpoint(current->asset->get_renderer(), current);
         configure_object_shadow(current->asset->get_renderer(), current);
+        current->pre_render();
         current->asset->get_mesh()->bind();
         current->asset->get_mesh()->draw();
     }
@@ -191,6 +194,7 @@ void StandardRenderEngine::ShadowRenderHelper::render(Viewpoint *viewpoint, Worl
         Renderable *current = *it;
         
         _shadow_renderer->set_uniform("mvp", viewpoint->get_view_projection_matrix() * current->get_model_matrix());
+        current->pre_render();
         current->asset->get_mesh()->bind();
         current->asset->get_mesh()->draw();
     }

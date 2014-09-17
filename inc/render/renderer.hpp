@@ -42,10 +42,14 @@ namespace olympus {
         
         void set_uniform(std::string id, glm::mat4 value);
         void set_uniform(std::string id, glm::vec3 value);
+        void set_uniform(std::string id, glm::vec2 value);
+        void set_uniform(std::string id, float value);
         void set_uniform(std::string id, int value);
         //Set a large array of values
-                void set_uniform(std::string id, glm::mat4 *values, unsigned num_values);
+        void set_uniform(std::string id, glm::mat4 *values, unsigned num_values);
         void set_uniform(std::string id, glm::vec3 *values, unsigned num_values);
+        void set_uniform(std::string id, glm::vec2 *values, unsigned num_values);
+        void set_uniform(std::string id, float *values, unsigned num_values);
         void set_uniform(std::string id, int *values, unsigned num_values);
        
     };

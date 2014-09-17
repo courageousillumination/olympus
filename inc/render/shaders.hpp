@@ -16,4 +16,6 @@
 #define SHADOW_VERTEX_SHADER "/media/development/olympus/src/render/shaders/flat_shadow_v.glsl"
 #define SHADOW_FRAGMENT_SHADER "/media/development/olympus/src/render/shaders/flat_shadow_f.glsl"
 
+#define WATER_VERTEX_SHADER "/media/development/olympus/src/render/shaders/water_v.glsl"
+
 #endif

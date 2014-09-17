@@ -19,6 +19,7 @@
 #include "render/resource_manager.hpp"
 
 #include "terrain/terrain.hpp"
+#include "terrain/water.hpp"
 
 #include "world/light.hpp"
 #include "world/world_object.hpp"

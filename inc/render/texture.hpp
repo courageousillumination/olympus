@@ -35,6 +35,8 @@ namespace olympus {
          */
         void load_image(const char *path);
         
+        void load_data(unsigned num_channels, unsigned width, unsigned height, float *data);
+        
         /**
          * Bind this texture. All future texture operations will affect
          * this texture until something else is bound (either explicitly

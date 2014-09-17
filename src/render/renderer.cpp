@@ -116,8 +116,16 @@ void Renderer::set_uniform(std::string id, glm::vec3 value) {
     glUniform3fv(get_uniform_location(id), 1, &value[0]);
 }
 
+void Renderer::set_uniform(std::string id, glm::vec2 value) {
+    glUniform2fv(get_uniform_location(id), 1, &value[0]);
+}
+
 void Renderer::set_uniform(std::string id, glm::mat4 value) {
     glUniformMatrix4fv(get_uniform_location(id), 1, GL_FALSE, &value[0][0]);
+}
+
+void Renderer::set_uniform(std::string id, float value) {
+    glUniform1f(get_uniform_location(id), value);
 }
 
 void Renderer::set_uniform(std::string id, int value) {
@@ -128,11 +136,18 @@ void Renderer::set_uniform(std::string id, glm::mat4 *values, unsigned num_value
     glUniformMatrix4fv(get_uniform_location(id), num_values, GL_FALSE, &values[0][0][0]);
 }
 
-
 void Renderer::set_uniform(std::string id, glm::vec3 *values, unsigned num_values) {
     glUniform3fv(get_uniform_location(id), num_values, &values[0][0]);
 }
 
+void Renderer::set_uniform(std::string id, glm::vec2 *values, unsigned num_values) {
+    glUniform2fv(get_uniform_location(id), num_values, &values[0][0]);
+}
+
 void Renderer::set_uniform(std::string id, int *values, unsigned num_values) {
     glUniform1iv(get_uniform_location(id), num_values, values);
+}
+
+void Renderer::set_uniform(std::string id, float *values, unsigned num_values) {
+    glUniform1fv(get_uniform_location(id), num_values, values);
 }
