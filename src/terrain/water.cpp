@@ -17,7 +17,7 @@ Water::~Water() {
 
 Renderer *Water::_get_renderer() {
     return new Renderer(WATER_VERTEX_SHADER,
-                        SHADOW_FRAGMENT_SHADER);
+                        FLAT_LIGHT_FRAGMENT_SHADER);
 }
 
 Mesh *Water::_generate_mesh() {
@@ -40,7 +40,7 @@ Mesh *Water::_generate_mesh() {
             unsigned index = i * width + j;
             verts[index] = glm::vec3(i * cell_size, 0.0f, j * cell_size);
             normals[index] = glm::vec3(0.0f, 1.0f, 0.0f);
-            colors[index] = glm::vec3(0.0f, 0.0f, 1.0f);
+            colors[index] = glm::vec3(0.0f, 1.0f, 1.0f);
             height_maps_locations[index] = glm::vec2((float) i / width, (float) j / height);
             
             //No need to make indices for the last row/column
@@ -80,7 +80,7 @@ Texture *Water::_generate_heightmap(unsigned width, unsigned height) {
     float *data_pointer = data;
     for (unsigned i = 0; i < width; i++) {
         for (unsigned j = 0; j < height; j++) {
-            *data_pointer++ = glm::perlin(glm::vec2((float) i / 5, (float) j / 5));//sin((float) i / 10);
+            *data_pointer++ = glm::perlin(glm::vec2((float) i / 10, (float) j / 10)) * 0.3;
         }
     }
     
@@ -109,11 +109,11 @@ void Water::destroy() {
 float x_position = 0.0f;
 float x_position2 = 0.0f;
 void Water::pre_render() {
-    x_position += 0.001f;
+    x_position += 0.002f;
     x_position2 += 0.003f;
     asset->get_renderer()->set_uniform(std::string("height_map1"), 0);
     asset->get_renderer()->set_uniform(std::string("height_map2"), 1);
     
     asset->get_renderer()->set_uniform(std::string("height_map_offset1"), glm::vec2(x_position, 0));
-    asset->get_renderer()->set_uniform(std::string("height_map_offset2"), glm::vec2(x_position2, 0));
+    asset->get_renderer()->set_uniform(std::string("height_map_offset2"), glm::vec2(0, x_position2));
 }

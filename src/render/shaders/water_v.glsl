@@ -20,23 +20,31 @@ uniform vec2 height_map_offset1;
 
 uniform sampler2D height_map2;
 uniform vec2 height_map_offset2;
-layout(location = 3) in vec2 height_map_location;
+flat layout(location = 3) in vec2 height_map_location;
+
+const ivec3 off = ivec3(-1,0,1);
+const vec2 size = vec2(2.0,0.0);
 
 void main() {
     vec3 pos = position;
-    vec2 map_loc = height_map_location;
-    map_loc.y += height_map_offset1[0];
-    float v = texture(height_map1, map_loc);
+    vec2 loc1 = height_map_location + height_map_offset1;
+    vec2 loc2 = height_map_location + height_map_offset2;
     
-    map_loc = height_map_location;
-    map_loc.x += height_map_offset2[0];
-    v += texture(height_map2, map_loc);
+    float v1 = texture(height_map1, loc1) + texture(height_map2, loc2);
+    float s01 = textureOffset(height_map1, loc1, off.xy) + textureOffset(height_map2, loc2, off.xy);
+    float s21 = textureOffset(height_map1, loc1, off.zy) + textureOffset(height_map2, loc2, off.zy);
+    float s10 = textureOffset(height_map1, loc1, off.yx) + textureOffset(height_map2, loc2, off.yx);
+    float s12 = textureOffset(height_map1, loc1, off.yz) + textureOffset(height_map2, loc2, off.yz);
     
-    pos.y += v / 2.0;
-    //pos.y += height_map_offset[0];
+    vec3 va = normalize(vec3(size.xy,s21-s01));
+    vec3 vb = normalize(vec3(size.yx,s12-s10));
+    
+    vec3 normal_1 = cross(va, vb);
+    
+    pos.y += v1 / 2.0;
     
     gl_Position =  projection_matrix * model_view_matrix * vec4(pos, 1.0);
-    f_normal = (model_view_matrix * vec4(normal, 0.0)).xyz;
+    f_normal = (model_view_matrix * vec4(normal_1, 0.0)).xyz;
     f_color = color;
     
     for (int i = 0; i < MAX_LIGHT_SOURCES; i++) {

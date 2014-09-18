@@ -73,7 +73,7 @@ int main() {
     StandardRenderEngine *render_engine = new StandardRenderEngine;
     screen->set_render_engine(render_engine);
     render_engine->enable_lighting();
-    render_engine->enable_shadows();
+    //render_engine->enable_shadows();
     
     window->set_keyboard_callback(key_callback);
     

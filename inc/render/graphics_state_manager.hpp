@@ -13,6 +13,7 @@ namespace olympus {
         bool wireframe;
         bool use_depth_test;
         bool cull;
+        bool blend;
         int depth_function;
         int cull_face;
         Framebuffer *framebuffer;

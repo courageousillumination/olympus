@@ -1,4 +1,6 @@
 #include <fstream>
+#include <exception>
+#include <stdexcept>
 
 #include <GL/glew.h>
 
@@ -44,7 +46,8 @@ unsigned Renderer::_compile_shader(const char *path, unsigned type) {
         glGetShaderInfoLog(shader_id, info_log_length, NULL, errors);
         LOG(Logger::ERROR, "Failed to compile shader %s. Error(s): %s", path, errors);
         delete []errors;
-        return 0;
+        
+        throw new std::runtime_error("Failed to compile shader.");
     }
     LOG(Logger::DEBUG, "Compiled %s", path);
     
@@ -68,7 +71,7 @@ unsigned Renderer::_link(unsigned num_shaders, unsigned shaders[]) {
         glGetProgramInfoLog(program_id, info_log_length, NULL, errors);
         LOG(Logger::ERROR, "Failed to link shader. Error(s): %s", errors);
         delete []errors;
-        return 0;
+        throw new std::runtime_error("Failed to link shader.");
     }
     
     LOG(Logger::DEBUG, "Linked shaders");

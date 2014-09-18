@@ -11,6 +11,7 @@ GraphicsState::GraphicsState() {
     depth_function = GL_LESS;
     cull = false;
     cull_face = GL_BACK;
+    blend = false;
     
     framebuffer = nullptr;
     
@@ -63,6 +64,9 @@ void GraphicsStateManager::_apply_graphics_state(GraphicsState *state) {
     }
     if (_head == nullptr or state->framebuffer != _head->framebuffer) {
         set_framebuffer(state->framebuffer);
+    }
+    if (_head == nullptr or state->blend != _head->blend) {
+        enable_disable_general(GL_BLEND, state->blend);
     }
 }
 
