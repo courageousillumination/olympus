@@ -62,3 +62,7 @@ Renderer *Asset::get_renderer() {
 Texture **Asset::get_textures() {
     return _textures;
 }
+
+Texture *Asset::get_texture(unsigned i) {
+    return _textures[i];
+}

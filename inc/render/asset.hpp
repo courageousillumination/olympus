@@ -46,9 +46,11 @@ namespace olympus {
          */
         bool remove_texture(unsigned slot);
         
+        
         Mesh *get_mesh();
         Renderer *get_renderer();
         Texture **get_textures();
+        Texture *get_texture(unsigned slot);
     };
 };
 #endif

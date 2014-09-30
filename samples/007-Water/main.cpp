@@ -81,8 +81,8 @@ int main() {
     Renderer *renderer = new Renderer(SHADOW_VERTEX_SHADER,
                                       SHADOW_FRAGMENT_SHADER);
     
-    Water *water = new Water;
-    water->generate();
+    Water *water = new Water(6, 0.3f, 20.0f);
+    water->set_scale(10.0f, 10.0f, 10.0f);
     
     world->add_child(water);
     
@@ -110,11 +110,12 @@ int main() {
         window->render();
         window_manager.poll();
         fps::fps_tick();
+        
+        water->simulate();
     }
     
     delete light;
     delete viewpoint;
-    water->destroy();
     delete water;
     delete renderer;
     delete world;

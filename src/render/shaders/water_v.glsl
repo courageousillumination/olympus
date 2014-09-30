@@ -4,7 +4,9 @@ const int MAX_LIGHT_SOURCES = 2;
 
 layout(location = 0) in vec3 position;
 layout(location = 1) in vec3 color;
-layout(location = 2) in vec3 normal;
+// Normals not used here, since they are calculated in the shader.
+flat layout(location = 3) in vec2 height_map_location;
+
 
 uniform mat4 model_view_matrix;
 uniform mat4 projection_matrix;
@@ -20,7 +22,6 @@ uniform vec2 height_map_offset1;
 
 uniform sampler2D height_map2;
 uniform vec2 height_map_offset2;
-flat layout(location = 3) in vec2 height_map_location;
 
 const ivec3 off = ivec3(-1,0,1);
 const vec2 size = vec2(2.0,0.0);
@@ -39,12 +40,12 @@ void main() {
     vec3 va = normalize(vec3(size.xy,s21-s01));
     vec3 vb = normalize(vec3(size.yx,s12-s10));
     
-    vec3 normal_1 = cross(va, vb);
+    vec3 normal = cross(va, vb);
     
     pos.y += v1 / 2.0;
     
     gl_Position =  projection_matrix * model_view_matrix * vec4(pos, 1.0);
-    f_normal = (model_view_matrix * vec4(normal_1, 0.0)).xyz;
+    f_normal = (model_view_matrix * vec4(normal, 0.0)).xyz;
     f_color = color;
     
     for (int i = 0; i < MAX_LIGHT_SOURCES; i++) {

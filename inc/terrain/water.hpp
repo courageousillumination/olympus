@@ -6,21 +6,20 @@
 namespace olympus {
     class Water : public Renderable {
     private:
+        unsigned _size;
+        float _time;
+        float _wave_height;
+        float _wave_width;
         
         static Renderer *_get_renderer();
-        static Mesh *_generate_mesh();
-        static Texture *_generate_heightmap(unsigned width, unsigned height);
+        Mesh *_generate_mesh();
+        Texture *_generate_heightmap();
     public:
-        Water();
+        Water(unsigned detail, float wave_height, float wave_width);
         ~Water();
         
-        /**
-         * Create the renderer, textures, etc that are needed for
-         * water.
-         */
-        void generate();
-        
-        void destroy();
+        // TODO: This simulate function should probably belong to something higher up the chain.
+        void simulate();
         
         void pre_render();
     };

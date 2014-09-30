@@ -81,16 +81,8 @@ int main() {
     Renderer *renderer = new Renderer(SHADOW_VERTEX_SHADER,
                                       SHADOW_FRAGMENT_SHADER);
     
-    Terrain *terrain = new Terrain;
-    Mesh *mesh = terrain->generate_mesh();
-    
-    //Create an asset to wrap all of the above
-    Asset *asset = new Asset;
-    asset->set_mesh(mesh);
-    asset->set_renderer(renderer);
-    
-    //Create a renderable to actually draw on the screen
-    terrain->asset = asset;
+    Terrain *terrain = new Terrain(renderer);
+    terrain->set_scale(5.0f, 5.0f, 5.0f);
     terrain->set_position(-2.5f, -2.5f, 0.0f);
     
     world->add_child(terrain);
@@ -123,8 +115,6 @@ int main() {
     
     delete light;
     delete viewpoint;
-    delete asset;
-    delete mesh;
     delete terrain;
     delete renderer;
     delete world;
