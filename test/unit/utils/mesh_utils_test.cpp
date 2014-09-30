@@ -68,7 +68,7 @@ TEST (MeshUtilsTest, GenerateNormals) {
     glm::vec3 *normals = generate_normals(verts, indices, 3, 3);
     
     for (unsigned i = 0; i < 3; i++) {
-        EXPECT_EQ(glm::vec3(0, 1, 0), normals[i]);
+        EXPECT_EQ(glm::vec3(0, -1, 0), normals[i]);
     }
     
     //Clean up

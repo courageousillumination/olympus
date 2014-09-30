@@ -17,7 +17,7 @@ std::string Renderer::_read_file(const char *path) {
     std::ifstream fin(path);
     if (!fin.good()) {
         LOG(Logger::ERROR, "Failed to open shader %s", path);
-        return code;
+        throw new std::runtime_error("Failed to open shader");
     }
     while(fin.good()) {
         getline(fin, line);
