@@ -1,2 +1,6 @@
 build
 doc/dox
+
+# Ignore files that are generated using cmake
+inc/olympus.hpp
+inc/render/shaders.hpp
