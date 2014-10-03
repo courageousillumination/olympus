@@ -66,4 +66,7 @@ TEST_F(TextureTest, SetParameters) {
     EXPECT_EQ(Texture::Clamp, texture->get_parameter(Texture::Wrap));
     EXPECT_EQ(Texture::Clamp, texture->get_parameter(Texture::WrapS));
     EXPECT_EQ(Texture::Clamp, texture->get_parameter(Texture::WrapT));
+    
+    //Test some edge cases
+    texture->set_parameter(Texture::Wrap, Texture::Invalid);
 }

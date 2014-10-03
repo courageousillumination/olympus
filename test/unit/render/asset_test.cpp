@@ -21,12 +21,20 @@ protected:
 };
 
 TEST_F (AssetTest, AddTexture) {
+    Texture *texture = new Texture;
+    
     EXPECT_FALSE(asset->add_texture(nullptr, -1));
     EXPECT_FALSE(asset->add_texture(nullptr, MAX_ASSET_TEXTURES));
-    EXPECT_TRUE(asset->add_texture(nullptr));
-    for (int i = 0; i < MAX_ASSET_TEXTURES; i++) {
-        EXPECT_TRUE(asset->add_texture(nullptr, i));
+    EXPECT_TRUE(asset->add_texture(texture));
+    for (int i = 1; i < MAX_ASSET_TEXTURES; i++) {
+        EXPECT_TRUE(asset->add_texture(texture, i));
     }
+    
+    for (int i = 0; i < MAX_ASSET_TEXTURES; i++) {
+        EXPECT_EQ(texture, asset->get_texture(i));
+    }
+    
+    delete texture;
 }
 
 
@@ -46,11 +54,12 @@ TEST_F (AssetTest, RemoveTexture) {
     EXPECT_TRUE(asset->remove_texture(texture1));
     EXPECT_TRUE(asset->remove_texture(1));
     
+    get_test_appender()->set_expect_warning(true);
+    
     asset->add_texture(texture1);
     asset->add_texture(texture2);
-    
-    get_test_appender()->set_expect_warning(true);
     EXPECT_TRUE(get_test_appender()->contains_string("Attempting to add a texture to texture slot 0 which already has a texture in it"));
+    
     get_test_appender()->set_expect_warning(false);
     
     delete texture1;

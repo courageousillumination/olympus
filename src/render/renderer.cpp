@@ -45,6 +45,7 @@ unsigned Renderer::_compile_shader(const char *path, unsigned type) {
         char *errors = new char[info_log_length];
         glGetShaderInfoLog(shader_id, info_log_length, NULL, errors);
         LOG(Logger::ERROR, "Failed to compile shader %s. Error(s): %s", path, errors);
+        glDeleteProgram(shader_id);
         delete []errors;
         
         throw new std::runtime_error("Failed to compile shader.");
@@ -71,6 +72,12 @@ unsigned Renderer::_link(unsigned num_shaders, unsigned shaders[]) {
         glGetProgramInfoLog(program_id, info_log_length, NULL, errors);
         LOG(Logger::ERROR, "Failed to link shader. Error(s): %s", errors);
         delete []errors;
+        //Clean up, clean up, everybody everywhere
+        for (unsigned i = 0; i < num_shaders; i++) {
+            glDeleteShader(shaders[i]);
+        }
+        glDeleteProgram(program_id);
+        
         throw new std::runtime_error("Failed to link shader.");
     }
     
@@ -84,6 +91,7 @@ Renderer::Renderer(const char *vertex_shader_path,
     unsigned shaders[2];
     shaders[0] = _compile_shader(vertex_shader_path, GL_VERTEX_SHADER);
     shaders[1] = _compile_shader(fragment_shader_path, GL_FRAGMENT_SHADER);
+
     _shader_id = _link(2, shaders);
     
     //Clean up

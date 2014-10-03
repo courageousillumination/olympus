@@ -35,6 +35,7 @@ static unsigned parameter_value_convertor(Texture::ParameterValue value) {
 
 Texture::Texture() {
     _target = Texture::NONE;
+    _texture_id = 0;
 }
 
 Texture::Texture(Texture::Target target) {
@@ -47,7 +48,11 @@ Texture::Texture(Texture::Target target) {
 }
 
 Texture::~Texture() {
-    ResourceManager::get_instance().release_resource(ResourceManager::TEXTURE, _texture_id);
+    // If for some reason we have the target none, we probably shouldn't release it.-
+    // Generally, this will only be used in testing.
+    if (_target != Texture::NONE) {
+        ResourceManager::get_instance().release_resource(ResourceManager::TEXTURE, _texture_id);
+    }
 }
 
 void Texture::load_image(const char *path) {

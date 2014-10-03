@@ -74,3 +74,12 @@ TEST (MeshUtilsTest, GenerateNormals) {
     //Clean up
     delete []normals;
 }
+
+TEST (MeshUtilsTest, HelperFunctions) {
+    float scale = 2.0f;
+    EXPECT_EQ(glm::vec3(10, 0, 10), position_helper(10, 10, 5, 5, &scale));
+    EXPECT_EQ(glm::vec2(10, 10), position_helper_2D(10, 10, 5, 5, &scale));
+    
+    float height_map[] = {1.0f};
+    EXPECT_EQ(glm::vec3(0.0, 1.0, 0.0), heightmap_sub(10, 10, 0, 0, height_map));
+}

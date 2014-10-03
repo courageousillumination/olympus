@@ -18,8 +18,7 @@ GraphicsState::GraphicsState() {
     next = nullptr;
 }
 
-//Individual setters, not part of the class.
-
+//Individual setters, not part of the class, all of these are static methods.
 static void enable_disable_general(GLenum target, bool flag) {
     if (flag) { 
         glEnable(target); 
@@ -104,6 +103,7 @@ void GraphicsStateManager::push(GraphicsState *state) {
 void GraphicsStateManager::pop() {
     if (_head == nullptr) { 
         LOG(Logger::ERROR, "Tried to pop off of an empty graphics state stack.");
+        return;
     }
     
     GraphicsState *next = _head->next;

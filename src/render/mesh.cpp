@@ -49,11 +49,6 @@ void Mesh::set_vertex_attribute(unsigned attribute_number, unsigned dims,
 }
 
 void Mesh::set_indices(unsigned num_indices, const unsigned *indices) {
-    if (indices == nullptr) {
-        _indexed = false;
-        return;
-    }
-    
     _indexed = true;
     _num_indices = num_indices;
     bind();

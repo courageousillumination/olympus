@@ -12,6 +12,9 @@ using namespace olympus;
 static TestAppender *test_appender = nullptr;
 
 void OlympusEnvironment::TearDown() {
+    // check for resource leaks
+    ResourceManager::get_instance().check_allocation();
+    
     Logger::shutdown();
     delete test_appender;
 }
