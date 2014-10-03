@@ -71,10 +71,7 @@ Texture *Water::_generate_heightmap() {
     }
     
     texture->load_data(1, _size, _size, data);
-    
-    //TODO: This is a hack. This does not belong here.
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+    texture->set_parameter(Texture::Wrap, Texture::Repeat);
     
     return texture;
 }

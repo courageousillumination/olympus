@@ -22,6 +22,17 @@ static unsigned enum_convertor(Texture::Target target) {
     }
 }
 
+static unsigned parameter_value_convertor(Texture::ParameterValue value) {
+    switch (value) {
+        case Texture::Repeat:
+            return GL_REPEAT;
+        case Texture::Clamp:
+            return GL_CLAMP;
+        default:
+            return GL_NONE;
+    }
+}
+
 Texture::Texture() {
     _target = Texture::NONE;
 }
@@ -68,4 +79,41 @@ void Texture::load_data(unsigned num_channels, unsigned width, unsigned height, 
 
 void Texture::bind() {
     glBindTexture(enum_convertor(_target), _texture_id);
+}
+
+void Texture::set_parameter(Texture::Parameter parameter, Texture::ParameterValue value) {
+    bind();
+    switch (parameter) {
+        case Texture::Wrap:
+            _wrapT = value;
+            _wrapS = value;
+            glTexParameteri(_target, GL_TEXTURE_WRAP_S, parameter_value_convertor(value));
+            glTexParameteri(_target, GL_TEXTURE_WRAP_T, parameter_value_convertor(value));
+            break;
+        case Texture::WrapS:
+            _wrapS = value;
+            glTexParameteri(_target, GL_TEXTURE_WRAP_S, parameter_value_convertor(value));
+            break;
+        case Texture::WrapT:
+            _wrapT = value;
+            glTexParameteri(_target, GL_TEXTURE_WRAP_T, parameter_value_convertor(value));
+            break;
+    }
+}
+
+Texture::ParameterValue Texture::get_parameter(Texture::Parameter parameter) {
+    switch (parameter) {
+        case Texture::Wrap:
+            if (_wrapT == _wrapS) {
+                return _wrapS;
+            }
+            return Invalid;
+        case Texture::WrapT:
+            return _wrapT;
+        case Texture::WrapS:
+            return _wrapS;
+        default:
+            LOG(Logger::WARN, "Attempted to get an invalid parameter from a texture (%d)", parameter);
+            return Invalid;
+    }
 }

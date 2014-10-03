@@ -52,8 +52,8 @@ void Framebuffer::attach_depth_texture(Texture *texture) {
     
     glBindFramebuffer(GL_FRAMEBUFFER, _frame_buffer_id);
     texture->bind();
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT32, _width, _height, 0, GL_DEPTH_COMPONENT, GL_FLOAT, 0);
     
-    glTexImage2D(GL_TEXTURE_2D, 0,GL_DEPTH_COMPONENT32, _width, _height, 0,GL_DEPTH_COMPONENT, GL_FLOAT, 0);
     glFramebufferTexture(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, texture->_texture_id, 0);   
 }
 
