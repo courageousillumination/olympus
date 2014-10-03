@@ -24,8 +24,8 @@ protected:
 };
 
 TEST_F (MeshTest, PrimativeTypes) {
-    Mesh mesh1(0, Mesh::TRIANGLE_FAN);
-    Mesh mesh2(0, Mesh::TRIANGLE_STRIP);
+    Mesh mesh1(1, Mesh::TRIANGLE_FAN);
+    Mesh mesh2(1, Mesh::TRIANGLE_STRIP);
 }
 
 TEST_F (MeshTest, IncorrectUpload) {

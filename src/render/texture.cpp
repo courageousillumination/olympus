@@ -79,7 +79,16 @@ void Texture::load_image(const char *path) {
 
 void Texture::load_data(unsigned num_channels, unsigned width, unsigned height, float *data) {
     bind();
-    glTexImage2D(enum_convertor(_target), 0, GL_R32F, width, height, 0, GL_RED, GL_FLOAT, data);
+    switch(num_channels) {
+        case 1:
+            glTexImage2D(enum_convertor(_target), 0, GL_R32F, width, height, 0, GL_RED, GL_FLOAT, data);
+            break;
+        case 3:
+            glTexImage2D(enum_convertor(_target), 0, GL_RGB, width, height, 0, GL_RGB, GL_FLOAT, data); 
+            break;
+        default:
+            LOG(Logger::WARN, "Tried to load data into a texture with an unspported number of channels %d", num_channels);
+    }
 }
 
 void Texture::bind() {

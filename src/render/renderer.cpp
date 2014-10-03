@@ -17,7 +17,7 @@ std::string Renderer::_read_file(const char *path) {
     std::ifstream fin(path);
     if (!fin.good()) {
         LOG(Logger::ERROR, "Failed to open shader %s", path);
-        throw new std::runtime_error("Failed to open shader");
+        throw std::runtime_error("Failed to open shader");
     }
     while(fin.good()) {
         getline(fin, line);
@@ -48,7 +48,7 @@ unsigned Renderer::_compile_shader(const char *path, unsigned type) {
         glDeleteProgram(shader_id);
         delete []errors;
         
-        throw new std::runtime_error("Failed to compile shader.");
+        throw std::runtime_error("Failed to compile shader.");
     }
     LOG(Logger::DEBUG, "Compiled %s", path);
     
@@ -78,7 +78,7 @@ unsigned Renderer::_link(unsigned num_shaders, unsigned shaders[]) {
         }
         glDeleteProgram(program_id);
         
-        throw new std::runtime_error("Failed to link shader.");
+        throw std::runtime_error("Failed to link shader.");
     }
     
     LOG(Logger::DEBUG, "Linked shaders");

@@ -1,6 +1,12 @@
 #include "olympus.hpp"
 #include "test_block.hpp"
 
+#define DELTA 0.01
+
+bool within_delta(float expected, float value) {
+    return value <= expected + DELTA && value >= expected - DELTA;
+}
+
 bool expect_color_block(unsigned x, unsigned y,
                         unsigned width, unsigned height,
                         float r, float g, float b) {
@@ -8,9 +14,11 @@ bool expect_color_block(unsigned x, unsigned y,
     glReadPixels(x, y, width, height, GL_RGB, GL_FLOAT, data);
     bool valid = true;
     for (unsigned i = 0; i < width * height; i++) {
-        if (data[i * 3] != r ||
-            data[i * 3 + 1] != g ||
-            data[i * 3 + 2] != b) {
+        if (!within_delta(r, data[i * 3]) ||
+            !within_delta(g, data[i * 3 + 1]) ||
+            !within_delta(b, data[i * 3 + 2])) {
+            //LOG(olympus::Logger::ERROR, "Expected %f %f %f, but found %f %f %f at pixel %d",
+            //    r, g, b, data[i * 3], data[i * 3 + 1], data[i * 3 + 2], i);
             valid = false;
             break;
         }

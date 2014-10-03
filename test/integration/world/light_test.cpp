@@ -35,6 +35,9 @@ protected:
     }
     
     virtual void TearDown() {
+        render_engine->disable_shadows();
+        render_engine->disable_lighting();
+        
         world->remove_child(s);
         delete viewpoint;
         delete light;

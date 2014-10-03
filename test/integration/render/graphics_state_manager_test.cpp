@@ -36,4 +36,6 @@ TEST_F (WindowedTest, GraphicsStateManagerTestStack) {
     EXPECT_TRUE(get_test_appender()->contains_string("Tried to push a null graphics state onto the stack"));
     
     get_test_appender()->set_expect_warning(false);
+    
+    delete state;
 }
