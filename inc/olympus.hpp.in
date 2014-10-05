@@ -25,4 +25,8 @@
 #include "world/world_object.hpp"
 #include "world/renderable.hpp"
 
+#include "ui/font_atlas.hpp"
+#include "ui/text.hpp"
+#include "ui/font_manager.hpp"
+
 #endif

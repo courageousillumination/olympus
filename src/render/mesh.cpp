@@ -69,3 +69,7 @@ void Mesh::draw() {
         glDrawArrays(_prim_type, 0, _num_verts);
     }
 }
+
+unsigned Mesh::get_num_verts() {
+    return _num_verts;
+}

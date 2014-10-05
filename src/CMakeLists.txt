@@ -1,4 +1,4 @@
-include_directories(${OLYMPUS_SOURCE_DIR}/inc)
+include_directories(${OLYMPUS_SOURCE_DIR}/inc /usr/include/freetype2)
 
 FILE(GLOB sources "*/*.cpp")
 

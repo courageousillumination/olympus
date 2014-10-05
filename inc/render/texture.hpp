@@ -55,6 +55,7 @@ namespace olympus {
          * Loads raw data into a texture.
          */
         void load_data(unsigned num_channels, unsigned width, unsigned height, float *data);
+        void load_data(unsigned num_channels, unsigned width, unsigned height, unsigned char*data);
         
         /**
          * Catch all for setting a specified parameter on the texture.

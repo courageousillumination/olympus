@@ -18,4 +18,7 @@
 
 #define WATER_VERTEX_SHADER "@OLYMPUS_SOURCE_DIR@/src/render/shaders/water_v.glsl"
 
+#define TEXT_VERTEX_SHADER "@OLYMPUS_SOURCE_DIR@/src/render/shaders/text_v.glsl"
+#define TEXT_FRAGMENT_SHADER "@OLYMPUS_SOURCE_DIR@/src/render/shaders/text_f.glsl"
+
 #endif

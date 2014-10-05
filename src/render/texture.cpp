@@ -91,6 +91,21 @@ void Texture::load_data(unsigned num_channels, unsigned width, unsigned height, 
     }
 }
 
+
+void Texture::load_data(unsigned num_channels, unsigned width, unsigned height, unsigned char*data) {
+    bind();
+    switch(num_channels) {
+        case 1:
+            glTexImage2D(enum_convertor(_target), 0, GL_RED, width, height, 0, GL_RED, GL_UNSIGNED_BYTE, data);
+            break;
+        case 3:
+            glTexImage2D(enum_convertor(_target), 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data); 
+            break;
+        default:
+            LOG(Logger::WARN, "Tried to load data into a texture with an unspported number of channels %d", num_channels);
+    }
+}
+
 void Texture::bind() {
     glBindTexture(enum_convertor(_target), _texture_id);
 }

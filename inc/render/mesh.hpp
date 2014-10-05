@@ -46,6 +46,11 @@ namespace olympus {
          * Draw the specified mesh.
          */
         void draw();
+        
+        /**
+         * Mainly useful for testing to make sure meshs were created properly
+         */
+        unsigned get_num_verts();
     };
 }
 #endif

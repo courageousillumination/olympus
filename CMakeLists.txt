@@ -21,7 +21,8 @@ find_package(OpenGL REQUIRED)
 if(NOT OPENGL_FOUND)
     message("ERROR: OpenGL not found")
 endif(NOT OPENGL_FOUND)
-set(GL_LIBRARY GL GLU GLEW X11 ${X11_Xxf86vm_LIB} pthread Xrandr Xi Xcursor Xinerama SOIL)  
+
+set(GL_LIBRARY GL GLU GLEW X11 ${X11_Xxf86vm_LIB} pthread Xrandr Xi Xcursor Xinerama SOIL freetype)
 
 add_subdirectory(inc)
 add_subdirectory(src)
