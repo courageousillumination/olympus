@@ -17,6 +17,8 @@ static unsigned enum_convertor(Texture::Target target) {
             return GL_TEXTURE_2D;
         case Texture::TEXTURE_3D:
             return GL_TEXTURE_3D;
+        case Texture::CUBE_MAP:
+            return GL_TEXTURE_CUBE_MAP;
         default:
             return GL_NONE;
     }
@@ -45,6 +47,10 @@ Texture::Texture(Texture::Target target) {
     bind();
     glTexParameteri(enum_convertor(_target), GL_TEXTURE_MAG_FILTER, GL_NEAREST);
     glTexParameteri(enum_convertor(_target), GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+    
+    //Man fuck packing
+    glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+    glPixelStorei(GL_PACK_ALIGNMENT, 1);
 }
 
 Texture::~Texture() {
@@ -75,6 +81,44 @@ void Texture::load_image(const char *path) {
                  _width, _height, 0, GL_RGB, GL_UNSIGNED_BYTE, img);
 
     SOIL_free_image_data(img);
+}
+
+
+void Texture::load_images(const char *front, const char *back, const char *left, 
+                          const char *right, const char *top, const char *bottom) {
+    if (_target != CUBE_MAP) {
+        LOG(Logger::WARN, "Attempted to load an 6 images into a texture that was not a cube map");
+        return;
+    }
+    
+    int width, height;
+    GLenum types[] = {
+        GL_TEXTURE_CUBE_MAP_POSITIVE_X,
+        GL_TEXTURE_CUBE_MAP_POSITIVE_Y,
+        GL_TEXTURE_CUBE_MAP_POSITIVE_Z,
+        GL_TEXTURE_CUBE_MAP_NEGATIVE_X,
+        GL_TEXTURE_CUBE_MAP_NEGATIVE_Y,
+        GL_TEXTURE_CUBE_MAP_NEGATIVE_Z,
+    };
+    const char *files[] = {
+        left,
+        top,
+        back,
+        right,
+        bottom,
+        front
+    };
+    
+    bind();
+    for (unsigned i = 0; i < 6; i++) {
+        unsigned char *img = SOIL_load_image(files[i], &width, &height, NULL, 0);
+        if (img == nullptr) {
+            LOG(Logger::ERROR, "Failed to load image for texture %s", files[i]);
+            throw std::runtime_error("Failed to load image for texture");
+        }
+        glTexImage2D(types[i], 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, img);
+        SOIL_free_image_data(img);
+    }
 }
 
 void Texture::load_data(unsigned num_channels, unsigned width, unsigned height, float *data) {

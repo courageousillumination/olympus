@@ -3,6 +3,8 @@
 
 #include <vector>
 
+#include "fx/skybox.hpp"
+
 #include "world/world_object.hpp"
 #include "world/light.hpp"
 #include "world/renderable.hpp"
@@ -19,6 +21,7 @@ namespace olympus {
     private:
         std::set<Renderable *> _renderables;
         std::vector<Light *> _lights;
+        Skybox *_skybox;
     public:
         World();
         
@@ -30,6 +33,8 @@ namespace olympus {
         const std::set<Renderable *> get_renderables();
         const std::vector<Light *> get_lights();
         
+        void set_skybox(Skybox *skybox);
+        Skybox *get_skybox();
     };
 }
 #endif

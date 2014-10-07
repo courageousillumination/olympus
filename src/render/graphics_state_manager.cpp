@@ -8,7 +8,7 @@ using namespace olympus;
 GraphicsState::GraphicsState() {
     wireframe = false;
     use_depth_test = true;
-    depth_function = GL_LESS;
+    depth_function = GL_LEQUAL;
     cull = false;
     cull_face = GL_BACK;
     blend = false;

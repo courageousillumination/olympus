@@ -11,6 +11,9 @@
 
 #include <GL/glew.h>
 
+#define GLM_FORCE_RADIANS
+#include <glm/gtx/transform.hpp>
+
 using namespace olympus;
 
 static glm::mat4 bias_matrix = glm::mat4(0.5, 0.0, 0.0, 0.0,
@@ -183,6 +186,19 @@ void StandardRenderEngine::render(Viewpoint *viewpoint, World *world) {
         current->pre_render();
         current->asset->get_mesh()->bind();
         current->asset->get_mesh()->draw();
+    }
+    
+    // Render the skybox last
+    if (world->get_skybox() != nullptr) {
+        Skybox *skybox = world->get_skybox();
+        glActiveTexture(GL_TEXTURE0);
+        skybox->asset->get_textures()[0]->bind();
+        skybox->asset->get_renderer()->bind();
+        skybox->asset->get_renderer()->set_uniform(std::string("MVP"), viewpoint->get_projection_matrix() *
+                                                                       viewpoint->get_view_matrix() *
+                                                                       glm::translate(viewpoint->get_position()));
+        skybox->asset->get_mesh()->bind();
+        skybox->asset->get_mesh()->draw();
     }
 }
 

@@ -14,6 +14,7 @@ namespace olympus {
         enum Target {
             TEXTURE_2D,
             TEXTURE_3D,
+            CUBE_MAP,
             NONE
         };
         //Define all possible parameters and values for a texture
@@ -50,6 +51,12 @@ namespace olympus {
          * Loads a specified image into a texture.
          */
         void load_image(const char *path);
+        
+        /**
+         * Load 6 images into a cube map.
+         */
+        void load_images(const char *front, const char *back, const char *left, 
+                         const char *right, const char *top, const char *bottom);
         
         /**
          * Loads raw data into a texture.

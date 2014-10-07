@@ -21,4 +21,7 @@
 #define TEXT_VERTEX_SHADER "@OLYMPUS_SOURCE_DIR@/src/render/shaders/text_v.glsl"
 #define TEXT_FRAGMENT_SHADER "@OLYMPUS_SOURCE_DIR@/src/render/shaders/text_f.glsl"
 
+#define SKYBOX_VERTEX_SHADER "@OLYMPUS_SOURCE_DIR@/src/render/shaders/skybox_v.glsl"
+#define SKYBOX_FRAGMENT_SHADER "@OLYMPUS_SOURCE_DIR@/src/render/shaders/skybox_f.glsl"
+
 #endif

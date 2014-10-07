@@ -6,6 +6,7 @@ World::World() {
     // A world is always the root. 
     // NOTE: Don't make a world the child of a world. That would be a bad idea.
     _root = this;
+    _skybox = nullptr;
 }
 
 void World::add_renderable(Renderable *renderable) {
@@ -37,4 +38,12 @@ const std::set<Renderable *> World::get_renderables() {
 
 const std::vector<Light *> World::get_lights() {
     return _lights;
+}
+
+void World::set_skybox(Skybox *skybox) {
+    _skybox = skybox;
+}
+
+Skybox *World::get_skybox() {
+    return _skybox;
 }
