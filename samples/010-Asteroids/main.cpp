@@ -70,7 +70,8 @@ int main() {
     Renderer *renderer = new Renderer(FLAT_VERTEX_SHADER,
                                       FLAT_FRAGMENT_SHADER);
 
-    Mesh *mesh = create_uv_sphere(1.0, 30, 30);
+    // Mesh *mesh = create_uv_sphere(1.0, 30, 30);
+    Mesh *mesh = create_icosphere(1.0, 3);
 
     //Create an asset to wrap all of the above
     Asset *asset = new Asset;

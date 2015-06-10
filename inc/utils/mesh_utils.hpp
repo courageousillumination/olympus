@@ -84,5 +84,10 @@ namespace olympus {
      * Creates a UV sphere with the given values.
      */
     Mesh *create_uv_sphere(float radius, unsigned rows, unsigned cols);
+
+    /**
+     * Creates a simple mesh for an icosphere.
+     */
+    Mesh *create_icosphere(float radius, unsigned recursion);
 };
 #endif

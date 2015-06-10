@@ -1,5 +1,7 @@
 #include <vector>
+#include <algorithm>
 
+#include "debug/logger.hpp"
 #include "utils/mesh_utils.hpp"
 
 unsigned *olympus::generate_plane_indices(unsigned width, unsigned height) {
@@ -119,6 +121,92 @@ olympus::Mesh *olympus::create_uv_sphere(float radius, unsigned rows, unsigned c
             }
             current_index += 4;
         }
+    }
+
+    mesh->set_vertex_attribute(0, 3, (int) verticies.size(), &verticies[0][0]);
+    mesh->set_vertex_attribute(1, 3, (int) verticies.size(), &colors[0][0]);
+    mesh->set_indices(indicies.size(), &indicies[0]);
+
+    return mesh;
+}
+
+/* Get midpoint and move out to the radius. */
+static unsigned get_index(glm::vec3 vertex, std::vector<glm::vec3> &verticies) {
+    auto pos = std::find(verticies.begin(), verticies.end(), vertex);
+    if (pos == verticies.end()) {
+        verticies.push_back(vertex);
+        return verticies.size() - 1;
+    } else {
+        return pos - verticies.begin();
+    }
+}
+
+olympus::Mesh *olympus::create_icosphere(float radius, unsigned recursion) {
+    // Create the base icohedron
+    olympus::Mesh *mesh = new olympus::Mesh(2, olympus::Mesh::TRIANGLES);
+
+    std::vector<glm::vec3> verticies;
+    std::vector<glm::vec3> colors;
+
+    double t = (1.0 + sqrt(5.0)) / 2.0;
+
+    verticies.push_back(glm::normalize(glm::vec3(-1, t, 0)));
+    verticies.push_back(glm::normalize(glm::vec3(1, t, 0)));
+    verticies.push_back(glm::normalize(glm::vec3(-1, -t, 0)));
+    verticies.push_back(glm::normalize(glm::vec3(1, -t, 0)));
+
+    verticies.push_back(glm::normalize(glm::vec3(0, -1, t)));
+    verticies.push_back(glm::normalize(glm::vec3(0, 1, t)));
+    verticies.push_back(glm::normalize(glm::vec3(0, -1, -t)));
+    verticies.push_back(glm::normalize(glm::vec3(0, 1, -t)));
+
+    verticies.push_back(glm::normalize(glm::vec3(t, 0, -1)));
+    verticies.push_back(glm::normalize(glm::vec3(t, 0, 1)));
+    verticies.push_back(glm::normalize(glm::vec3(-t, 0, -1)));
+    verticies.push_back(glm::normalize(glm::vec3(-t, 0, 1)));
+
+    std::vector<unsigned> indicies = {0, 11, 5, 0, 5, 1, 0, 1, 7, 0, 7, 10, 0, 10, 11,
+                                 1, 5, 9, 5, 11, 4, 11, 10, 2, 10, 7, 6, 7, 1, 8, 3,
+                                 9,4,3,4,2,3,2,6,3,6,8,3,8,9,4,9,5,2,4,11,6,2,10,8,6,7,9,8,1};
+
+    /* Enter recursion. */
+    for(unsigned i = 0; i < recursion; i++) {
+
+        std::vector<unsigned> new_indicies;
+        for(unsigned j = 0; j < indicies.size(); j+= 3) {
+
+            unsigned i1, i2, i3;
+            i1 = indicies[j];
+            i2 = indicies[j + 1];
+            i3 = indicies[j + 2];
+            glm::vec3 middle1 = glm::normalize((verticies[i1] + verticies[i2]) * 0.5f);
+            glm::vec3 middle2 = glm::normalize((verticies[i2] + verticies[i3]) * 0.5f);
+            glm::vec3 middle3 = glm::normalize((verticies[i3] + verticies[i1]) * 0.5f);
+
+            unsigned index1 = get_index(middle1, verticies);
+            unsigned index2 = get_index(middle2, verticies);
+            unsigned index3 = get_index(middle3, verticies);
+
+            new_indicies.push_back(i1);
+            new_indicies.push_back(index1);
+            new_indicies.push_back(index3);
+            new_indicies.push_back(i2);
+            new_indicies.push_back(index2);
+            new_indicies.push_back(index1);
+            new_indicies.push_back(i3);
+            new_indicies.push_back(index3);
+            new_indicies.push_back(index2);
+            new_indicies.push_back(index1);
+            new_indicies.push_back(index2);
+            new_indicies.push_back(index3);
+
+        }
+        indicies = new_indicies;
+    }
+
+    /* Just assign constant color */
+    for (unsigned i = 0; i < verticies.size(); i++) {
+        colors.push_back(glm::vec3(0, 1, 0));
     }
 
     mesh->set_vertex_attribute(0, 3, (int) verticies.size(), &verticies[0][0]);
