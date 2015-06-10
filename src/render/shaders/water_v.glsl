@@ -5,7 +5,7 @@ const int MAX_LIGHT_SOURCES = 2;
 layout(location = 0) in vec3 position;
 layout(location = 1) in vec3 color;
 // Normals not used here, since they are calculated in the shader.
-flat layout(location = 3) in vec2 height_map_location;
+layout(location = 3) in vec2 height_map_location;
 
 
 uniform mat4 model_view_matrix;
@@ -30,27 +30,27 @@ void main() {
     vec3 pos = position;
     vec2 loc1 = height_map_location + height_map_offset1;
     vec2 loc2 = height_map_location + height_map_offset2;
-    
+
     float v1 = texture(height_map1, loc1) + texture(height_map2, loc2);
     float s01 = textureOffset(height_map1, loc1, off.xy) + textureOffset(height_map2, loc2, off.xy);
     float s21 = textureOffset(height_map1, loc1, off.zy) + textureOffset(height_map2, loc2, off.zy);
     float s10 = textureOffset(height_map1, loc1, off.yx) + textureOffset(height_map2, loc2, off.yx);
     float s12 = textureOffset(height_map1, loc1, off.yz) + textureOffset(height_map2, loc2, off.yz);
-    
+
     vec3 va = normalize(vec3(size.xy,s21-s01));
     vec3 vb = normalize(vec3(size.yx,s12-s10));
-    
+
     vec3 normal = cross(va, vb);
-    
+
     pos.y += v1 / 2.0;
-    
+
     gl_Position =  projection_matrix * model_view_matrix * vec4(pos, 1.0);
     f_normal = (model_view_matrix * vec4(normal, 0.0)).xyz;
     f_color = color;
-    
+
     for (int i = 0; i < MAX_LIGHT_SOURCES; i++) {
         shadow_position[i] = (shadow_mvp[i] * vec4(pos, 1.0)).xyz;
     }
-    
+
 
 }
