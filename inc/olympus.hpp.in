@@ -29,4 +29,6 @@
 #include "ui/text.hpp"
 #include "ui/font_manager.hpp"
 
+#include "utils/mesh_utils.hpp"
+
 #endif
