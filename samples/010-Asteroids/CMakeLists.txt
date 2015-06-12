@@ -6,4 +6,4 @@ link_directories (${OLYMPUS_BINARY_DIR}/src)
 
 add_executable(Asteroids main.cpp)
 
-target_link_libraries(Asteroids Olympus ${GLFW_LIBRARIES} ${GL_LIBRARY})
+target_link_libraries(Asteroids Olympus ${GLFW_LIBRARIES} ${GL_LIBRARY} noise)

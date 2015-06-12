@@ -1,4 +1,6 @@
 #include <iostream>
+#include <cstdlib>
+
 
 #include "olympus.hpp"
 #include "utils/shortcuts.hpp"
@@ -9,6 +11,8 @@
 using namespace std;
 using namespace olympus;
 
+
+unsigned NUM_ASTEROIDS = 1000;
 
 Viewpoint *viewpoint = nullptr;
 EasyWindow *easy_window = nullptr;
@@ -71,19 +75,25 @@ int main() {
                                       FLAT_FRAGMENT_SHADER);
 
     // Mesh *mesh = create_uv_sphere(1.0, 30, 30);
-    Mesh *mesh = create_icosphere(1.0, 3);
 
-    //Create an asset to wrap all of the above
-    Asset *asset = new Asset;
-    asset->set_mesh(mesh);
-    asset->set_renderer(renderer);
 
-    //Create a renderable to actually draw on the screen
-    Renderable *renderable = new Renderable;
-    renderable->asset = asset;
-    renderable->set_position(0.0f, 0.0f, 0.3f);
+    //Draw n asteroids on the screen
+    for(unsigned i = 0; i < NUM_ASTEROIDS; i++) {
+        Mesh *mesh = create_icosphere(1.0, 3);
 
-    easy_window->world->add_child(renderable);
+        //Create an asset to wrap all of the above
+        Asset *asset = new Asset;
+        asset->set_mesh(mesh);
+        asset->set_renderer(renderer);
+
+        Renderable *renderable = new Renderable;
+        renderable->asset = asset;
+        renderable->set_position(std::rand() % 200 - 100, std::rand() % 200 - 100, std::rand() % 200 - 100);
+        renderable->set_scale(0.5 + static_cast <float> (rand()) /( static_cast <float> (RAND_MAX/(2.0 - 0.5))),
+                              0.5 + static_cast <float> (rand()) /( static_cast <float> (RAND_MAX/(2.0 - 0.5))),
+                              0.5 + static_cast <float> (rand()) /( static_cast <float> (RAND_MAX/(2.0 - 0.5))));
+        easy_window->world->add_child(renderable);
+    }
 
     //Set up the viewpoint
     viewpoint = new Viewpoint;

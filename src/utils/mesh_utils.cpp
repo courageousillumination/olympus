@@ -1,6 +1,9 @@
 #include <vector>
 #include <algorithm>
 
+
+#include <noise/noise.h> // Bleh. This should not go here...
+
 #include "debug/logger.hpp"
 #include "utils/mesh_utils.hpp"
 
@@ -142,6 +145,11 @@ static unsigned get_index(glm::vec3 vertex, std::vector<glm::vec3> &verticies) {
 }
 
 olympus::Mesh *olympus::create_icosphere(float radius, unsigned recursion) {
+
+    noise::module::Perlin perlin_noise;
+    perlin_noise.SetSeed(rand());
+    // std::cout << perlin_noise.GetValue(0.5, 0.2, 0.5) << std::endl;
+
     // Create the base icohedron
     olympus::Mesh *mesh = new olympus::Mesh(2, olympus::Mesh::TRIANGLES);
 
@@ -204,9 +212,16 @@ olympus::Mesh *olympus::create_icosphere(float radius, unsigned recursion) {
         indicies = new_indicies;
     }
 
+    /* Add some noise !!!! */
+    for (unsigned i = 0; i < verticies.size(); i++) {
+        glm::vec3 vertex = verticies[i];
+        float displacement = 1.0 - 0.5 * perlin_noise.GetValue(vertex[0], vertex[1], vertex[2]);
+        verticies[i] = vertex * displacement;
+    }
+
     /* Just assign constant color */
     for (unsigned i = 0; i < verticies.size(); i++) {
-        colors.push_back(glm::vec3(0, 1, 0));
+        colors.push_back(glm::vec3(0.53125, 0.53125, 0.53125));
     }
 
     mesh->set_vertex_attribute(0, 3, (int) verticies.size(), &verticies[0][0]);
